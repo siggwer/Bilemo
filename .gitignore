@@ -1,4 +1,6 @@
-
+###> environnement/Bilemo ###
+.idea
+composer.phar
 ###> symfony/framework-bundle ###
 /.env.local
 /.env.local.php
@@ -8,3 +10,8 @@
 /var/
 /vendor/
 ###< symfony/framework-bundle ###
+###> symfony/phpunit-bridge ###
+.phpunit
+/phpunit.xml
+/build/
+###< symfony/phpunit-bridge ###
