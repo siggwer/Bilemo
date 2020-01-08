@@ -1,0 +1,7 @@
+App\Entity\Product
+product_{1..100}:
+  name: 'phone <current()>'
+  reference: '<paragraph(1, true)>'
+  description: '<paragraph(4, true)>'
+  brand: '@brand_<($current % 10 + 1)>'
+  prix: '@€_<($current % 10 + 1)>'

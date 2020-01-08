@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use Symfony\Component\Validator\Constraints as Assert;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use DateTimeImmutable;
 use Serializable;
@@ -85,7 +87,7 @@ class Client
     private $roles = [];
 
     /**
-     * @var
+     * @var Collection|Consumer[]
      *
      * @ORM\OneToMany(targetEntity="App\Entity\Consumer", mappedBy="client", orphanRemoval=true)
      */
@@ -100,6 +102,7 @@ class Client
     {
         $this->created_at = new DateTimeImmutable();
         $this->updated_at = new DateTimeImmutable();
+        $this->consumer = new ArrayCollection();
     }
 
     /**
@@ -228,5 +231,21 @@ class Client
     public function setRoles(?string $roles): void
     {
         $this->roles = $roles;
+    }
+
+    /**
+     * @return Consumer[]|Collection
+     */
+    public function getConsumer()
+    {
+        return $this->consumer;
+    }
+
+    /**
+     * @param Consumer[]|Collection $consumer
+     */
+    public function setConsumer($consumer): void
+    {
+        $this->consumer = $consumer;
     }
 }
