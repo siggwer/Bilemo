@@ -1,0 +1,6 @@
+App\Entity\Client:
+  client_{1..100}:
+    username: 'username-<current()>'
+    email: 'email+<current()>\@email.com'
+    password: 'password'
+

@@ -61,8 +61,8 @@ class Consumer
     /**
      * @var Client
      *
-     * @ORM\ManyToOne(targetEntity="App\Entity\Client", inversedBy="Consumer")
-     * @ORM\JoinColumn(name="client_id", referencedColumnName="id")
+     * @ORM\ManyToOne(targetEntity="Client", inversedBy="consumer")
+     * @ORM\JoinColumn(name="client_id", referencedColumnName="id", onDelete="CASCADE")
      */
     public $client;
 

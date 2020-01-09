@@ -84,12 +84,12 @@ class Client
      *
      * @ORM\Column(type="array")
      */
-    private $roles = [];
+    private $roles = 'ROLE_USER';
 
     /**
      * @var Collection|Consumer[]
      *
-     * @ORM\OneToMany(targetEntity="App\Entity\Consumer", mappedBy="client", orphanRemoval=true)
+     * @ORM\OneToMany(targetEntity="Consumer", mappedBy="client")
      */
     private $consumer;
 

@@ -7,6 +7,8 @@
         "ext-iconv": "*",
         "doctrine/annotations": "^1.8",
         "doctrine/doctrine-bundle": "1.12",
+        "firebase/php-jwt": "^5.0",
+        "gedmo/doctrine-extensions": "^2.4",
         "sensio/framework-extra-bundle": "^5.5",
         "symfony/console": "4.4.*",
         "symfony/dotenv": "4.4.*",
@@ -15,7 +17,8 @@
         "symfony/orm-pack": "^1.0",
         "symfony/serializer": "4.4.*",
         "symfony/validator": "4.4.*",
-        "symfony/yaml": "4.4.*"
+        "symfony/yaml": "4.4.*",
+        "trappar/alice-generator-bundle": "^2.0"
     },
     "require-dev": {
         "hautelook/alice-bundle": "2.5.1",
