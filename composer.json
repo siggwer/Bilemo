@@ -7,7 +7,6 @@
         "ext-iconv": "*",
         "doctrine/annotations": "^1.8",
         "doctrine/doctrine-bundle": "1.12",
-        "firebase/php-jwt": "^5.0",
         "gedmo/doctrine-extensions": "^2.4",
         "sensio/framework-extra-bundle": "^5.5",
         "symfony/console": "4.4.*",
