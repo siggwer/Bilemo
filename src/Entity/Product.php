@@ -25,28 +25,29 @@ class Product
     /**
      * @var string|null
      *
-     * @ORM\Column(type="text")
+     * @ORM\Column(type="string")
      */
     private $name;
 
     /**
      * @var string|null
      *
-     * @ORM\Column(type="text")
+     * @ORM\Column(type="string")
      */
     private $reference;
 
     /**
-     * @var string|null
+     * @var $brand
      *
-     * @ORM\Column(type="text")
+     * @ORM\ManyToOne(targetEntity="App\Entity\Brand", inversedBy="product")
+     * @ORM\JoinColumn(name="brand_id", referencedColumnName="id", onDelete="CASCADE")
      */
     private $brand;
 
     /**
      * @var string|null
      *
-     * @ORM\Column(type="text")
+     * @ORM\Column(type="longtext")
      */
     private $description;
 

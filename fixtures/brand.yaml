@@ -1,0 +1,2 @@
+App\Entity\Brand:
+  name: 'brandname_<current()>'

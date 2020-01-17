@@ -1,5 +1,5 @@
-App\Entity\Consumer:
-  consumer_{1..50}:
+App\Entity\User:
+  user_{1..50}:
     name: 'name-<current()>'
     email: 'email+<current()>\@email.com'
 

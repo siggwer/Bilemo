@@ -8,13 +8,13 @@ use DateTimeImmutable;
 use Exception;
 
 /**
- * Class Consumer
+ * Class User
  *
  * @package App\Entity
  *
- * @ORM\Entity(repositoryClass="App\Repository\ConsumerRepository")
+ * @ORM\Entity(repositoryClass="App\Repository\UserRepository")
  */
-class Consumer
+class User
 {
     /**
      * @var int|null
@@ -61,13 +61,13 @@ class Consumer
     /**
      * @var Client
      *
-     * @ORM\ManyToOne(targetEntity="Client", inversedBy="consumer")
+     * @ORM\ManyToOne(targetEntity="Client", inversedBy="user")
      * @ORM\JoinColumn(name="client_id", referencedColumnName="id", onDelete="CASCADE")
      */
     public $client;
 
     /**
-     * Consumer constructor.
+     * User constructor.
      *
      * @throws Exception
      */

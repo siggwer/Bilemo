@@ -34,15 +34,6 @@ class Client
      * @ORM\Column(type="string", length=255, unique=true)
      *
      * @Assert\NotBlank(message="This value should not be blank")
-     */
-    private $username;
-
-    /**
-     * @var string|null
-     *
-     * @ORM\Column(type="string", length=255, unique=true)
-     *
-     * @Assert\NotBlank(message="This value should not be blank")
      * @Assert\Email(message="Email address not valid")
      */
     private $email;
@@ -87,11 +78,11 @@ class Client
     private $roles = 'ROLE_USER';
 
     /**
-     * @var Collection|Consumer[]
+     * @var Collection|User[]
      *
-     * @ORM\OneToMany(targetEntity="Consumer", mappedBy="client")
+     * @ORM\OneToMany(targetEntity="User", mappedBy="client")
      */
-    private $consumer;
+    private $user;
 
     /**
      * Client constructor.
@@ -102,7 +93,7 @@ class Client
     {
         $this->created_at = new DateTimeImmutable();
         $this->updated_at = new DateTimeImmutable();
-        $this->consumer = new ArrayCollection();
+        $this->user = new ArrayCollection();
     }
 
     /**
@@ -119,22 +110,6 @@ class Client
     public function setId(?int $id): void
     {
         $this->id = $id;
-    }
-
-    /**
-     * @return string|null
-     */
-    public function getUsername(): ?string
-    {
-        return $this->username;
-    }
-
-    /**
-     * @param string|null $username
-     */
-    public function setUsername(?string $username): void
-    {
-        $this->username = $username;
     }
 
     /**
@@ -234,18 +209,18 @@ class Client
     }
 
     /**
-     * @return Consumer[]|Collection
+     * @return User[]|Collection
      */
-    public function getConsumer()
+    public function getUser()
     {
-        return $this->consumer;
+        return $this->user;
     }
 
     /**
-     * @param Consumer[]|Collection $consumer
+     * @param User[]|Collection $user
      */
-    public function setConsumer($consumer): void
+    public function setUser($user): void
     {
-        $this->consumer = $consumer;
+        $this->user = $user;
     }
 }
