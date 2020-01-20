@@ -2,6 +2,7 @@
 
 namespace App\Entity;
 
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -37,17 +38,17 @@ class Product
     private $reference;
 
     /**
-     * @var $brand
+     * @var Collection|Brand
      *
      * @ORM\ManyToOne(targetEntity="App\Entity\Brand", inversedBy="product")
-     * @ORM\JoinColumn(name="brand_id", referencedColumnName="id", onDelete="CASCADE")
+     * @ORM\JoinColumn(name="brand_id", referencedColumnName="id", onDelete="CASCADE", nullable=false)
      */
     private $brand;
 
     /**
      * @var string|null
      *
-     * @ORM\Column(type="longtext")
+     * @ORM\Column(type="text")
      */
     private $description;
 
@@ -107,17 +108,17 @@ class Product
     }
 
     /**
-     * @return string|null
+     * @return Collection|Brand
      */
-    public function getBrand(): ?string
+    public function getBrand()
     {
         return $this->brand;
     }
 
     /**
-     * @param string|null $brand
+     * @param Collection|Brand $brand
      */
-    public function setBrand(?string $brand): void
+    public function setBrand($brand): void
     {
         $this->brand = $brand;
     }

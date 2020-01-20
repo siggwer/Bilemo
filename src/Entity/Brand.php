@@ -2,8 +2,6 @@
 
 namespace App\Entity;
 
-use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -32,19 +30,11 @@ class Brand
     private $name;
 
     /**
-     * @var Collection|Product[]
+     * @var Product
      *
-     * @ORM\OneToMany(targetEntity="product", mappedBy="product")
+     * @ORM\OneToMany(targetEntity="App\Entity\Product", mappedBy="brand")
      */
     private $product;
-
-    /**
-     * Brand constructor.
-     */
-    public function __construct()
-    {
-        $this->product = new ArrayCollection();
-    }
 
     /**
      * @return int|null
@@ -79,7 +69,7 @@ class Brand
     }
 
     /**
-     * @return mixed
+     * @return Product
      */
     public function getProduct()
     {
@@ -87,7 +77,7 @@ class Brand
     }
 
     /**
-     * @param mixed $product
+     * @param Product $product
      */
     public function setProduct($product): void
     {

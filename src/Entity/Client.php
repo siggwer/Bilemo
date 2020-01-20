@@ -78,9 +78,9 @@ class Client
     private $roles = 'ROLE_USER';
 
     /**
-     * @var Collection|User[]
+     * @var User
      *
-     * @ORM\OneToMany(targetEntity="User", mappedBy="client")
+     * @ORM\OneToMany(targetEntity="App\Entity\User", mappedBy="client")
      */
     private $user;
 
@@ -93,7 +93,6 @@ class Client
     {
         $this->created_at = new DateTimeImmutable();
         $this->updated_at = new DateTimeImmutable();
-        $this->user = new ArrayCollection();
     }
 
     /**
@@ -209,7 +208,7 @@ class Client
     }
 
     /**
-     * @return User[]|Collection
+     * @return User
      */
     public function getUser()
     {
@@ -217,7 +216,7 @@ class Client
     }
 
     /**
-     * @param User[]|Collection $user
+     * @param User $user
      */
     public function setUser($user): void
     {
