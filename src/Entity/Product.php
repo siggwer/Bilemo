@@ -68,14 +68,6 @@ class Product
     }
 
     /**
-     * @param int|null $id
-     */
-    public function setId(?int $id): void
-    {
-        $this->id = $id;
-    }
-
-    /**
      * @return string|null
      */
     public function getName(): ?string
