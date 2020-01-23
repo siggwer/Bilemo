@@ -9,6 +9,7 @@ use App\Entity\Client;
 use App\Entity\Brand;
 use App\Entity\User;
 use ReflectionClass;
+use Exception;
 
 /**
  * Class ProductTest
@@ -18,7 +19,7 @@ use ReflectionClass;
 class ProductTest extends TestCase
 {
     /**
-     * @var Product
+     * @var
      */
     private $product;
 
@@ -38,7 +39,7 @@ class ProductTest extends TestCase
     private $user;
 
     /**
-     *
+     * @throws Exception
      */
     public function setUp() : void
     {
