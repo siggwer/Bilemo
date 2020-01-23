@@ -1,6 +1,6 @@
 doctrine:
-    dbal:
 
+    dbal:
         # configure these for your database server
         driver: 'pdo_mysql'
         server_version: '5.7'

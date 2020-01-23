@@ -1,0 +1,3 @@
+App\Entity\Brand:
+  brand_{1..100}:
+    name: 'brandname_<current()>'

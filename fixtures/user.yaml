@@ -1,0 +1,6 @@
+App\Entity\User:
+  user_{1..100}:
+    name: 'name-<current()>'
+    email: 'email+<current()>\@email.com'
+    client: '@client_<current()>'
+
