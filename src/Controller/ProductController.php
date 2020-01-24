@@ -21,7 +21,7 @@ use App\Entity\Product;
 class ProductController extends AbstractController
 {
     /**
-     * @Route("/{id}", name="product_read")
+     * @Route("/{id}", name="product_read", methods={"GET"})
      *
      * @param Product $product
      *
