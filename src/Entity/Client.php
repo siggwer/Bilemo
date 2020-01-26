@@ -17,7 +17,7 @@ use Exception;
  *
  * @ORM\Entity(repositoryClass="App\Repository\ClientRepository")
  */
-class Client
+class Client implements UserInterface
 {
     /**
      * @var int|null
@@ -69,20 +69,6 @@ class Client
      * @ORM\Column(type="datetime_immutable")
      */
     private $updated_at;
-
-    /**
-     * @var string|null
-     *
-     * @ORM\Column(type="array")
-     */
-    private $roles = 'ROLE_USER';
-
-    /**
-     * @var User
-     *
-     * @ORM\OneToMany(targetEntity="App\Entity\User", mappedBy="client")
-     */
-    private $user;
 
     /**
      * Client constructor.
@@ -189,29 +175,5 @@ class Client
     public function getRoles(): ?string
     {
         return $this->roles;
-    }
-
-    /**
-     * @param string|null $roles
-     */
-    public function setRoles(?string $roles): void
-    {
-        $this->roles = $roles;
-    }
-
-    /**
-     * @return User
-     */
-    public function getUser()
-    {
-        return $this->user;
-    }
-
-    /**
-     * @param User $user
-     */
-    public function setUser($user): void
-    {
-        $this->user = $user;
     }
 }

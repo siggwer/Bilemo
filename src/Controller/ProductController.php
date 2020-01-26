@@ -16,7 +16,7 @@ use App\Entity\Product;
  *
  * @package App\Controller
  *
- * @Route("/product")
+ * @Route("/products")
  */
 class ProductController extends AbstractController
 {
