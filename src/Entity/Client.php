@@ -71,13 +71,6 @@ class Client
     private $updated_at;
 
     /**
-     * @var string|null
-     *
-     * @ORM\Column(type="array")
-     */
-    private $roles = 'ROLE_USER';
-
-    /**
      * @var User
      *
      * @ORM\OneToMany(targetEntity="App\Entity\User", mappedBy="client")
@@ -181,22 +174,6 @@ class Client
     public function setUpdatedAt(?DateTimeImmutable $updated_at): void
     {
         $this->updated_at = $updated_at;
-    }
-
-    /**
-     * @return string|null
-     */
-    public function getRoles(): ?string
-    {
-        return $this->roles;
-    }
-
-    /**
-     * @param string|null $roles
-     */
-    public function setRoles(?string $roles): void
-    {
-        $this->roles = $roles;
     }
 
     /**
