@@ -3,11 +3,8 @@
 namespace App\Entity;
 
 use Symfony\Component\Validator\Constraints as Assert;
-use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use DateTimeImmutable;
-use Serializable;
 use Exception;
 
 /**
@@ -17,7 +14,7 @@ use Exception;
  *
  * @ORM\Entity(repositoryClass="App\Repository\ClientRepository")
  */
-class Client implements UserInterface
+class Client
 {
     /**
      * @var int|null
@@ -167,13 +164,5 @@ class Client implements UserInterface
     public function setUpdatedAt(?DateTimeImmutable $updated_at): void
     {
         $this->updated_at = $updated_at;
-    }
-
-    /**
-     * @return string|null
-     */
-    public function getRoles(): ?string
-    {
-        return $this->roles;
     }
 }

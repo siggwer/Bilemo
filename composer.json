@@ -21,8 +21,8 @@
         "trappar/alice-generator-bundle": "^2.0"
     },
     "require-dev": {
-        "dama/doctrine-test-bundle": "^6.3",
         "hautelook/alice-bundle": "2.5.1",
+        "dama/doctrine-test-bundle": "^6.3",
         "phpunit/php-code-coverage": "^7.0",
         "phpunit/phpunit": "8",
         "symfony/maker-bundle": "^1.14",

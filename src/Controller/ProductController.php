@@ -31,33 +31,4 @@ class ProductController extends AbstractController
     {
         return $this->json($product);
     }
-
-    /**
-     * @Route(name="product_create", methods={"POST"})
-     *
-     * @param Request $request
-     * @param SerializerInterface $serializer
-     * @param ValidatorInterface $validator
-     *
-     * @return JsonResponse
-     */
-    public function create(
-        Request $request,
-        SerializerInterface $serializer,
-        ValidatorInterface $validator
-    ): JsonResponse
-    {
-        $product = $serializer->deserialize($request->getContent(), Product::class, "json");
-
-        $constraintViolation = $validator->validate($product);
-
-        if($constraintViolation->count() > 0) {
-            return $this->json($constraintViolation, Response::HTTP_BAD_REQUEST);
-        }
-
-        $this->getDoctrine()->getManager()->persist($product);
-        $this->getDoctrine()->getManager()->flush();
-
-        return $this->json($product, Response::HTTP_CREATED);
-    }
 }

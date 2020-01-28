@@ -146,5 +146,4 @@ class Product
     {
         $this->prix = $prix;
     }
-
 }
