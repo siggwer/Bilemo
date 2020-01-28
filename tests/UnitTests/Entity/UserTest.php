@@ -4,11 +4,9 @@ namespace App\Tests\UnitTests\Entity;
 
 use PHPUnit\Framework\TestCase;
 use ReflectionException;
-use App\Entity\Product;
 use DateTimeImmutable;
 use App\Entity\Client;
-use App\Entity\Brand;
-use App\Entity\user;
+use App\Entity\User;
 use ReflectionClass;
 use Exception;
 
@@ -17,7 +15,7 @@ use Exception;
  *
  * @package App\Tests\UnitTests\Entity
  */
-class userTest extends TestCase
+class UserTest extends TestCase
 {
     /**
      * @var
@@ -25,46 +23,23 @@ class userTest extends TestCase
     private $user;
 
     /**
-     * @var
-     */
-    private $brand;
-
-    /**
-     * @var
-     */
-    private $client;
-
-    /**
-     * @var
-     */
-    private $product;
-
-    /**
      * @throws Exception
      */
     public function setUp() : void
     {
         $this->user = new User();
-        $this->client = new Client();
-        $this->brand = new Brand();
-        $this->product = new Product();
     }
 
     /**
      *
+     * @throws ReflectionException
      */
     public function testGetId()
     {
         $user = new User();
         $this->assertNull($user->getId());
-        try {
-            $reflecion = new ReflectionClass($user);
-        } catch (ReflectionException $e) {
-        }
-        try {
-            $property = $reflecion->getProperty('id');
-        } catch (ReflectionException $e) {
-        }
+        $reflecion = new ReflectionClass($user);
+        $property = $reflecion->getProperty('id');
         $property->setAccessible(true);
         $property->setValue($user, '1');
         $this->assertEquals(1, $user->getId());

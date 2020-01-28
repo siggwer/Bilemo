@@ -60,9 +60,6 @@ class User
 
     /**
      * @var Client
-     *
-     * @ORM\ManyToOne(targetEntity="Client", inversedBy="user")
-     * @ORM\JoinColumn(name="client_id", referencedColumnName="id", onDelete="CASCADE", nullable=false)
      */
     private $client;
 

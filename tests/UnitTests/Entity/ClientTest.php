@@ -4,11 +4,8 @@ namespace App\Tests\UnitTests\Entity;
 
 use PHPUnit\Framework\TestCase;
 use ReflectionException;
-use App\Entity\Product;
 use DateTimeImmutable;
 use App\Entity\Client;
-use App\Entity\Brand;
-use App\Entity\User;
 use ReflectionClass;
 use Exception;
 
@@ -25,46 +22,23 @@ class ClientTest extends TestCase
     private $client;
 
     /**
-     * @var
-     */
-    private $brand;
-
-    /**
-     * @var
-     */
-    private $product;
-
-    /**
-     * @var
-     */
-    private $user;
-
-    /**
      * @throws Exception
      */
     public function setUp() : void
     {
         $this->client = new Client();
-        $this->brand = new Brand();
-        $this->product = new Product();
-        $this->user = new User();
     }
 
     /**
      *
+     * @throws ReflectionException
      */
     public function testGetId()
     {
         $client = new Client();
         $this->assertNull($client->getId());
-        try {
-            $reflecion = new ReflectionClass($client);
-        } catch (ReflectionException $e) {
-        }
-        try {
-            $property = $reflecion->getProperty('id');
-        } catch (ReflectionException $e) {
-        }
+        $reflecion = new ReflectionClass($client);
+        $property = $reflecion->getProperty('id');
         $property->setAccessible(true);
         $property->setValue($client, '1');
         $this->assertEquals(1, $client->getId());
@@ -108,15 +82,5 @@ class ClientTest extends TestCase
         $this->client->setUpdatedAt(new DateTimeImmutable());
         $result = $this->client->getUpdatedAt();
         $this->assertInstanceOf(DateTimeImmutable::class, $result);
-    }
-
-    /**
-     *
-     */
-    public function testGetUser()
-    {
-        $this->client->setUser('test');
-        $result = $this->client->getUser();
-        $this->assertSame('test', $result);
     }
 }
