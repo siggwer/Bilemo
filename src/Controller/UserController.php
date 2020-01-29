@@ -10,7 +10,7 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
-use App\Entity\Client;
+use App\Repository\UserRepository;
 use App\Entity\User;
 
 /**
@@ -22,6 +22,26 @@ use App\Entity\User;
  */
 class UserController extends AbstractController
 {
+    /**
+     * @Route(name="user_listing", methods={"GET"})
+     *
+     * @param Request $request
+     * @param UserRepository $repository
+     * @return JsonResponse
+     */
+    public function listing(Request $request, UserRepository $repository): JsonResponse
+    {
+        return $this->json(
+            $repository->findBy(
+                [],
+                ['name' => 'asc'],
+                10,
+                $request->query->get('page', 1) * 10 - 10
+            )
+        );
+    }
+
+
     /**
      * @Route("/{id}", name="user_read", methods={"GET"})
      *
@@ -63,7 +83,7 @@ class UserController extends AbstractController
     }
 
     /**
-     * @Route("/{id}, "name="user_update", methods={"PUT"})
+     * @Route("/{id}", name="user_update", methods={"PUT"})
      *
      * @param User $user
      * @param Request $request
@@ -98,7 +118,7 @@ class UserController extends AbstractController
     }
 
     /**
-     * @Route("/{id}, "name="user_delete", methods={"DELETE"})
+     * @Route("/{id}", name="user_delete", methods={"DELETE"})
      *
      * @param User $user
      * @return JsonResponse
