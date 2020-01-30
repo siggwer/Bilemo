@@ -13,6 +13,7 @@ use Exception;
  * @package App\Entity
  *
  * @ORM\Entity(repositoryClass="App\Repository\ClientRepository")
+ * @method setClient(object $getReference)
  */
 class Client
 {
@@ -66,6 +67,13 @@ class Client
      * @ORM\Column(type="datetime_immutable")
      */
     private $updated_at;
+
+    /**
+     * @var string|null
+     *
+     * @ORM\Column(type="array")
+     */
+    private $roles = 'ROLE_USER';
 
     /**
      * Client constructor.
@@ -164,5 +172,21 @@ class Client
     public function setUpdatedAt(?DateTimeImmutable $updated_at): void
     {
         $this->updated_at = $updated_at;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getRoles(): ?string
+    {
+        return $this->roles;
+    }
+
+    /**
+     * @param string|null $roles
+     */
+    public function setRoles(?string $roles): void
+    {
+        $this->roles = $roles;
     }
 }

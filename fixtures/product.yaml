@@ -1,8 +1,0 @@
-App\Entity\Product:
-  product_{1..100}:
-    name: 'phone <current()>'
-    reference: 'ref_<current()>'
-    description: '<paragraph(4, true)>'
-    price: '<numberBetween(1, 1000)>'
-    brand: '@brand_<current()>'
-

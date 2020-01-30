@@ -1,4 +1,4 @@
-###> environnement/Bilemo ###
+###> symfony/framework-bundle ###
 .idea
 composer.phar
 ###> symfony/framework-bundle ###
