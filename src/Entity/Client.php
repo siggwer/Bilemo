@@ -68,11 +68,11 @@ class Client
     private $updated_at;
 
     /**
-     * @var User
+     * @var string|null
      *
-     * @ORM\OneToMany(targetEntity="App\Entity\User", mappedBy="client")
+     * @ORM\Column(type="array")
      */
-    private $user;
+    private $roles = 'ROLE_USER';
 
     /**
      * Client constructor.
@@ -174,18 +174,18 @@ class Client
     }
 
     /**
-     * @return User
+     * @return string|null
      */
-    public function getUser()
+    public function getRoles(): ?string
     {
-        return $this->user;
+        return $this->roles;
     }
 
     /**
-     * @param User $user
+     * @param string|null $roles
      */
-    public function setUser($user): void
+    public function setRoles(?string $roles): void
     {
-        $this->user = $user;
+        $this->roles = $roles;
     }
 }

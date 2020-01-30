@@ -39,6 +39,9 @@ class Product
 
     /**
      * @var Collection|Brand
+     *
+     * @ORM\ManyToOne(targetEntity="App\Entity\Brand")
+     * @ORM\JoinColumn(name="brand_id", referencedColumnName="id", onDelete="CASCADE", nullable=false)
      */
     private $brand;
 
@@ -54,7 +57,7 @@ class Product
      *
      * @ORM\Column(type="decimal", precision=32, scale=2)
      */
-    private $prix;
+    private $price;
 
     /**
      * @return int|null
@@ -131,16 +134,16 @@ class Product
     /**
      * @return float|null
      */
-    public function getPrix(): ?float
+    public function getprice(): ?float
     {
-        return $this->prix;
+        return $this->price;
     }
 
     /**
-     * @param float|null $prix
+     * @param float|null $price
      */
-    public function setPrix(?float $prix): void
+    public function setprice(?float $price): void
     {
-        $this->prix = $prix;
+        $this->price = $price;
     }
 }

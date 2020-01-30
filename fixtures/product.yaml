@@ -3,6 +3,6 @@ App\Entity\Product:
     name: 'phone <current()>'
     reference: 'ref_<current()>'
     description: '<paragraph(4, true)>'
-    prix: '<numberBetween(1, 1000)>'
+    price: '<numberBetween(1, 1000)>'
     brand: '@brand_<current()>'
 
