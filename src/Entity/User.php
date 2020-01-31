@@ -30,7 +30,7 @@ class User
      *
      * @ORM\Column(type="string", length=255)
      *
-     * @Assert\NotBlank()
+     * @Assert\NotBlank(message="This value should not be blank")
      */
     private $name;
 

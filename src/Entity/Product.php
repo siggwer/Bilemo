@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use Doctrine\Common\Collections\Collection;
+use Symfony\Component\Validator\Constraints as Assert;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -27,6 +28,8 @@ class Product
      * @var string|null
      *
      * @ORM\Column(type="string")
+     *
+     * @Assert\NotBlank(message="This value should not be blank")
      */
     private $name;
 
@@ -34,6 +37,8 @@ class Product
      * @var string|null
      *
      * @ORM\Column(type="string")
+     *
+     * @Assert\NotBlank(message="This value should not be blank")
      */
     private $reference;
 
@@ -42,6 +47,8 @@ class Product
      *
      * @ORM\ManyToOne(targetEntity="App\Entity\Brand")
      * @ORM\JoinColumn(name="brand_id", referencedColumnName="id", onDelete="CASCADE", nullable=false)
+     *
+     * @Assert\NotBlank(message="This value should not be blank")
      */
     private $brand;
 
@@ -49,6 +56,8 @@ class Product
      * @var string|null
      *
      * @ORM\Column(type="text")
+     *
+     * @Assert\NotBlank(message="This value should not be blank")
      */
     private $description;
 
@@ -56,6 +65,9 @@ class Product
      * @var float|null
      *
      * @ORM\Column(type="decimal", precision=32, scale=2)
+     *
+     * @Assert\NotBlank(message="This value should not be blank")
+     * @Assert\Positive(message="This value should not be equal to 0 or negative")
      */
     private $price;
 
