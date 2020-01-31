@@ -2,8 +2,9 @@
 
 namespace App\Entity;
 
-use Doctrine\Common\Collections\Collection;
 use Symfony\Component\Validator\Constraints as Assert;
+use Hateoas\Configuration\Annotation as Hateoas;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -12,6 +13,14 @@ use Doctrine\ORM\Mapping as ORM;
  * @package App\Entity
  *
  * @ORM\Entity(repositoryClass="App\Repository\ProductRepository")
+ *
+ * @Hateoas\Relation(
+ *     "read",
+ *     href=@Hateoas\Route(
+ *     "product_read",
+ *     parameters = {"id" = "expr(object.getId())"}
+ *      )
+ * )
  */
 class Product
 {

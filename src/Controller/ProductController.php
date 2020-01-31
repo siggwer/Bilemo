@@ -3,9 +3,10 @@
 namespace App\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
+use JMS\Serializer\SerializerInterface;
 use App\Repository\ProductRepository;
 use App\Entity\Product;
 
@@ -23,17 +24,24 @@ class ProductController extends AbstractController
      *
      * @param Request $request
      * @param ProductRepository $repository
-     * @return JsonResponse
+     * @param SerializerInterface $serializer
+     *
+     * @return Response
      */
-    public function listing(Request $request, ProductRepository $repository): JsonResponse
-    {
-        return $this->json(
-            $repository->findBy(
+    public function listing(
+        Request $request,
+        ProductRepository $repository,
+        SerializerInterface $serializer
+    ): Response {
+        return new Response(
+            $serializer->serialize($repository->findBy(
                 [],
                 ['price' => 'asc'],
                 10,
                 $request->query->get('page', 1) * 10 - 10
-            )
+            ), 'json'),
+            Response::HTTP_OK,
+            ['content-type' => 'application/json']
         );
     }
 
@@ -42,10 +50,20 @@ class ProductController extends AbstractController
      *
      * @param Product $product
      *
-     * @return JsonResponse
+     * @return Response
      */
-    public function read(Product $product): JsonResponse
-    {
-        return $this->json($product);
+    public function read(
+        Product $product
+    ): Response {
+//        return new Response(
+//                $product,
+//                'json'
+//        );
+        $data = $this->get('jms_serializer')->serialize($product, 'json');
+
+        $response = new Response($data);
+        $response->headers->set('Content-Type', 'application/json');
+
+        return $response;
     }
 }

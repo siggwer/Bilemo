@@ -237,6 +237,9 @@
     "symfony/event-dispatcher-contracts": {
         "version": "v1.1.7"
     },
+    "symfony/expression-language": {
+        "version": "v4.4.3"
+    },
     "symfony/filesystem": {
         "version": "v4.4.3"
     },
@@ -370,6 +373,12 @@
     },
     "webmozart/assert": {
         "version": "1.6.0"
+    },
+    "willdurand/hateoas": {
+        "version": "3.5.0"
+    },
+    "willdurand/hateoas-bundle": {
+        "version": "2.1.0"
     },
     "zendframework/zend-code": {
         "version": "3.4.1"
