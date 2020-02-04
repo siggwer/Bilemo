@@ -3,11 +3,8 @@
 namespace App\Entity;
 
 use Symfony\Component\Validator\Constraints as Assert;
-use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use DateTimeImmutable;
-use Serializable;
 use Exception;
 
 /**
@@ -78,13 +75,6 @@ class Client
     private $roles = 'ROLE_USER';
 
     /**
-     * @var User
-     *
-     * @ORM\OneToMany(targetEntity="App\Entity\User", mappedBy="client")
-     */
-    private $user;
-
-    /**
      * Client constructor.
      *
      * @throws Exception
@@ -101,14 +91,6 @@ class Client
     public function getId(): ?int
     {
         return $this->id;
-    }
-
-    /**
-     * @param int|null $id
-     */
-    public function setId(?int $id): void
-    {
-        $this->id = $id;
     }
 
     /**
@@ -205,21 +187,5 @@ class Client
     public function setRoles(?string $roles): void
     {
         $this->roles = $roles;
-    }
-
-    /**
-     * @return User
-     */
-    public function getUser()
-    {
-        return $this->user;
-    }
-
-    /**
-     * @param User $user
-     */
-    public function setUser($user): void
-    {
-        $this->user = $user;
     }
 }

@@ -30,26 +30,11 @@ class Brand
     private $name;
 
     /**
-     * @var Product
-     *
-     * @ORM\OneToMany(targetEntity="App\Entity\Product", mappedBy="brand")
-     */
-    private $product;
-
-    /**
      * @return int|null
      */
     public function getId(): ?int
     {
         return $this->id;
-    }
-
-    /**
-     * @param int|null $id
-     */
-    public function setId(?int $id): void
-    {
-        $this->id = $id;
     }
 
     /**
@@ -66,21 +51,5 @@ class Brand
     public function setName(?string $name): void
     {
         $this->name = $name;
-    }
-
-    /**
-     * @return Product
-     */
-    public function getProduct()
-    {
-        return $this->product;
-    }
-
-    /**
-     * @param Product $product
-     */
-    public function setProduct($product): void
-    {
-        $this->product = $product;
     }
 }

@@ -47,21 +47,21 @@ class User
     /**
      * @var DateTimeImmutable|null
      *
-     * @ORM\Column(type="datetime")
+     * @ORM\Column(type="datetime_immutable")
      */
     private $created_at;
 
     /**
      * @var DateTimeImmutable|null
      *
-     * @ORM\Column(type="datetime")
+     * @ORM\Column(type="datetime_immutable")
      */
     private $updated_at;
 
     /**
      * @var Client
      *
-     * @ORM\ManyToOne(targetEntity="Client", inversedBy="user")
+     * @ORM\ManyToOne(targetEntity="Client")
      * @ORM\JoinColumn(name="client_id", referencedColumnName="id", onDelete="CASCADE", nullable=false)
      */
     private $client;
@@ -83,14 +83,6 @@ class User
     public function getId(): ?int
     {
         return $this->id;
-    }
-
-    /**
-     * @param int|null $id
-     */
-    public function setId(?int $id): void
-    {
-        $this->id = $id;
     }
 
     /**
