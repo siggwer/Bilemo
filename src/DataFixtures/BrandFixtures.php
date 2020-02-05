@@ -13,18 +13,18 @@ use App\Entity\Brand;
  */
 class BrandFixtures extends Fixture
 {
-    const BRAND_REFERENCE = 'brandname';
+    public const BRAND_REFERENCE = 'brandname';
 
     /**
      * @param ObjectManager $manager
      */
     public function load(ObjectManager $manager)
     {
-        for ($i = 1; $i <= 100; $i++){
-        $brand = new Brand();
-        $brand ->setName('brand' .$i);
-        $this->setReference(self::BRAND_REFERENCE, (object)$brand);
-        $manager->persist($brand);
+        for ($i = 1; $i <= 10; $i++){
+            $brand = new Brand();
+            $brand ->setName('brand' .$i);
+            $this->addReference(self::BRAND_REFERENCE . $i);
+            $manager->persist($brand);
         }
 
         $manager->flush();

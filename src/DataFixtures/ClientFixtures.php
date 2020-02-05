@@ -23,12 +23,12 @@ class ClientFixtures extends Fixture
      */
     public function load(ObjectManager $manager)
     {
-        for ($i = 1; $i <= 100; $i++){
-        $client = new Client();
-        $client->setEmail('email@' . $i);
-        $client->setPassword('password');
-        $this->setReference(self::CLIENT_REFERENCE, $client);
-        $manager->persist($client);
+        for ($i = 1; $i <= 10; $i++){
+            $client = new Client();
+            $client->setEmail('email@' . $i);
+            $client->setPassword('password');
+            $this->setReference(self²::CLIENT_REFERENCE . $i);
+            $manager->persist($client);
         }
 
         $manager->flush();
