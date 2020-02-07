@@ -3,9 +3,8 @@
 namespace App\DataFixtures;
 
 use Doctrine\Common\DataFixtures\DependentFixtureInterface;
-use Doctrine\Common\Persistence\ObjectManager;
 use Doctrine\Bundle\FixturesBundle\Fixture;
-use App\DataFixtures\BrandFixtures;
+use Doctrine\Persistence\ObjectManager;
 use App\Entity\Product;
 use Exception;
 
@@ -17,13 +16,13 @@ use Exception;
 class ProductFixtures extends Fixture implements DependentFixtureInterface
 {
     /**
-     * @param ObjectManager $manager
-     * 
+     * @inheritDoc
+     *
      * @throws Exception
      */
     public function load(ObjectManager $manager)
     {
-        for ($i = 1; $i <= 100; $i++){
+        for ($i = 1; $i <= 10; $i++){
             $product = new Product();
             $product->setName('phone n' . $i);
             $product->setReference('ref' . $i);
@@ -45,5 +44,4 @@ class ProductFixtures extends Fixture implements DependentFixtureInterface
             BrandFixtures::class,
         );
     }
-
 }

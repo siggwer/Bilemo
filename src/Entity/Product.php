@@ -4,7 +4,6 @@ namespace App\Entity;
 
 use Symfony\Component\Validator\Constraints as Assert;
 use Hateoas\Configuration\Annotation as Hateoas;
-use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -16,9 +15,9 @@ use Doctrine\ORM\Mapping as ORM;
  *
  * @Hateoas\Relation(
  *     "read",
- *     href=@Hateoas\Route(
- *     "product_read",
- *     parameters = {"id" = "expr(object.getId())"}
+ *      href=@Hateoas\Route(
+ *          "product_read",
+ *          parameters = {"id" = "expr(object.getId())"}
  *      )
  * )
  */
@@ -52,12 +51,9 @@ class Product
     private $reference;
 
     /**
-     * @var Collection|Brand
+     * @var Brand
      *
      * @ORM\ManyToOne(targetEntity="App\Entity\Brand")
-     * @ORM\JoinColumn(name="brand_id", referencedColumnName="id", onDelete="CASCADE", nullable=false)
-     *
-     * @Assert\NotBlank(message="This value should not be blank")
      */
     private $brand;
 
@@ -121,17 +117,17 @@ class Product
     }
 
     /**
-     * @return Collection|Brand
+     * @return Brand
      */
-    public function getBrand()
+    public function getBrand(): Brand
     {
         return $this->brand;
     }
 
     /**
-     * @param Collection|Brand $brand
+     * @param Brand $brand
      */
-    public function setBrand($brand): void
+    public function setBrand(Brand $brand): void
     {
         $this->brand = $brand;
     }
@@ -155,7 +151,7 @@ class Product
     /**
      * @return float|null
      */
-    public function getprice(): ?float
+    public function getPrice(): ?float
     {
         return $this->price;
     }
@@ -163,7 +159,7 @@ class Product
     /**
      * @param float|null $price
      */
-    public function setprice(?float $price): void
+    public function setPrice(?float $price): void
     {
         $this->price = $price;
     }

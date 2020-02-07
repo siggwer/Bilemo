@@ -2,6 +2,7 @@
 
 namespace App\Entity;
 
+use Symfony\Component\Validator\Constraints as Assert;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -26,6 +27,8 @@ class Brand
      * @var string|null
      *
      * @ORM\Column(type="string", length=255)
+     *
+     * @Assert\NotBlank(message="This value should not be blank")
      */
     private $name;
 

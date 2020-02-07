@@ -13,7 +13,6 @@ use Exception;
  * @package App\Entity
  *
  * @ORM\Entity(repositoryClass="App\Repository\ClientRepository")
- * @method setClient(object $getReference)
  */
 class Client
 {

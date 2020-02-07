@@ -46,24 +46,21 @@ class ProductController extends AbstractController
     }
 
     /**
-     * @Route("/{id}", name="product_read", methods={"GET"})
+     * @Route("/{id}", name="product_read", methods={"GET"}, requirements={"id":"\d+"})
      *
      * @param Product $product
+     * @param SerializerInterface $serializer
      *
      * @return Response
      */
     public function read(
+        SerializerInterface $serializer,
         Product $product
     ): Response {
-//        return new Response(
-//                $product,
-//                'json'
-//        );
-        $data = $this->get('jms_serializer')->serialize($product, 'json');
-
-        $response = new Response($data);
-        $response->headers->set('Content-Type', 'application/json');
-
-        return $response;
+        return new Response(
+            $serializer->serialize($product,
+                'json'
+            ),
+            Response::HTTP_OK, []);
     }
 }

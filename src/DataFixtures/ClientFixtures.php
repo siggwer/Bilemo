@@ -2,19 +2,19 @@
 
 namespace App\DataFixtures;
 
-use Doctrine\Common\Persistence\ObjectManager;
 use Doctrine\Bundle\FixturesBundle\Fixture;
+use Doctrine\Persistence\ObjectManager;
 use App\Entity\Client;
 use Exception;
 
 /**
- * Class ClientFixturesFixtures
+ * Class ClientFixtures
  *
  * @package App\DataFixtures
  */
 class ClientFixtures extends Fixture
 {
-    const CLIENT_REFERENCE = 'client';
+    public const CLIENT_REFERENCE = 'client';
 
     /**
      * @param ObjectManager $manager
@@ -23,14 +23,15 @@ class ClientFixtures extends Fixture
      */
     public function load(ObjectManager $manager)
     {
-        for ($i = 1; $i <= 10; $i++){
+        for ($i = 1; $i <= 10; $i++) {
             $client = new Client();
-            $client->setEmail('email@' . $i);
+            $client->setEmail('email' . $i++ . '@email.fr');
             $client->setPassword('password');
-            $this->setReference(self²::CLIENT_REFERENCE . $i);
             $manager->persist($client);
         }
 
         $manager->flush();
+
+        $this->setReference(self::CLIENT_REFERENCE, $client);
     }
 }

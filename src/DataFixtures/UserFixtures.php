@@ -3,29 +3,26 @@
 namespace App\DataFixtures;
 
 use Doctrine\Common\DataFixtures\DependentFixtureInterface;
-use Doctrine\Common\Persistence\ObjectManager;
 use Doctrine\Bundle\FixturesBundle\Fixture;
+use Doctrine\Persistence\ObjectManager;
 use App\Entity\User;
-use Exception;
 
 /**
- * Class ProductFixtures
+ * Class UserFixtures
  *
  * @package App\DataFixtures
  */
 class UserFixtures extends Fixture implements DependentFixtureInterface
 {
     /**
-     * @param ObjectManager $manager
-     *
-     * @throws Exception
+     * @inheritDoc
      */
     public function load(ObjectManager $manager)
     {
         for ($i = 1; $i <= 10; $i++){
             $user = new User();
             $user->setName('username' . $i);
-            $user->setEmail('email@' . $i);
+            $user->setEmail('email' . $i++ . '@email.fr');
             $user->setClient($this->getReference(ClientFixtures::CLIENT_REFERENCE));
             $manager->persist($user);
         }
@@ -34,12 +31,12 @@ class UserFixtures extends Fixture implements DependentFixtureInterface
     }
 
     /**
-     * @inheritDoc
+     * @return array
      */
     public function getDependencies()
     {
         return array(
-           ClientFixtures::class
+            ClientFixtures::class,
         );
     }
 }
