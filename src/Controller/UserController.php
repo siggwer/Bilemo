@@ -11,7 +11,6 @@ use JMS\Serializer\SerializerInterface;
 use App\Repository\UserRepository;
 use App\Entity\User;
 
-
 /**
  * Class UserController
  *
@@ -79,18 +78,22 @@ class UserController extends AbstractController
         ValidatorInterface $validator
     ): Response
     {
-        $user = $serializer->deserialize($request->getContent(), User::class, "json");
+        $user = $serializer->deserialize($request->getContent(), User::class, 'json');
 
         $constraintViolation = $validator->validate($user);
 
         if($constraintViolation->count() > 0) {
-            return $this->json($constraintViolation, Response::HTTP_BAD_REQUEST);
+            return new Response($constraintViolation, Response::HTTP_BAD_REQUEST);
         }
 
         $this->getDoctrine()->getManager()->persist($user);
         $this->getDoctrine()->getManager()->flush();
 
-        return $this->json($user, Response::HTTP_CREATED);
+        return new Response(
+        $serializer->serialize($user,
+            'json'
+        ),
+        Response::HTTP_OK, []);
     }
 
     /**
@@ -112,20 +115,24 @@ class UserController extends AbstractController
         $user = $serializer->deserialize(
             $request->getContent(),
             User::class,
-            "json",
+            'json',
             [AbstractNormalizer::OBJECT_TO_POPULATE => $user]
         );
 
         $constraintViolation = $validator->validate($user);
 
         if($constraintViolation->count() > 0) {
-            return $this->json($constraintViolation, Response::HTTP_BAD_REQUEST);
+            return new Response($constraintViolation, Response::HTTP_BAD_REQUEST);
         }
 
         $this->getDoctrine()->getManager()->persist($user);
         $this->getDoctrine()->getManager()->flush();
 
-        return $this->json(null, Response::HTTP_NO_CONTENT);
+        return new Response(
+            $serializer->serialize($user,
+                'json'
+            ),
+            Response::HTTP_OK, []);
     }
 
     /**
@@ -139,6 +146,7 @@ class UserController extends AbstractController
         $this->getDoctrine()->getManager()->remove($user);
         $this->getDoctrine()->getManager()->flush();
 
-        return $this->json(null, Response::HTTP_NO_CONTENT);
+        return new Response(null, Response::HTTP_NO_CONTENT);
+
     }
 }
