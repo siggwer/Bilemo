@@ -5,6 +5,8 @@ namespace App\Entity;
 use Symfony\Component\Validator\Constraints as Assert;
 use Doctrine\ORM\Mapping as ORM;
 
+use Exception;
+
 /**
  * Class Brand
  *
@@ -12,17 +14,8 @@ use Doctrine\ORM\Mapping as ORM;
  *
  * @ORM\Entity(repositoryClass="App\Repository\BrandRepository")
  */
-class Brand
+class Brand extends AbstractEntity
 {
-    /**
-     * @var int|null
-     *
-     * @ORM\Id()
-     * @ORM\GeneratedValue()
-     * @ORM\Column(type="integer")
-     */
-    private $id;
-
     /**
      * @var string|null
      *
@@ -33,11 +26,13 @@ class Brand
     private $name;
 
     /**
-     * @return int|null
+     * Brand constructor.
+     *
+     * @throws Exception
      */
-    public function getId(): ?int
+    public function __construct()
     {
-        return $this->id;
+        parent::__construct();
     }
 
     /**

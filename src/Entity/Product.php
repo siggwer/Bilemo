@@ -4,7 +4,9 @@ namespace App\Entity;
 
 use Symfony\Component\Validator\Constraints as Assert;
 use Hateoas\Configuration\Annotation as Hateoas;
+use JMS\Serializer\Annotation as Serializer;
 use Doctrine\ORM\Mapping as ORM;
+use Exception;
 
 /**
  * Class Product
@@ -20,18 +22,10 @@ use Doctrine\ORM\Mapping as ORM;
  *          parameters = {"id" = "expr(object.getId())"}
  *      )
  * )
+ * @Serializer\ExclusionPolicy("all")
  */
-class Product
+class Product extends AbstractEntity
 {
-    /**
-     * @var int|null
-     *
-     * @ORM\Id()
-     * @ORM\GeneratedValue()
-     * @ORM\Column(type="integer")
-     */
-    private $id;
-
     /**
      * @var string|null
      *
@@ -77,11 +71,13 @@ class Product
     private $price;
 
     /**
-     * @return int|null
+     * Product constructor.
+     *
+     * @throws Exception
      */
-    public function getId(): ?int
+    public function __construct()
     {
-        return $this->id;
+        parent::__construct();
     }
 
     /**
