@@ -6,7 +6,6 @@ use Symfony\Component\Validator\Constraints as Assert;
 use Hateoas\Configuration\Annotation as Hateoas;
 use JMS\Serializer\Annotation as Serializer;
 use Doctrine\ORM\Mapping as ORM;
-use Exception;
 
 /**
  * Class Product
@@ -47,7 +46,7 @@ class Product extends AbstractEntity
     /**
      * @var Brand
      *
-     * @ORM\ManyToOne(targetEntity="App\Entity\Brand")
+     * @ORM\ManyToOne(targetEntity="App\Entity\Brand", cascade={"persist"})
      */
     private $brand;
 
@@ -69,16 +68,6 @@ class Product extends AbstractEntity
      * @Assert\Positive(message="This value should not be equal to 0 or negative")
      */
     private $price;
-
-    /**
-     * Product constructor.
-     *
-     * @throws Exception
-     */
-    public function __construct()
-    {
-        parent::__construct();
-    }
 
     /**
      * @return string|null

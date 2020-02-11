@@ -5,8 +5,6 @@ namespace App\Entity;
 use Symfony\Component\Validator\Constraints as Assert;
 use Doctrine\ORM\Mapping as ORM;
 
-use Exception;
-
 /**
  * Class Brand
  *
@@ -24,16 +22,6 @@ class Brand extends AbstractEntity
      * @Assert\NotBlank(message="This value should not be blank")
      */
     private $name;
-
-    /**
-     * Brand constructor.
-     *
-     * @throws Exception
-     */
-    public function __construct()
-    {
-        parent::__construct();
-    }
 
     /**
      * @return string|null

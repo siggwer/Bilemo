@@ -2,6 +2,7 @@
 
 namespace App\Entity;
 
+use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Validator\Constraints as Assert;
 use Hateoas\Configuration\Annotation as Hateoas;
 use JMS\Serializer\Annotation as Serializer;
@@ -25,7 +26,7 @@ use Exception;
  * )
  * @Serializer\ExclusionPolicy("all")
  */
-class User extends AbstractEntity
+class User extends AbstractEntity implements UserInterface
 {
 
     /**
@@ -64,9 +65,16 @@ class User extends AbstractEntity
     /**
      * @var Client
      *
-     * @ORM\ManyToOne(targetEntity="Client")
+     * @ORM\ManyToOne(targetEntity="Client", cascade={"persist"})
      */
     private $client;
+
+    /**
+     * @var array
+     *
+     * @ORM\Column(type="array")
+     */
+    private $roles;
 
     /**
      * User constructor.
@@ -158,5 +166,45 @@ class User extends AbstractEntity
     public function setClient(Client $client): void
     {
         $this->client = $client;
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function getRoles()
+    {
+        return $this->roles;
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function getPassword()
+    {
+        // TODO: Implement getPassword() method.
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function getSalt()
+    {
+        // TODO: Implement getSalt() method.
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function getUsername()
+    {
+        // TODO: Implement getUsername() method.
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function eraseCredentials()
+    {
+        // TODO: Implement eraseCredentials() method.
     }
 }

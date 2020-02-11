@@ -46,7 +46,7 @@ class ProductController extends AbstractController
     }
 
     /**
-     * @Route("/{id}", name="product_read", methods={"GET"}, requirements={"id":"\d+"})
+     * @Route("/{id}", name="product_read", methods={"GET"})
      *
      * @param Product $product
      * @param SerializerInterface $serializer
