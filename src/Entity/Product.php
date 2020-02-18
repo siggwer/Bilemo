@@ -4,7 +4,7 @@ namespace App\Entity;
 
 use Symfony\Component\Validator\Constraints as Assert;
 use Hateoas\Configuration\Annotation as Hateoas;
-use JMS\Serializer\Annotation as Jms;
+use JMS\Serializer\Annotation as JMS;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -60,7 +60,7 @@ class Product
      *
      * @ORM\ManyToOne(targetEntity="App\Entity\Brand")
      *
-     * @Jms\Exclude()
+     * @JMS\Exclude()
      */
     private $brand;
 
