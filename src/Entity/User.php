@@ -22,6 +22,21 @@ use Exception;
  *          parameters = {"id" = "expr(object.getId())"}
  *      )
  * )
+ *
+ * @Hateoas\Relation(
+ *     "update",
+ *      href=@Hateoas\Route(
+ *          "user_update",
+ *          parameters = {"id" = "expr(object.getId())"}
+ *      )
+ * )
+ * @Hateoas\Relation(
+ *     "delete",
+ *      href=@Hateoas\Route(
+ *          "user_delete",
+ *          parameters = {"id" = "expr(object.getId())"}
+ *      )
+ * )
  */
 class User
 {

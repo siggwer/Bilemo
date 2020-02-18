@@ -46,7 +46,7 @@ class ProductController extends AbstractController
     }
 
     /**
-     * @Route("/{id}", name="product_read", methods={"GET"}, requirements={"id":"\d+"})
+     * @Route("/{id}", name="product_read", methods={"GET"})
      *
      * @param Product $product
      * @param SerializerInterface $serializer
@@ -57,10 +57,12 @@ class ProductController extends AbstractController
         SerializerInterface $serializer,
         Product $product
     ): Response {
+        var_dump($product,$serializer );
+        exit();
         return new Response(
             $serializer->serialize($product,
                 'json'
             ),
-            Response::HTTP_OK, []);
+            Response::HTTP_OK, ['content-type' => 'application/json']);
     }
 }

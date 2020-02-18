@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
@@ -35,7 +36,7 @@ class UserController extends AbstractController
     ): Response {
         return new Response(
             $serializer->serialize($repository->findBy(
-                [],
+                ['client' => $this->getUser()],
                 ['name' => 'asc'],
                 10,
                 $request->query->get('page', 1) * 10 - 10
@@ -61,7 +62,7 @@ class UserController extends AbstractController
             $serializer->serialize($user,
                 'json'
             ),
-            Response::HTTP_OK, []);
+            Response::HTTP_OK, ['content-type' => 'application/json']);
     }
 
     /**
@@ -83,7 +84,7 @@ class UserController extends AbstractController
         $constraintViolation = $validator->validate($user);
 
         if($constraintViolation->count() > 0) {
-            return new Response($constraintViolation, Response::HTTP_BAD_REQUEST);
+            return new JsonResponse($constraintViolation, Response::HTTP_BAD_REQUEST);
         }
 
         $this->getDoctrine()->getManager()->persist($user);
@@ -93,7 +94,7 @@ class UserController extends AbstractController
         $serializer->serialize($user,
             'json'
         ),
-        Response::HTTP_OK, []);
+        Response::HTTP_OK, ['content-type' => 'application/json']);
     }
 
     /**
@@ -122,7 +123,7 @@ class UserController extends AbstractController
         $constraintViolation = $validator->validate($user);
 
         if($constraintViolation->count() > 0) {
-            return new Response($constraintViolation, Response::HTTP_BAD_REQUEST);
+            return new JsonResponse($constraintViolation, Response::HTTP_BAD_REQUEST);
         }
 
         $this->getDoctrine()->getManager()->persist($user);
@@ -132,7 +133,7 @@ class UserController extends AbstractController
             $serializer->serialize($user,
                 'json'
             ),
-            Response::HTTP_OK, []);
+            Response::HTTP_OK, ['content-type' => 'application/json']);
     }
 
     /**

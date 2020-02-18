@@ -4,6 +4,7 @@ namespace App\Entity;
 
 use Symfony\Component\Validator\Constraints as Assert;
 use Hateoas\Configuration\Annotation as Hateoas;
+use JMS\Serializer\Annotation as Jms;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -19,6 +20,10 @@ use Doctrine\ORM\Mapping as ORM;
  *          "product_read",
  *          parameters = {"id" = "expr(object.getId())"}
  *      )
+ * )
+ * @Hateoas\Relation(
+ *     "brand",
+ *      embedded="expr(object.getBrand())"
  * )
  */
 class Product
@@ -54,6 +59,8 @@ class Product
      * @var Brand
      *
      * @ORM\ManyToOne(targetEntity="App\Entity\Brand")
+     *
+     * @Jms\Exclude()
      */
     private $brand;
 
