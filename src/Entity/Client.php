@@ -2,6 +2,7 @@
 
 namespace App\Entity;
 
+use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Validator\Constraints as Assert;
 use Doctrine\ORM\Mapping as ORM;
 use DateTimeImmutable;
@@ -14,7 +15,7 @@ use Exception;
  *
  * @ORM\Entity(repositoryClass="App\Repository\ClientRepository")
  */
-class Client extends AbstractEntity
+class Client extends AbstractEntity implements UserInterface
 {
     /**
      * @var string|null
@@ -61,7 +62,7 @@ class Client extends AbstractEntity
     /**
      * @var string|null
      *
-     * @ORM\Column(type="array")
+     * @ORM\Column(type="json")
      */
     private $roles = 'ROLE_USER';
 
@@ -70,8 +71,15 @@ class Client extends AbstractEntity
      *
      * @throws Exception
      */
-    public function __construct()
+    public function __construct(
+        string $name,
+        string $email,
+        string $plainPassword
+    )
     {
+        $this->name = $name;
+        $this->email = $email;
+        $this->plainPassword = $plainPassword;
         $this->created_at = new DateTimeImmutable();
         $this->updated_at = new DateTimeImmutable();
         parent::__construct();
@@ -158,11 +166,14 @@ class Client extends AbstractEntity
     }
 
     /**
-     * @return string|null
+     * @return array|string|null
      */
-    public function getRoles(): ?string
+    public function getRoles()
     {
-        return $this->roles;
+        #return $this->roles;
+        $roles = $this->roles;
+
+        return array_unique((array)$roles);
     }
 
     /**
@@ -171,5 +182,29 @@ class Client extends AbstractEntity
     public function setRoles(?string $roles): void
     {
         $this->roles = $roles;
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function getSalt()
+    {
+        // TODO: Implement getSalt() method.
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function getUsername()
+    {
+        return $this->email;
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function eraseCredentials()
+    {
+        // TODO: Implement eraseCredentials() method.
     }
 }

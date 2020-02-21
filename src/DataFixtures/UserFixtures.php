@@ -19,14 +19,15 @@ class UserFixtures extends Fixture implements DependentFixtureInterface
      */
     public function load(ObjectManager $manager)
     {
-        for ($i = 1; $i <= 10; $i++){
-            $user = new User();
-            $user->setName('username' . $i);
-            $user->setEmail('email' . $i++ . '@email.fr');
-            $user->setClient($this->getReference(ClientFixtures::CLIENT_REFERENCE));
-            $manager->persist($user);
+        for ($j = 1; $j <= 10; $j++) {
+            for ($i = 1; $i <= 10; $i++) {
+                $user = new User();
+                $user->setName('username' . $i);
+                $user->setEmail('email' . $i++ . '@email.fr');
+                $user->setClient($this->getReference(ClientFixtures::CLIENT_REFERENCE . '_'. $j));
+                $manager->persist($user);
+            }
         }
-
         $manager->flush();
     }
 

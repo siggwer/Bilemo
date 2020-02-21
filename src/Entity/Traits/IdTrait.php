@@ -2,11 +2,11 @@
 
 namespace App\Entity\Traits;
 
-use JMS\Serializer\Annotation as Serializer;
+use JMS\Serializer\Annotation as SERIALIZER;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * Trait
+ * Trait IdTrait
  *
  * @package App\Entity\Traits
  */
@@ -20,14 +20,16 @@ trait IdTrait
      * @ORM\GeneratedValue(strategy="CUSTOM")
      * @ORM\CustomIdGenerator(class="Ramsey\Uuid\Doctrine\UuidGenerator")
      *
-     * @Serializer\Type("uuid")
+     * @SERIALIZER\Type("uuid")
      */
     protected $id;
 
     /**
+     * @param string
+     *
      * @return string
      */
-    public function getId(): string
+    public function getId()
     {
         return $this->id;
     }

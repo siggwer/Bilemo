@@ -19,6 +19,36 @@ class ProductRepository extends ServiceEntityRepository
         parent::__construct($registry, Product::class);
     }
 
+    /**
+     * @param $param
+     *
+     * @return mixed
+     */
+    public function getPaginatedPhones($param)
+    {
+        return $this->createQueryBuilder('p')
+            ->orderBy('p.price', 'ASC')
+            ->setCacheable(true)
+            ->getQuery()
+            ->getResult()
+            ;
+    }
+
+    /**
+     * @param $id
+     *
+     * @return mixed
+     */
+    public function findById($id)
+    {
+        return $this->createQueryBuilder('p')
+            ->where('p.id = :id')
+            ->setParameter('id', $id)
+            ->setCacheable(true)
+            ->getQuery()
+            ->getResult();
+    }
+
     // /**
     //  * @return Product[] Returns an array of Product objects
     //  */

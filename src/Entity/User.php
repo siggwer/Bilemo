@@ -2,10 +2,9 @@
 
 namespace App\Entity;
 
-use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Validator\Constraints as Assert;
 use Hateoas\Configuration\Annotation as Hateoas;
-use JMS\Serializer\Annotation as Serializer;
+use JMS\SERIALIZER\Annotation as SERIALIZER;
 use Doctrine\ORM\Mapping as ORM;
 use DateTimeImmutable;
 use Exception;
@@ -24,17 +23,33 @@ use Exception;
  *          parameters = {"id" = "expr(object.getId())"}
  *      )
  * )
- * @Serializer\ExclusionPolicy("all")
+ * @Hateoas\Relation(
+ *     "update",
+ *      href=@Hateoas\Route(
+ *          "user_update",
+ *          parameters = {"id" = "expr(object.getId())"}
+ *      )
+ * )
+ * @Hateoas\Relation(
+ *     "delete",
+ *      href=@Hateoas\Route(
+ *          "user_delete",
+ *          parameters = {"id" = "expr(object.getId())"}
+ *      )
+ * )
+ * @SERIALIZER\ExclusionPolicy("all")
  */
-class User extends AbstractEntity implements UserInterface
+class User extends AbstractEntity
 {
-
     /**
      * @var string|null
      *
      * @ORM\Column(type="string", length=255)
      *
      * @Assert\NotBlank(message="This value should not be blank")
+     *
+     * @SERIALIZER\Expose()
+     * @SERIALIZER\Groups({"detail_user", "list_user"})
      */
     private $name;
 
@@ -45,6 +60,9 @@ class User extends AbstractEntity implements UserInterface
      *
      * @Assert\NotBlank(message="This value should not be blank")
      * @Assert\Email(message="Email address not valid")
+     *
+     * @SERIALIZER\Expose()
+     * @SERIALIZER\Groups({"detail_user", "list_user"})
      */
     private $email;
 
@@ -52,6 +70,9 @@ class User extends AbstractEntity implements UserInterface
      * @var DateTimeImmutable|null
      *
      * @ORM\Column(type="datetime_immutable")
+     *
+     * @SERIALIZER\Expose()
+     * @SERIALIZER\Groups({"detail_user", "list_user"})
      */
     private $created_at;
 
@@ -59,6 +80,9 @@ class User extends AbstractEntity implements UserInterface
      * @var DateTimeImmutable|null
      *
      * @ORM\Column(type="datetime_immutable")
+     *
+     * @SERIALIZER\Expose()
+     * @SERIALIZER\Groups({"detail_user", "list_user"})
      */
     private $updated_at;
 
@@ -68,13 +92,6 @@ class User extends AbstractEntity implements UserInterface
      * @ORM\ManyToOne(targetEntity="Client", cascade={"persist"})
      */
     private $client;
-
-    /**
-     * @var array
-     *
-     * @ORM\Column(type="array")
-     */
-    private $roles;
 
     /**
      * User constructor.
@@ -166,45 +183,5 @@ class User extends AbstractEntity implements UserInterface
     public function setClient(Client $client): void
     {
         $this->client = $client;
-    }
-
-    /**
-     * @inheritDoc
-     */
-    public function getRoles()
-    {
-        return $this->roles;
-    }
-
-    /**
-     * @inheritDoc
-     */
-    public function getPassword()
-    {
-        // TODO: Implement getPassword() method.
-    }
-
-    /**
-     * @inheritDoc
-     */
-    public function getSalt()
-    {
-        // TODO: Implement getSalt() method.
-    }
-
-    /**
-     * @inheritDoc
-     */
-    public function getUsername()
-    {
-        // TODO: Implement getUsername() method.
-    }
-
-    /**
-     * @inheritDoc
-     */
-    public function eraseCredentials()
-    {
-        // TODO: Implement eraseCredentials() method.
     }
 }

@@ -23,12 +23,10 @@ class BrandFixtures extends Fixture
         for ($i = 1; $i <= 10; $i++){
             $brand = new Brand();
             $brand ->setName('brand' . $i);
+            $this->setReference(self::BRAND_REFERENCE . '_' . $i, $brand);
             $manager->persist($brand);
         }
 
         $manager->flush();
-
-        $this->setReference(self::BRAND_REFERENCE, $brand);
-
     }
 }
