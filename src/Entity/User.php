@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use Symfony\Component\Validator\Constraints as Assert;
+use Hateoas\Configuration\Annotation as Hateoas;
 use Doctrine\ORM\Mapping as ORM;
 use DateTimeImmutable;
 use Exception;
@@ -13,12 +14,33 @@ use Exception;
  * @package App\Entity
  *
  * @ORM\Entity(repositoryClass="App\Repository\UserRepository")
+ *
+ * @Hateoas\Relation(
+ *     "read",
+ *      href=@Hateoas\Route(
+ *          "user_read",
+ *          parameters = {"id" = "expr(object.getId())"}
+ *      )
+ * )
+ *
+ * @Hateoas\Relation(
+ *     "update",
+ *      href=@Hateoas\Route(
+ *          "user_update",
+ *          parameters = {"id" = "expr(object.getId())"}
+ *      )
+ * )
+ * @Hateoas\Relation(
+ *     "delete",
+ *      href=@Hateoas\Route(
+ *          "user_delete",
+ *          parameters = {"id" = "expr(object.getId())"}
+ *      )
+ * )
  */
 class User
 {
     /**
-     * @var int|null
-     *
      * @ORM\Id()
      * @ORM\GeneratedValue()
      * @ORM\Column(type="integer")
@@ -30,7 +52,7 @@ class User
      *
      * @ORM\Column(type="string", length=255)
      *
-     * @Assert\NotBlank()
+     * @Assert\NotBlank(message="This value should not be blank")
      */
     private $name;
 
@@ -62,7 +84,6 @@ class User
      * @var Client
      *
      * @ORM\ManyToOne(targetEntity="Client")
-     * @ORM\JoinColumn(name="client_id", referencedColumnName="id", onDelete="CASCADE", nullable=false)
      */
     private $client;
 

@@ -2,7 +2,9 @@
 
 namespace App\Entity;
 
-use Doctrine\Common\Collections\Collection;
+use Symfony\Component\Validator\Constraints as Assert;
+use Hateoas\Configuration\Annotation as Hateoas;
+use JMS\Serializer\Annotation as JMS;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -11,6 +13,18 @@ use Doctrine\ORM\Mapping as ORM;
  * @package App\Entity
  *
  * @ORM\Entity(repositoryClass="App\Repository\ProductRepository")
+ *
+ * @Hateoas\Relation(
+ *     "read",
+ *      href=@Hateoas\Route(
+ *          "product_read",
+ *          parameters = {"id" = "expr(object.getId())"}
+ *      )
+ * )
+ * @Hateoas\Relation(
+ *     "brand",
+ *      embedded="expr(object.getBrand())"
+ * )
  */
 class Product
 {
@@ -27,6 +41,8 @@ class Product
      * @var string|null
      *
      * @ORM\Column(type="string")
+     *
+     * @Assert\NotBlank(message="This value should not be blank")
      */
     private $name;
 
@@ -34,14 +50,17 @@ class Product
      * @var string|null
      *
      * @ORM\Column(type="string")
+     *
+     * @Assert\NotBlank(message="This value should not be blank")
      */
     private $reference;
 
     /**
-     * @var Collection|Brand
+     * @var Brand
      *
      * @ORM\ManyToOne(targetEntity="App\Entity\Brand")
-     * @ORM\JoinColumn(name="brand_id", referencedColumnName="id", onDelete="CASCADE", nullable=false)
+     *
+     * @JMS\Exclude()
      */
     private $brand;
 
@@ -49,6 +68,8 @@ class Product
      * @var string|null
      *
      * @ORM\Column(type="text")
+     *
+     * @Assert\NotBlank(message="This value should not be blank")
      */
     private $description;
 
@@ -56,6 +77,9 @@ class Product
      * @var float|null
      *
      * @ORM\Column(type="decimal", precision=32, scale=2)
+     *
+     * @Assert\NotBlank(message="This value should not be blank")
+     * @Assert\Positive(message="This value should not be equal to 0 or negative")
      */
     private $price;
 
@@ -100,17 +124,17 @@ class Product
     }
 
     /**
-     * @return Collection|Brand
+     * @return Brand
      */
-    public function getBrand()
+    public function getBrand(): Brand
     {
         return $this->brand;
     }
 
     /**
-     * @param Collection|Brand $brand
+     * @param Brand $brand
      */
-    public function setBrand($brand): void
+    public function setBrand(Brand $brand): void
     {
         $this->brand = $brand;
     }
@@ -134,7 +158,7 @@ class Product
     /**
      * @return float|null
      */
-    public function getprice(): ?float
+    public function getPrice(): ?float
     {
         return $this->price;
     }
@@ -142,7 +166,7 @@ class Product
     /**
      * @param float|null $price
      */
-    public function setprice(?float $price): void
+    public function setPrice(?float $price): void
     {
         $this->price = $price;
     }

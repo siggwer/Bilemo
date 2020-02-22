@@ -3,12 +3,11 @@
 namespace App\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\Validator\Validator\ValidatorInterface;
-use Symfony\Component\Serializer\SerializerInterface;
-use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
+use JMS\Serializer\SerializerInterface;
+use App\Repository\ProductRepository;
 use App\Entity\Product;
 
 /**
@@ -16,48 +15,52 @@ use App\Entity\Product;
  *
  * @package App\Controller
  *
- * @Route("/product")
+ * @Route("/products")
  */
 class ProductController extends AbstractController
 {
     /**
-     * @Route("/{id}", name="product_read")
+     * @Route(name="product_listing", methods={"GET"})
      *
-     * @param Product $product
+     * @param Request $request
+     * @param ProductRepository $repository
+     * @param SerializerInterface $serializer
      *
-     * @return JsonResponse
+     * @return Response
      */
-    public function read(Product $product): JsonResponse
-    {
-        return $this->json($product);
+    public function listing(
+        Request $request,
+        ProductRepository $repository,
+        SerializerInterface $serializer
+    ): Response {
+        return new Response(
+            $serializer->serialize($repository->findBy(
+                [],
+                ['price' => 'asc'],
+                10,
+                $request->query->get('page', 1) * 10 - 10
+            ), 'json'),
+            Response::HTTP_OK,
+            ['content-type' => 'application/json']
+        );
     }
 
     /**
-     * @Route(name="product_create", methods={"POST"})
+     * @Route("/{id}", name="product_read", methods={"GET"})
      *
-     * @param Request $request
+     * @param Product $product
      * @param SerializerInterface $serializer
-     * @param ValidatorInterface $validator
      *
-     * @return JsonResponse
+     * @return Response
      */
-    public function create(
-        Request $request,
+    public function read(
         SerializerInterface $serializer,
-        ValidatorInterface $validator
-    ): JsonResponse
-    {
-        $product = $serializer->deserialize($request->getContent(), Product::class, "json");
-
-        $constraintViolation = $validator->validate($product);
-
-        if($constraintViolation->count() > 0) {
-            return $this->json($constraintViolation, Response::HTTP_BAD_REQUEST);
-        }
-
-        $this->getDoctrine()->getManager()->persist($product);
-        $this->getDoctrine()->getManager()->flush();
-
-        return $this->json($product, Response::HTTP_CREATED);
+        Product $product
+    ): Response {
+        return new Response(
+            $serializer->serialize($product,
+                'json'
+            ),
+            Response::HTTP_OK, ['content-type' => 'application/json']);
     }
 }

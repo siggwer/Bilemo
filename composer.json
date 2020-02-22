@@ -6,27 +6,21 @@
         "ext-ctype": "*",
         "ext-iconv": "*",
         "doctrine/annotations": "^1.8",
-        "doctrine/doctrine-bundle": "1.12",
-        "doctrine/persistence": "^1.3",
-        "gedmo/doctrine-extensions": "^2.4",
+        "jms/serializer-bundle": "^3.5",
         "sensio/framework-extra-bundle": "^5.5",
         "symfony/console": "4.4.*",
         "symfony/dotenv": "4.4.*",
         "symfony/flex": "^1.3.1",
         "symfony/framework-bundle": "4.4.*",
         "symfony/orm-pack": "^1.0",
-        "symfony/serializer": "4.4.*",
         "symfony/validator": "4.4.*",
         "symfony/yaml": "4.4.*",
-        "trappar/alice-generator-bundle": "^2.0"
+        "willdurand/hateoas-bundle": "^2.1"
     },
     "require-dev": {
-        "hautelook/alice-bundle": "2.5.1",
         "dama/doctrine-test-bundle": "^6.3",
-        "phpunit/php-code-coverage": "^7.0",
-        "phpunit/phpunit": "8",
         "symfony/maker-bundle": "^1.14",
-        "symfony/phpunit-bridge": "^5.0"
+        "symfony/test-pack": "^1.0"
     },
     "config": {
         "preferred-install": {
@@ -57,7 +51,7 @@
             "php ./bin/console d:d:d --force --if-exists",
             "php ./bin/console d:d:c",
             "php ./bin/console d:s:u -f",
-            "php ./bin/console h:f:l -n"
+            "php ./bin/console d:f:l -n"
         ],
         "auto-scripts": {
             "cache:clear": "symfony-cmd",

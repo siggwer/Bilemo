@@ -47,7 +47,7 @@ class Client
     /**
      * @var string|null
      *
-     * @Assert\NotBlank
+     * @Assert\NotBlank(message="This value should not be blank")
      *
      * @Assert\Length(min=6)
      */
