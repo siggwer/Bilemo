@@ -13,7 +13,9 @@ use Nelmio\ApiDocBundle\Annotation\Model;
 use JMS\Serializer\SerializerInterface;
 use App\Repository\UserRepository;
 use Swagger\Annotations as SWG;
+use DateTimeImmutable;
 use App\Entity\User;
+use Exception;
 
 /**
  * Class UserController
@@ -31,18 +33,6 @@ class UserController extends AbstractController
      *     response="200",
      *     description="Return the list of all users.",
      *     @SWG\Schema(ref=@Model(type=App\Entity\User::class, groups={"list_user"}))
-     * )
-     *
-     * @SWG\Response(
-     *     response="404",
-     *     description="No user found, check your parameters."
-     * )
-     *
-     * @SWG\Parameter(
-     *     name="id",
-     *     in="path",
-     *     type="string",
-     *     description="Id User"
      * )
      *
      * @SWG\Tag(name="User")
@@ -83,6 +73,11 @@ class UserController extends AbstractController
      *     description="No user found, check your parameters."
      * )
      *
+     *  * @SWG\Response(
+     *     response="403",
+     *     description="Acces denied"
+     * )
+     *
      * @SWG\Parameter(
      *     name="id",
      *     in="path",
@@ -101,28 +96,26 @@ class UserController extends AbstractController
      */
     public function read(
         SerializerInterface $serializer,
-        UserRepository $userRepository,
-        Request $request
+        Request $request,
+        User $user
     ): Response {
-        $user = $request->get('id');
+
         $this->denyAccessUnlessGranted('item', $user);
 
         return new Response(
-            $serializer->serialize($userRepository->findById($request->get(
-                'id')
-            ), 'json'),
+            $serializer->serialize($user,'json'),
             Response::HTTP_OK,
             ['content-type' => 'application/json']
         );
     }
 
     /**
-     * @Route(name="user_create", methods={"POST"})
+     *  @Route(name="user_create", methods={"POST"})
      *
      * @SWG\Response(
      *     response="201",
      *     description="A new user created.",
-     *     @SWG\Schema(ref=@Model(type=App\Entity\User::class, groups={"add_user"}))
+     *      @SWG\Schema(ref=@Model(type=App\Entity\User::class, groups={"detail_user"}))
      * )
      *
      * @SWG\Response(
@@ -131,17 +124,11 @@ class UserController extends AbstractController
      * )
      *
      * @SWG\Parameter(
-     *     name="id",
-     *     in="path",
-     *     type="string",
-     *     description="Id Client"
-     * )
-     *
-     * @SWG\Parameter(
-     *     name="id",
-     *     in="path",
-     *     type="string",
-     *     description="Id user."
+     *     name="body",
+     *     in="body",
+     *     type="array",
+     *     description="User data",
+     *     schema=@SWG\Schema(ref=@Model(type=App\Entity\User::class, groups={"write_user"}))
      * )
      *
      * @SWG\Tag(name="User")
@@ -152,6 +139,7 @@ class UserController extends AbstractController
      * @param ValidatorInterface $validator
      * @param Request $request
      * @return Response
+     * @throws Exception
      */
     public function create(
         SerializerInterface $serializer,
@@ -159,14 +147,20 @@ class UserController extends AbstractController
         Request $request
     ): Response
     {
-        $user = $serializer->deserialize($request->getContent(), User::class, 'json');
+        $user = $serializer->deserialize(
+            $request->getContent(),
+            User::class,
+            'json'
+        );
 
+        $user->init();
         $constraintViolation = $validator->validate($user);
 
         if($constraintViolation->count() > 0) {
             return new JsonResponse($constraintViolation, Response::HTTP_BAD_REQUEST);
         }
 
+        $user->setClient($this->getUser());
         $this->getDoctrine()->getManager()->persist($user);
         $this->getDoctrine()->getManager()->flush();
 
@@ -182,8 +176,7 @@ class UserController extends AbstractController
      *
      * @SWG\Response(
      *     response="201",
-     *     description="Update user.",
-     *     @SWG\Schema(ref=@Model(type=App\Entity\User::class, groups={"update_user"}))
+     *     description="Update user."
      * )
      *
      * @SWG\Response(
@@ -192,10 +185,11 @@ class UserController extends AbstractController
      * )
      *
      * @SWG\Parameter(
-     *     name="id",
-     *     in="path",
-     *     type="string",
-     *     description="Id Client"
+     *     name="body",
+     *     in="body",
+     *     type="array",
+     *     description="User data",
+     *     schema=@SWG\Schema(ref=@Model(type=App\Entity\User::class, groups={"write_user"}))
      * )
      *
      * @SWG\Parameter(
@@ -209,11 +203,12 @@ class UserController extends AbstractController
      *
      * @Security(name="Bearer")
      *
+     * @param User $user
+     * @param Request $request
      * @param SerializerInterface $serializer
      * @param ValidatorInterface $validator
-     * @param UserRepository $userRepository
-     * @param Request $request
      * @return Response
+     * @throws Exception
      */
     public function update(
         User $user,
@@ -222,16 +217,18 @@ class UserController extends AbstractController
         ValidatorInterface $validator
     ): Response
     {
-        var_dump($user);
-        exit;
-        $this->denyAccessUnlessGranted('item', $request->get('id'));
-        $user = $serializer->deserialize(
+
+        $this->denyAccessUnlessGranted('item', $user);
+
+        $newUser = $serializer->deserialize(
             $request->getContent(),
             User::class,
-            'json',
-            [AbstractNormalizer::OBJECT_TO_POPULATE => $user]
+            'json'
         );
 
+        $user->setName($newUser->getName());
+        $user->setEmail($newUser->getEmail());
+        $user->setUpdatedAt(new DateTimeImmutable(now()));
 
         $constraintViolation = $validator->validate($user);
 
@@ -254,20 +251,12 @@ class UserController extends AbstractController
      *
      * @SWG\Response(
      *     response="204",
-     *     description="User deleted.",
-     *     @SWG\Schema(ref=@Model(type=App\Entity\User::class, groups={"delete_user"}))
+     *     description="User deleted."
      * )
      *
      * @SWG\Response(
      *     response="404",
      *     description="No user found, check your parameters."
-     * )
-     *
-     * @SWG\Parameter(
-     *     name="id",
-     *     in="path",
-     *     type="string",
-     *     description="Id Client"
      * )
      *
      * @SWG\Parameter(
@@ -285,7 +274,7 @@ class UserController extends AbstractController
      */
     public function delete(User $user): Response
     {
-        $this->denyAccessUnlessGranted('item');
+        $this->denyAccessUnlessGranted('item', $user);
         $this->getDoctrine()->getManager()->remove($user);
         $this->getDoctrine()->getManager()->flush();
 

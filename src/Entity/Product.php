@@ -4,7 +4,7 @@ namespace App\Entity;
 
 use Symfony\Component\Validator\Constraints as Assert;
 use Hateoas\Configuration\Annotation as Hateoas;
-use JMS\SERIALIZER\Annotation as SERIALIZER;
+use JMS\Serializer\Annotation as Serializer;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -26,7 +26,7 @@ use Doctrine\ORM\Mapping as ORM;
  *      embedded="expr(object.getBrand())"
  * )
  *
- * @SERIALIZER\ExclusionPolicy("all")
+ * @Serializer\ExclusionPolicy("all")
  */
 class Product extends AbstractEntity
 {
@@ -37,8 +37,8 @@ class Product extends AbstractEntity
      *
      * @Assert\NotBlank(message="This value should not be blank")
      *
-     * @SERIALIZER\Expose()
-     * @SERIALIZER\Groups({"detail_product", "list_product"})
+     * @Serializer\Expose()
+     * @Serializer\Groups({"detail_product", "list_product"})
      */
     private $name;
 
@@ -49,8 +49,8 @@ class Product extends AbstractEntity
      *
      * @Assert\NotBlank(message="This value should not be blank")
      *
-     * @SERIALIZER\Expose()
-     * @SERIALIZER\Groups({"detail_product", "list_product"})
+     * @Serializer\Expose()
+     * @Serializer\Groups({"detail_product", "list_product"})
      */
     private $reference;
 
@@ -68,8 +68,8 @@ class Product extends AbstractEntity
      *
      * @Assert\NotBlank(message="This value should not be blank")
      *
-     * @SERIALIZER\Expose()
-     * @SERIALIZER\Groups({"detail_product", "list_product"})
+     * @Serializer\Expose()
+     * @Serializer\Groups({"detail_product", "list_product"})
      */
     private $description;
 
@@ -81,8 +81,8 @@ class Product extends AbstractEntity
      * @Assert\NotBlank(message="This value should not be blank")
      * @Assert\Positive(message="This value should not be equal to 0 or negative")
      *
-     * @SERIALIZER\Expose()
-     * @SERIALIZER\Groups({"detail_product", "list_product"})
+     * @Serializer\Expose()
+     * @Serializer\Groups({"detail_product", "list_product"})
      */
     private $price;
 

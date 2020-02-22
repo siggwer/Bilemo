@@ -24,7 +24,7 @@ class UserVoter extends Voter
         if (!array($attribute, [self::ITEM])){
             return false;
         }
-        if (!$subject instanceof Client) {
+        if (!$subject instanceof User) {
             return false;
         }
 

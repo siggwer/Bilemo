@@ -4,7 +4,7 @@ namespace App\Entity;
 
 use Symfony\Component\Validator\Constraints as Assert;
 use Hateoas\Configuration\Annotation as Hateoas;
-use JMS\SERIALIZER\Annotation as SERIALIZER;
+use JMS\Serializer\Annotation as Serializer;
 use Doctrine\ORM\Mapping as ORM;
 use DateTimeImmutable;
 use Exception;
@@ -37,7 +37,7 @@ use Exception;
  *          parameters = {"id" = "expr(object.getId())"}
  *      )
  * )
- * @SERIALIZER\ExclusionPolicy("all")
+ * @Serializer\ExclusionPolicy("all")
  */
 class User extends AbstractEntity
 {
@@ -48,8 +48,8 @@ class User extends AbstractEntity
      *
      * @Assert\NotBlank(message="This value should not be blank")
      *
-     * @SERIALIZER\Expose()
-     * @SERIALIZER\Groups({"detail_user", "list_user"})
+     * @Serializer\Expose()
+     * @Serializer\Groups({"write_user", "list_user"})
      */
     private $name;
 
@@ -61,8 +61,8 @@ class User extends AbstractEntity
      * @Assert\NotBlank(message="This value should not be blank")
      * @Assert\Email(message="Email address not valid")
      *
-     * @SERIALIZER\Expose()
-     * @SERIALIZER\Groups({"detail_user", "list_user"})
+     * @Serializer\Expose()
+     * @Serializer\Groups({"write_user", "list_user"})
      */
     private $email;
 
@@ -71,8 +71,8 @@ class User extends AbstractEntity
      *
      * @ORM\Column(type="datetime_immutable")
      *
-     * @SERIALIZER\Expose()
-     * @SERIALIZER\Groups({"detail_user", "list_user"})
+     * @Serializer\Expose()
+     * @Serializer\Groups({"detail_user", "list_user"})
      */
     private $created_at;
 
@@ -81,8 +81,8 @@ class User extends AbstractEntity
      *
      * @ORM\Column(type="datetime_immutable")
      *
-     * @SERIALIZER\Expose()
-     * @SERIALIZER\Groups({"detail_user", "list_user"})
+     * @Serializer\Expose()
+     * @Serializer\Groups({"detail_user", "list_user"})
      */
     private $updated_at;
 
@@ -94,15 +94,12 @@ class User extends AbstractEntity
     private $client;
 
     /**
-     * User constructor.
-     *
      * @throws Exception
      */
-    public function __construct()
+    public function init()
     {
         $this->created_at = new DateTimeImmutable();
         $this->updated_at = new DateTimeImmutable();
-        parent::__construct();
     }
 
     /**

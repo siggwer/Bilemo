@@ -23,7 +23,7 @@ class UserFixtures extends Fixture implements DependentFixtureInterface
             for ($i = 1; $i <= 10; $i++) {
                 $user = new User();
                 $user->setName('username' . $i);
-                $user->setEmail('email' . $i++ . '@email.fr');
+                $user->setEmail('email' . (($j - 1)* 10 + $i). '@email.fr');
                 $user->setClient($this->getReference(ClientFixtures::CLIENT_REFERENCE . '_'. $j));
                 $manager->persist($user);
             }

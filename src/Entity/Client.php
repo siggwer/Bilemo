@@ -71,15 +71,8 @@ class Client extends AbstractEntity implements UserInterface
      *
      * @throws Exception
      */
-    public function __construct(
-        string $name,
-        string $email,
-        string $plainPassword
-    )
+    public function __construct()
     {
-        $this->name = $name;
-        $this->email = $email;
-        $this->plainPassword = $plainPassword;
         $this->created_at = new DateTimeImmutable();
         $this->updated_at = new DateTimeImmutable();
         parent::__construct();

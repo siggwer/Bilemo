@@ -447,6 +447,12 @@
             "./config/packages/security.yaml"
         ]
     },
+    "symfony/serializer": {
+        "version": "v4.4.4"
+    },
+    "symfony/serializer-pack": {
+        "version": "v1.0.2"
+    },
     "symfony/service-contracts": {
         "version": "v2.0.1"
     },

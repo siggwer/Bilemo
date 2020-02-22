@@ -64,9 +64,9 @@ class ClientTest extends TestCase
      */
     public function testGetPassword()
     {
-        $this->client->setPlainPassword('password');
+        $this->client->setPlainPassword('sfJDLKSmdlfsmdlfjlmskDFLMsdjflmSDFLMlm');
         $result = $this->client->getPlainPassword();
-        $this->assertEquals('password', $result);
+        $this->assertEquals('sfJDLKSmdlfsmdlfjlmskDFLMsdjflmSDFLMlm', $result);
     }
 
     /**

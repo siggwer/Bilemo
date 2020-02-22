@@ -30,18 +30,6 @@ class ProductController extends AbstractController
      *     @SWG\Schema(ref=@Model(type=App\Entity\Product::class, groups={"list_product"}))
      * )
      *
-     * @SWG\Response(
-     *     response="404",
-     *     description="No productfound, check your parameters."
-     * )
-     *
-     * @SWG\Parameter(
-     *     name="id",
-     *     in="path",
-     *     type="string",
-     *     description="Id Product"
-     * )
-     *
      * @SWG\Tag(name="Product")
      *
      * @Security(name="Bearer")
@@ -73,18 +61,6 @@ class ProductController extends AbstractController
      *     response="200",
      *     description="Return the list of all products.",
      *     @SWG\Schema(ref=@Model(type=App\Entity\Product::class, groups={"detail_product"}))
-     * )
-     *
-     * @SWG\Response(
-     *     response="404",
-     *     description="No productfound, check your parameters."
-     * )
-     *
-     * @SWG\Parameter(
-     *     name="id",
-     *     in="path",
-     *     type="string",
-     *     description="Id Product"
      * )
      *
      * @SWG\Tag(name="Product")
