@@ -39,7 +39,7 @@ class ProductTest extends TestCase
         $reflecion = new ReflectionClass($product);
         $property = $reflecion->getProperty('id');
         $property->setAccessible(true);
-        $property->setValue($product, '1');
+        $property->setValue($product, 'e36f227c-2946-11e8-b467-0ed5f89f718b');
         $this->assertEquals(1, $product->getId());
     }
 

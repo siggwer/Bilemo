@@ -41,7 +41,7 @@ class UserTest extends TestCase
         $reflecion = new ReflectionClass($user);
         $property = $reflecion->getProperty('id');
         $property->setAccessible(true);
-        $property->setValue($user, '1');
+        $property->setValue($user, 'e36f227c-2946-11e8-b467-0ed5f89f718b');
         $this->assertEquals(1, $user->getId());
     }
 

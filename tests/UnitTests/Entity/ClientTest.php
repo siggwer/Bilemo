@@ -26,7 +26,12 @@ class ClientTest extends TestCase
      */
     public function setUp() : void
     {
-        $this->client = new Client();
+        $this->client = new Client(
+            'name',
+            'email',
+        'password'
+        )
+        ;
     }
 
     /**
@@ -40,7 +45,7 @@ class ClientTest extends TestCase
         $reflecion = new ReflectionClass($client);
         $property = $reflecion->getProperty('id');
         $property->setAccessible(true);
-        $property->setValue($client, '1');
+        $property->setValue($client, 'e36f227c-2946-11e8-b467-0ed5f89f718b');
         $this->assertEquals(1, $client->getId());
     }
 
@@ -52,6 +57,16 @@ class ClientTest extends TestCase
         $this->client->setEmail('test@yopmail.com');
         $result = $this->client->getEmail();
         $this->assertEquals('test@yopmail.com', $result);
+    }
+
+    /**
+     * 
+     */
+    public function testGetPassword()
+    {
+        $this->client->setPlainPassword('password');
+        $result = $this->client->getPlainPassword();
+        $this->assertEquals('password', $result);
     }
 
     /**
