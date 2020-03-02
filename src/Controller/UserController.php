@@ -64,7 +64,7 @@ class UserController extends AbstractController
      *
      * @SWG\Response(
      *     response="200",
-     *     description="Return the list of all users.",
+     *     description="Return the detail of one product",
      *     @SWG\Schema(ref=@Model(type=App\Entity\User::class, groups={"detail_user"}))
      * )
      *
@@ -91,12 +91,10 @@ class UserController extends AbstractController
      *
      * @param SerializerInterface $serializer
      * @param UserRepository $userRepository
-     * @param Request $request
      * @return Response
      */
     public function read(
         SerializerInterface $serializer,
-        Request $request,
         User $user
     ): Response {
 
@@ -110,12 +108,17 @@ class UserController extends AbstractController
     }
 
     /**
-     *  @Route(name="user_create", methods={"POST"})
+     * @Route(name="user_create", methods={"POST"})
      *
      * @SWG\Response(
      *     response="201",
      *     description="A new user created.",
      *      @SWG\Schema(ref=@Model(type=App\Entity\User::class, groups={"detail_user"}))
+     * )
+     *
+     * @SWG\Response(
+     *     response="401",
+     *     description="Unauthorized, JWT Token not found"
      * )
      *
      * @SWG\Response(
@@ -175,8 +178,13 @@ class UserController extends AbstractController
      * @Route("/{id}", name="user_update", methods={"PUT"})
      *
      * @SWG\Response(
-     *     response="201",
+     *     response="204",
      *     description="Update user."
+     * )
+     *
+     *  @SWG\Response(
+     *     response="401",
+     *     description="Unauthorized, JWT Token not found"
      * )
      *
      * @SWG\Response(
@@ -203,10 +211,10 @@ class UserController extends AbstractController
      *
      * @Security(name="Bearer")
      *
-     * @param User $user
-     * @param Request $request
      * @param SerializerInterface $serializer
      * @param ValidatorInterface $validator
+     * @param Request $request
+     * @param User $user
      * @return Response
      * @throws Exception
      */
@@ -228,7 +236,7 @@ class UserController extends AbstractController
 
         $user->setName($newUser->getName());
         $user->setEmail($newUser->getEmail());
-        $user->setUpdatedAt(new DateTimeImmutable(now()));
+        $user->setUpdatedAt(new DateTimeImmutable());
 
         $constraintViolation = $validator->validate($user);
 
@@ -243,7 +251,7 @@ class UserController extends AbstractController
             $serializer->serialize($user,
                 'json'
             ),
-            Response::HTTP_OK, ['content-type' => 'application/json']);
+            Response::HTTP_NO_CONTENT, ['content-type' => 'application/json']);
     }
 
     /**
@@ -252,6 +260,11 @@ class UserController extends AbstractController
      * @SWG\Response(
      *     response="204",
      *     description="User deleted."
+     * )
+     *
+     * @SWG\Response(
+     *     response="401",
+     *     description="Unauthorized, JWT Token not found"
      * )
      *
      * @SWG\Response(

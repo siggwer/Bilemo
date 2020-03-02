@@ -59,8 +59,13 @@ class ProductController extends AbstractController
      *
      * @SWG\Response(
      *     response="200",
-     *     description="Return the list of all products.",
+     *     description="Return the detail of one product.",
      *     @SWG\Schema(ref=@Model(type=App\Entity\Product::class, groups={"detail_product"}))
+     * )
+     *
+     * @SWG\Response(
+     *     response="404",
+     *     description="No product found."
      * )
      *
      * @SWG\Tag(name="Product")
