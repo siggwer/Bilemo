@@ -6,6 +6,7 @@ use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Persistence\ObjectManager;
 use App\Entity\Client;
+use DateTimeImmutable;
 use Exception;
 
 /**
@@ -47,6 +48,8 @@ class ClientFixtures extends Fixture
                     $client,
                     'password'
                 ));
+                $client->setCreatedAt(new DateTimeImmutable());
+                $client->setUpdatedAt(new DateTimeImmutable());
                 $client->setRoles(('ROLE_USER'));
                 #$this->setReference(self::CLIENT_REFERENCE, (object)$client->getId('id'));
 

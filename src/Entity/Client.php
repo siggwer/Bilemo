@@ -50,14 +50,14 @@ class Client extends AbstractEntity implements UserInterface
      *
      * @ORM\Column(type="datetime_immutable")
      */
-    private $created_at;
+    private $createdAt;
 
     /**
      * @var DateTimeImmutable|null
      *
      * @ORM\Column(type="datetime_immutable")
      */
-    private $updated_at;
+    private $updatedAt;
 
     /**
      * @var string|null
@@ -73,8 +73,8 @@ class Client extends AbstractEntity implements UserInterface
      */
     public function __construct()
     {
-        $this->created_at = new DateTimeImmutable();
-        $this->updated_at = new DateTimeImmutable();
+        $this->createdAt = new DateTimeImmutable();
+        $this->updatedAt= new DateTimeImmutable();
         parent::__construct();
     }
 
@@ -131,15 +131,15 @@ class Client extends AbstractEntity implements UserInterface
      */
     public function getCreatedAt(): ?DateTimeImmutable
     {
-        return $this->created_at;
+        return $this->createdAt;
     }
 
     /**
-     * @param DateTimeImmutable|null $created_at
+     * @param DateTimeImmutable|null $createdAt
      */
-    public function setCreatedAt(?DateTimeImmutable $created_at): void
+    public function setCreatedAt(?DateTimeImmutable $createdAt): void
     {
-        $this->created_at = $created_at;
+        $this->createdAt = $createdAt;
     }
 
     /**
@@ -147,15 +147,15 @@ class Client extends AbstractEntity implements UserInterface
      */
     public function getUpdatedAt(): ?DateTimeImmutable
     {
-        return $this->updated_at;
+        return $this->updatedAt;
     }
 
     /**
-     * @param DateTimeImmutable|null $updated_at
+     * @param DateTimeImmutable|null $updatedAt
      */
-    public function setUpdatedAt(?DateTimeImmutable $updated_at): void
+    public function setUpdatedAt(?DateTimeImmutable $updatedAt): void
     {
-        $this->updated_at = $updated_at;
+        $this->updatedAt = $updatedAt;
     }
 
     /**

@@ -20,8 +20,8 @@ abstract class AbstractEntity
      *
      * @throws Exception
      */
-//    public function __construct()
-//    {
-//        $this->id = Uuid::uuid4()->toString();
-//    }
+    public function __construct()
+    {
+        $this->id = Uuid::uuid4()->toString();
+    }
 }

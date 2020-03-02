@@ -73,7 +73,7 @@ class UserController extends AbstractController
      *     description="No user found, check your parameters."
      * )
      *
-     *  * @SWG\Response(
+     * @SWG\Response(
      *     response="403",
      *     description="Acces denied"
      * )
@@ -279,6 +279,5 @@ class UserController extends AbstractController
         $this->getDoctrine()->getManager()->flush();
 
         return new Response(null, Response::HTTP_NO_CONTENT);
-
     }
 }

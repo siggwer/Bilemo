@@ -5,6 +5,7 @@ namespace App\DataFixtures;
 use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Persistence\ObjectManager;
+use DateTimeImmutable;
 use App\Entity\User;
 
 /**
@@ -25,6 +26,8 @@ class UserFixtures extends Fixture implements DependentFixtureInterface
                 $user->setName('username' . $i);
                 $user->setEmail('email' . (($j - 1)* 10 + $i). '@email.fr');
                 $user->setClient($this->getReference(ClientFixtures::CLIENT_REFERENCE . '_'. $j));
+                $user->setCreatedAt(new DateTimeImmutable());
+                $user->setUpdatedAt(new DateTimeImmutable());
                 $manager->persist($user);
             }
         }

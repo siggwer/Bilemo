@@ -74,7 +74,7 @@ class User extends AbstractEntity
      * @Serializer\Expose()
      * @Serializer\Groups({"detail_user", "list_user"})
      */
-    private $created_at;
+    private $createdAt;
 
     /**
      * @var DateTimeImmutable|null
@@ -84,7 +84,7 @@ class User extends AbstractEntity
      * @Serializer\Expose()
      * @Serializer\Groups({"detail_user", "list_user"})
      */
-    private $updated_at;
+    private $updatedAt;
 
     /**
      * @var Client
@@ -98,8 +98,8 @@ class User extends AbstractEntity
      */
     public function init()
     {
-        $this->created_at = new DateTimeImmutable();
-        $this->updated_at = new DateTimeImmutable();
+        $this->createdAt = new DateTimeImmutable();
+        $this->updatedAt = new DateTimeImmutable();
     }
 
     /**
@@ -139,15 +139,15 @@ class User extends AbstractEntity
      */
     public function getCreatedAt(): ?DateTimeImmutable
     {
-        return $this->created_at;
+        return $this->createdAt;
     }
 
     /**
-     * @param DateTimeImmutable|null $created_at
+     * @param DateTimeImmutable|null $createdAt
      */
-    public function setCreatedAt(?DateTimeImmutable $created_at): void
+    public function setCreatedAt(?DateTimeImmutable $createdAt): void
     {
-        $this->created_at = $created_at;
+        $this->createdAt = $createdAt;
     }
 
     /**
@@ -155,15 +155,15 @@ class User extends AbstractEntity
      */
     public function getUpdatedAt(): ?DateTimeImmutable
     {
-        return $this->updated_at;
+        return $this->updatedAt;
     }
 
     /**
      * @param DateTimeImmutable|null $updated_at
      */
-    public function setUpdatedAt(?DateTimeImmutable $updated_at): void
+    public function setUpdatedAt(?DateTimeImmutable $updatedAt): void
     {
-        $this->updated_at = $updated_at;
+        $this->updatedAt = $updatedAt;
     }
 
     /**
