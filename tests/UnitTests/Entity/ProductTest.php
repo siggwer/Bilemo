@@ -3,10 +3,14 @@
 namespace App\Tests\UnitTests\Entity;
 
 use PHPUnit\Framework\TestCase;
+use Ramsey\Uuid\UuidFactory;
+use ReflectionClass;
 use ReflectionException;
 use App\Entity\Product;
-use ReflectionClass;
+use Ramsey\Uuid\Uuid;
+use App\Entity\Brand;
 use Exception;
+use Mockery;
 
 /**
  * Class ProductTest
@@ -29,24 +33,36 @@ class ProductTest extends TestCase
     }
 
     /**
-     *
      * @throws ReflectionException
+     * @throws Exception
      */
-    public function testGetId()
+    public function testGetId(): void
     {
-        $product = new Product();
-        $this->assertNull($product->getId());
-        $reflecion = new ReflectionClass($product);
+        $stringUuid = '253e0f90-8842-4731-91dd-0191816e6a28';
+        $uuid = Uuid::fromString($stringUuid);
+
+        $factoryMock = Mockery::mock(UuidFactory::class . '[uuid4]',
+            [
+            'uuid4' => $uuid,
+            ]
+        );
+
+        Uuid::setFactory($factoryMock);
+
+        $this->assertSame($uuid, Uuid::uuid4());
+        $this->assertEquals($stringUuid, Uuid::uuid4()->toString());
+
+        $reflecion = new ReflectionClass($this->product);
         $property = $reflecion->getProperty('id');
         $property->setAccessible(true);
-        $property->setValue($product, 'e36f227c-2946-11e8-b467-0ed5f89f718b');
-        $this->assertEquals(1, $product->getId());
+        $property->setValue($this->product, $stringUuid);
+        $this->assertEquals($stringUuid, $this->product->getId());
     }
 
     /**
      *
      */
-    public function testGetName()
+    public function testGetName(): void
     {
         $this->product->setName('test');
         $result = $this->product->getName();
@@ -56,7 +72,7 @@ class ProductTest extends TestCase
     /**
      *
      */
-    public function testGetReference()
+    public function testGetReference(): void
     {
         $this->product->setReference('test');
         $result = $this->product->getReference();
@@ -66,17 +82,18 @@ class ProductTest extends TestCase
     /**
      *
      */
-    public function testGetBrand()
+    public function testGetBrand(): void
     {
-        $this->product->setBrand('test');
+        $brand = new Brand();
+        $this->product->setBrand($brand);
         $result = $this->product->getBrand();
-        $this->assertSame('test', $result);
+        $this->assertSame($brand, $result);
     }
 
     /**
      *
      */
-    public function testGetDescription()
+    public function testGetDescription(): void
     {
         $this->product->setDescription('test');
         $result = $this->product->getDescription();
@@ -86,10 +103,10 @@ class ProductTest extends TestCase
     /**
      *
      */
-    public function testGetPrice()
+    public function testGetPrice(): void
     {
-        $this->product->setPrix('99');
-        $result = $this->product->getPrix();
+        $this->product->setPrice('99');
+        $result = $this->product->getPrice();
         $this->assertEquals('99', $result);
     }
 }

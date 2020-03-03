@@ -30,6 +30,11 @@ class ProductController extends AbstractController
      *     @SWG\Schema(ref=@Model(type=App\Entity\Product::class, groups={"list_product"}))
      * )
      *
+     * @SWG\Response(
+     *     response="401",
+     *     description="Unauthorized, JWT Token not found"
+     * )
+     *
      * @SWG\Tag(name="Product")
      *
      * @Security(name="Bearer")
@@ -61,6 +66,11 @@ class ProductController extends AbstractController
      *     response="200",
      *     description="Return the detail of one product.",
      *     @SWG\Schema(ref=@Model(type=App\Entity\Product::class, groups={"detail_product"}))
+     * )
+     *
+     * @SWG\Response(
+     *     response="401",
+     *     description="Unauthorized, JWT Token not found"
      * )
      *
      * @SWG\Response(

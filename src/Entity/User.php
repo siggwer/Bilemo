@@ -95,8 +95,10 @@ class User extends AbstractEntity
 
     /**
      * @throws Exception
+     *
+     * @codeCoverageIgnore
      */
-    public function init()
+    public function init(): void
     {
         $this->createdAt = new DateTimeImmutable();
         $this->updatedAt = new DateTimeImmutable();
@@ -159,7 +161,7 @@ class User extends AbstractEntity
     }
 
     /**
-     * @param DateTimeImmutable|null $updated_at
+     * @param DateTimeImmutable|null $updatedAt
      */
     public function setUpdatedAt(?DateTimeImmutable $updatedAt): void
     {

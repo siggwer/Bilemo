@@ -74,7 +74,7 @@ class Client extends AbstractEntity implements UserInterface
     public function __construct()
     {
         $this->createdAt = new DateTimeImmutable();
-        $this->updatedAt= new DateTimeImmutable();
+        $this->updatedAt = new DateTimeImmutable();
         parent::__construct();
     }
 
@@ -179,6 +179,8 @@ class Client extends AbstractEntity implements UserInterface
 
     /**
      * @inheritDoc
+     *
+     * @codeCoverageIgnore
      */
     public function getSalt()
     {
@@ -187,6 +189,8 @@ class Client extends AbstractEntity implements UserInterface
 
     /**
      * @inheritDoc
+     *
+     *
      */
     public function getUsername()
     {
@@ -195,6 +199,8 @@ class Client extends AbstractEntity implements UserInterface
 
     /**
      * @inheritDoc
+     *
+     * @codeCoverageIgnore
      */
     public function eraseCredentials()
     {

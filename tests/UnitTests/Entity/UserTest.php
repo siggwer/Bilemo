@@ -3,12 +3,15 @@
 namespace App\Tests\UnitTests\Entity;
 
 use PHPUnit\Framework\TestCase;
+use Ramsey\Uuid\UuidFactory;
 use ReflectionException;
 use DateTimeImmutable;
 use App\Entity\Client;
+use Ramsey\Uuid\Uuid;
 use App\Entity\User;
 use ReflectionClass;
 use Exception;
+use Mockery;
 
 /**
  * Class userTest
@@ -23,6 +26,16 @@ class UserTest extends TestCase
     private $user;
 
     /**
+     * @var DateTimeImmutable
+     */
+    private $createdAt;
+
+    /**
+     * @var DateTimeImmutable
+     */
+    private $updatedAt;
+
+    /**
      * @throws Exception
      */
     public function setUp() : void
@@ -30,25 +43,41 @@ class UserTest extends TestCase
         $this->user = new User();
     }
 
+    public function initTest(): void
+    {
+
+    }
+
     /**
      *
      * @throws ReflectionException
+     * @throws Exception
      */
-    public function testGetId()
+    public function testGetId(): void
     {
-        $user = new User();
-        $this->assertNull($user->getId());
-        $reflecion = new ReflectionClass($user);
+        $stringUuid = '253e0f90-8842-4731-91dd-0191816e6a28';
+        $uuid = Uuid::fromString($stringUuid);
+
+        $factoryMock = Mockery::mock(UuidFactory::class . '[uuid4]', [
+            'uuid4' => $uuid,
+        ]);
+
+        Uuid::setFactory($factoryMock);
+
+        $this->assertSame($uuid, Uuid::uuid4());
+        $this->assertEquals($stringUuid, Uuid::uuid4()->toString());
+
+        $reflecion = new ReflectionClass($this->user);
         $property = $reflecion->getProperty('id');
         $property->setAccessible(true);
-        $property->setValue($user, 'e36f227c-2946-11e8-b467-0ed5f89f718b');
-        $this->assertEquals(1, $user->getId());
+        $property->setValue($this->user, $stringUuid);
+        $this->assertEquals($stringUuid, $this->user->getId());
     }
 
     /**
      *
      */
-    public function testGetName()
+    public function testGetName(): void
     {
         $this->user->setName('test');
         $result = $this->user->getName();
@@ -58,7 +87,7 @@ class UserTest extends TestCase
     /**
      *
      */
-    public function testGetEmail()
+    public function testGetEmail(): void
     {
         $this->user->setEmail('test@yopmail.com');
         $result = $this->user->getEmail();
@@ -68,7 +97,7 @@ class UserTest extends TestCase
     /**
      * @throws Exception
      */
-    public function testGetCreatedAt()
+    public function testGetCreatedAt(): void
     {
         $this->user->setCreatedAt(new DateTimeImmutable());
         $result = $this->user->getCreatedAt();
@@ -78,7 +107,7 @@ class UserTest extends TestCase
     /**
      * @throws Exception
      */
-    public function testGetUpdatedAt()
+    public function testGetUpdatedAt(): void
     {
         $this->user->setUpdatedAt(new DateTimeImmutable());
         $result = $this->user->getUpdatedAt();
@@ -88,7 +117,7 @@ class UserTest extends TestCase
     /**
      *
      */
-    public function testGetClient()
+    public function testGetClient(): void
     {
         $client = new Client();
         $this->user->setClient($client);

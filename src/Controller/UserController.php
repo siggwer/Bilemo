@@ -69,13 +69,13 @@ class UserController extends AbstractController
      * )
      *
      * @SWG\Response(
-     *     response="404",
-     *     description="No user found, check your parameters."
+     *     response="403",
+     *     description="Acces denied"
      * )
      *
      * @SWG\Response(
-     *     response="403",
-     *     description="Acces denied"
+     *     response="404",
+     *     description="No user found, check your parameters."
      * )
      *
      * @SWG\Parameter(
@@ -90,7 +90,7 @@ class UserController extends AbstractController
      * @Security(name="Bearer")
      *
      * @param SerializerInterface $serializer
-     * @param UserRepository $userRepository
+     * @param User $user
      * @return Response
      */
     public function read(
