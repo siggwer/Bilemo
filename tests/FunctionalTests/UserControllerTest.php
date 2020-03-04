@@ -6,11 +6,11 @@ use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 use Symfony\Bundle\FrameworkBundle\Client;
 
 /**
- * Class ProductControllerTest
+ * Class UserControllerTest
  *
  * @package App\Tests\FunctionalTests
  */
-class ProductControllerTest extends WebTestCase
+class UserControllerTest extends WebTestCase
 {
     /**
      * @param string $username
@@ -18,7 +18,7 @@ class ProductControllerTest extends WebTestCase
      *
      * @return Client
      */
-    protected function createAuthenticatedClient($username = 'email10@email.fr', $password = 'password'): Client
+    protected function createAuthenticatedClient($username = 'email9@email.fr', $password = 'password'): Client
     {
         $client = static::createClient();
         $client->request(
@@ -40,16 +40,16 @@ class ProductControllerTest extends WebTestCase
 
         return $client;
     }
-    
-    
+
+
     /**
      *
      */
-    public function testProductListingResponseOk(): void
+    public function testUserListingResponseOk(): void
     {
         $client = $this->createAuthenticatedClient();
 
-        $client->request('GET', '/api/products');
+        $client->request('GET', '/api/users');
 
         $this->assertEquals(200, $client->getResponse()->getStatusCode());
     }
@@ -57,11 +57,11 @@ class ProductControllerTest extends WebTestCase
     /**
      *
      */
-    public function testProductReadingResponseOk(): void
+    public function testUserReadingResponseOk(): void
     {
         $client = $this->createAuthenticatedClient();
 
-        $client->request('GET', '/api/products/{id}');
+        $client->request('GET', '/api/users/0467f706-6afc-4227-b206-24911dedc22a');
 
         $this->assertEquals(200, $client->getResponse()->getStatusCode());
     }
