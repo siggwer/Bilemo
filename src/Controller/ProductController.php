@@ -85,6 +85,7 @@ class ProductController extends AbstractController
      * @param SerializerInterface $serializer
      * @param ProductRepository $productRepository
      * @param Request $request
+     *
      * @return Response
      */
     public function read(

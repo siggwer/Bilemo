@@ -42,6 +42,7 @@ class UserController extends AbstractController
      * @param Request $request
      * @param SerializerInterface $serializer
      * @param UserRepository $repository
+     *
      * @return Response
      */
     public function listing(
@@ -91,6 +92,7 @@ class UserController extends AbstractController
      *
      * @param SerializerInterface $serializer
      * @param User $user
+     *
      * @return Response
      */
     public function read(
@@ -141,7 +143,9 @@ class UserController extends AbstractController
      * @param SerializerInterface $serializer
      * @param ValidatorInterface $validator
      * @param Request $request
+     *
      * @return Response
+     *
      * @throws Exception
      */
     public function create(
@@ -216,6 +220,7 @@ class UserController extends AbstractController
      * @param Request $request
      * @param User $user
      * @return Response
+     *
      * @throws Exception
      */
     public function update(
@@ -282,7 +287,9 @@ class UserController extends AbstractController
      * @SWG\Tag(name="User")
      *
      * @Security(name="Bearer")
+     *
      * @param User $user
+     * 
      * @return Response
      */
     public function delete(User $user): Response
