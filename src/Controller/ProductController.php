@@ -92,7 +92,7 @@ class ProductController extends AbstractController
         ProductRepository $productRepository,
         Request $request
     ): Response {
-        return new Response(
+       return new Response(
             $serializer->serialize($productRepository->findById($request->get(
                 'id')
             ), 'json'),

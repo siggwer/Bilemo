@@ -15,7 +15,7 @@ use App\Entity\User;
  */
 class UserFixtures extends Fixture implements DependentFixtureInterface
 {
-    /**
+   /**
      * @inheritDoc
      */
     public function load(ObjectManager $manager)

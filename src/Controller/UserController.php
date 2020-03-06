@@ -42,6 +42,7 @@ class UserController extends AbstractController
      * @param Request $request
      * @param SerializerInterface $serializer
      * @param UserRepository $repository
+     *
      * @return Response
      */
     public function listing(
@@ -49,7 +50,7 @@ class UserController extends AbstractController
         SerializerInterface $serializer,
         UserRepository $repository
     ): Response {
-        return new Response(
+         return new Response(
             $serializer->serialize($repository->getPaginatedUsers(
                 ['client' => $this->getUser()],
                 $request->query->get('page', 1) * 10 - 10
@@ -91,14 +92,14 @@ class UserController extends AbstractController
      *
      * @param SerializerInterface $serializer
      * @param User $user
+     *
      * @return Response
      */
     public function read(
         SerializerInterface $serializer,
         User $user
     ): Response {
-
-        $this->denyAccessUnlessGranted('item', $user);
+          $this->denyAccessUnlessGranted('item', $user);
 
         return new Response(
             $serializer->serialize($user,'json'),
@@ -141,15 +142,20 @@ class UserController extends AbstractController
      * @param SerializerInterface $serializer
      * @param ValidatorInterface $validator
      * @param Request $request
+     * @param User $user
      * @return Response
+     *
      * @throws Exception
      */
     public function create(
         SerializerInterface $serializer,
         ValidatorInterface $validator,
-        Request $request
+        Request $request,
+        User $user
     ): Response
     {
+      $this->denyAccessUnlessGranted('item', $user);
+
         $user = $serializer->deserialize(
             $request->getContent(),
             User::class,
@@ -215,7 +221,9 @@ class UserController extends AbstractController
      * @param ValidatorInterface $validator
      * @param Request $request
      * @param User $user
+     
      * @return Response
+     
      * @throws Exception
      */
     public function update(
@@ -225,8 +233,7 @@ class UserController extends AbstractController
         ValidatorInterface $validator
     ): Response
     {
-
-        $this->denyAccessUnlessGranted('item', $user);
+       $this->denyAccessUnlessGranted('item', $user);
 
         $newUser = $serializer->deserialize(
             $request->getContent(),

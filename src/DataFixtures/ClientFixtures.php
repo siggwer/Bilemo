@@ -16,7 +16,7 @@ use Exception;
  */
 class ClientFixtures extends Fixture
 {
-    public const CLIENT_REFERENCE = 'client';
+   public const CLIENT_REFERENCE = 'client';
 
     /**
      * @var UserPasswordEncoderInterface
