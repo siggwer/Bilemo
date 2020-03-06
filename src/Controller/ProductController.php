@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Entity\Product;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Response;
@@ -89,13 +90,10 @@ class ProductController extends AbstractController
      */
     public function read(
         SerializerInterface $serializer,
-        ProductRepository $productRepository,
-        Request $request
+        Product $product
     ): Response {
        return new Response(
-            $serializer->serialize($productRepository->findById($request->get(
-                'id')
-            ), 'json'),
+            $serializer->serialize($product, 'json'),
             Response::HTTP_OK,
             ['content-type' => 'application/json']
         );

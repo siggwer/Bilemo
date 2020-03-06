@@ -254,11 +254,7 @@ class UserController extends AbstractController
         $this->getDoctrine()->getManager()->persist($user);
         $this->getDoctrine()->getManager()->flush();
 
-        return new Response(
-            $serializer->serialize($user,
-                'json'
-            ),
-            Response::HTTP_NO_CONTENT, ['content-type' => 'application/json']);
+        return new Response(null, Response::HTTP_NO_CONTENT);
     }
 
     /**
@@ -290,6 +286,7 @@ class UserController extends AbstractController
      *
      * @Security(name="Bearer")
      * @param User $user
+     *
      * @return Response
      */
     public function delete(User $user): Response
