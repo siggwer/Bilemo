@@ -47,18 +47,6 @@ class UserVoter extends Voter
         /** @var User $user */
         $user = $subject;
 
-//        switch ($attribute) {
-//            case self::READ:
-//                return $this->read($post, $client);
-//            case self::PUT:
-//                return $this->update($post, $client);
-//            case self::DELETE:
-//                return $this->delete($post, $client);
-//        }
-
         return $user->getClient() === $client;
-
-
-//        throw new \LogicException('This code should not be reached!');
     }
 }
