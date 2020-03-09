@@ -32,7 +32,10 @@ class UserController extends AbstractController
      * @SWG\Response(
      *     response="200",
      *     description="Return the list of all users.",
-     *     @SWG\Schema(ref=@Model(type=App\Entity\User::class, groups={"list_user"}))
+     *     @SWG\Schema(
+     *         type="array",
+     *         @Model(type=User::class)
+     *     )
      * )
      *
      * @SWG\Tag(name="User")
@@ -173,11 +176,7 @@ class UserController extends AbstractController
         $this->getDoctrine()->getManager()->persist($user);
         $this->getDoctrine()->getManager()->flush();
 
-        return new Response(
-            $serializer->serialize($user,
-                'json'
-            ),
-            Response::HTTP_OK, ['content-type' => 'application/json']);
+        return new Response(null,Response::HTTP_OK);
     }
 
     /**

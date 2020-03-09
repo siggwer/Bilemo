@@ -28,7 +28,10 @@ class ProductController extends AbstractController
      * @SWG\Response(
      *     response="200",
      *     description="Return the list of all products.",
-     *     @SWG\Schema(ref=@Model(type=App\Entity\Product::class, groups={"list_product"}))
+     *     @SWG\Schema(
+     *         type="array",
+     *         @Model(type=Product::class)
+     *     )
      * )
      *
      * @SWG\Response(
@@ -85,7 +88,7 @@ class ProductController extends AbstractController
      *
      * @param SerializerInterface $serializer
      * @param ProductRepository $productRepository
-     * @param Request $request
+     * @param Product $product
      * @return Response
      */
     public function read(
