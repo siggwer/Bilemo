@@ -2,8 +2,14 @@
 
 namespace App\Tests\FunctionalTests;
 
+use Sensio\Bundle\FrameworkExtraBundle\EventListener\ParamConverterListener;
+use Sensio\Bundle\FrameworkExtraBundle\Request\ParamConverter\DoctrineParamConverter;
+use Sensio\Bundle\FrameworkExtraBundle\Request\ParamConverter\ParamConverterManager;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
+use Doctrine\Common\Persistence\ManagerRegistry;
+use Doctrine\Persistence\ObjectManager;
 use Symfony\Bundle\FrameworkBundle\Client;
+use App\Repository\UserRepository;
 
 /**
  * Class ProductControllerTest
@@ -12,13 +18,18 @@ use Symfony\Bundle\FrameworkBundle\Client;
  */
 class ProductControllerTest extends WebTestCase
 {
+    function setUp()
+    {
+        $this->client = static::createClient();
+    }
+
     /**
      * @param string $username
      * @param string $password
      *
      * @return Client
      */
-    protected function createAuthenticatedClient($username = 'email10@email.fr', $password = 'password'): Client
+    protected function createAuthenticatedClient($username = 'email8@email.fr', $password = 'password'): Client
     {
         $client = static::createClient();
         $client->request(
@@ -40,8 +51,7 @@ class ProductControllerTest extends WebTestCase
 
         return $client;
     }
-    
-    
+
     /**
      *
      */
@@ -61,7 +71,7 @@ class ProductControllerTest extends WebTestCase
     {
         $client = $this->createAuthenticatedClient();
 
-        $client->request('GET', '/api/products/{id}');
+        $client->request('GET', '/api/products/016bffef-0acb-40d5-893e-0e06c0204dd1');
 
         $this->assertEquals(200, $client->getResponse()->getStatusCode());
     }

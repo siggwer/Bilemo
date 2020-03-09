@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Entity\Product;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Response;
@@ -27,7 +28,10 @@ class ProductController extends AbstractController
      * @SWG\Response(
      *     response="200",
      *     description="Return the list of all products.",
-     *     @SWG\Schema(ref=@Model(type=App\Entity\Product::class, groups={"list_product"}))
+     *     @SWG\Schema(
+     *      type="array",
+     *      @Model(type=Product::class)
+     *     )
      * )
      *
      * @SWG\Response(
@@ -83,20 +87,15 @@ class ProductController extends AbstractController
      * @Security(name="Bearer")
      *
      * @param SerializerInterface $serializer
-     * @param ProductRepository $productRepository
-     * @param Request $request
-     *
+     * @param Product $product
      * @return Response
      */
     public function read(
         SerializerInterface $serializer,
-        ProductRepository $productRepository,
-        Request $request
+        Product $product
     ): Response {
         return new Response(
-            $serializer->serialize($productRepository->findById($request->get(
-                'id')
-            ), 'json'),
+            $serializer->serialize($product,'json'),
             Response::HTTP_OK,
             ['content-type' => 'application/json']
         );

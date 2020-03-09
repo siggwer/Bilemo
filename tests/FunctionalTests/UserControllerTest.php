@@ -18,7 +18,7 @@ class UserControllerTest extends WebTestCase
      *
      * @return Client
      */
-    protected function createAuthenticatedClient($username = 'email2@email.fr', $password = 'password'): Client
+    protected function createAuthenticatedClient($username = 'email8@email.fr', $password = 'password'): Client
     {
         $client = static::createClient();
         $client->request(
@@ -61,8 +61,31 @@ class UserControllerTest extends WebTestCase
     {
         $client = $this->createAuthenticatedClient();
 
-        $client->request('GET', '/api/users/019f42f9-bcc6-4564-89d9-8c09156f0873');
+        $client->request('GET', '/api/users/018991bc-4e25-4ffb-9cd6-cc8bd64765bb');
 
         $this->assertEquals(200, $client->getResponse()->getStatusCode());
+    }
+
+    /**
+     *
+     */
+    public function testUserCreateOk()
+    {
+        $client = $this->createAuthenticatedClient();
+
+        $data = [
+            'name' => 'test',
+            'email' => 'test14@test.com'
+        ];
+        $client->request(
+            'POST',
+            '/api/users',
+            array(),
+            array(),
+            array('CONTENT_TYPE' => 'application/json'),
+            json_encode($data)
+        );
+
+        $this->assertEquals(201, $client->getResponse()->getStatusCode());
     }
 }
