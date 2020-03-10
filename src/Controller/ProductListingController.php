@@ -2,7 +2,6 @@
 
 namespace App\Controller;
 
-use App\Entity\Product;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Response;
@@ -12,18 +11,17 @@ use Nelmio\ApiDocBundle\Annotation\Model;
 use JMS\Serializer\SerializerInterface;
 use App\Repository\ProductRepository;
 use Swagger\Annotations as SWG;
+use App\Entity\Product;
 
 /**
- * Class ProductController
+ * Class ProductListingController
  *
  * @package App\Controller
- *
- * @Route("/products")
  */
-class ProductController extends AbstractController
+class ProductListingController extends AbstractController
 {
     /**
-     * @Route(name="product_listing", methods={"GET"})
+     * @Route("/products", name="product_listing", methods={"GET"})
      *
      * @SWG\Response(
      *     response="200",
@@ -60,44 +58,6 @@ class ProductController extends AbstractController
                     $request->query->get('page', 1) * 10 - 10
                 ), 'json'
             ),
-            Response::HTTP_OK,
-            ['content-type' => 'application/json']
-        );
-    }
-
-    /**
-     * @Route("/{id}", name="product_read", methods={"GET"})
-     *
-     * @SWG\Response(
-     *     response="200",
-     *     description="Return the detail of one product.",
-     * @SWG\Schema(ref=@Model(type=App\Entity\Product::class, groups={"detail_product"}))
-     * )
-     *
-     * @SWG\Response(
-     *     response="401",
-     *     description="Unauthorized, JWT Token not found"
-     * )
-     *
-     * @SWG\Response(
-     *     response="404",
-     *     description="No product found."
-     * )
-     *
-     * @SWG\Tag(name="Product")
-     *
-     * @Security(name="Bearer")
-     *
-     * @param  SerializerInterface $serializer
-     * @param  Product             $product
-     * @return Response
-     */
-    public function read(
-        SerializerInterface $serializer,
-        Product $product
-    ): Response {
-        return new Response(
-            $serializer->serialize($product, 'json'),
             Response::HTTP_OK,
             ['content-type' => 'application/json']
         );
