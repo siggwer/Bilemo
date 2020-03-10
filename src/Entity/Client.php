@@ -2,6 +2,7 @@
 
 namespace App\Entity;
 
+use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Validator\Constraints as Assert;
 use Doctrine\ORM\Mapping as ORM;
 use DateTimeImmutable;
@@ -14,17 +15,8 @@ use Exception;
  *
  * @ORM\Entity(repositoryClass="App\Repository\ClientRepository")
  */
-class Client
+class Client extends AbstractEntity implements UserInterface
 {
-    /**
-     * @var int|null
-     *
-     * @ORM\Id()
-     * @ORM\GeneratedValue()
-     * @ORM\Column(type="integer")
-     */
-    private $id;
-
     /**
      * @var string|null
      *
@@ -58,19 +50,19 @@ class Client
      *
      * @ORM\Column(type="datetime_immutable")
      */
-    private $created_at;
+    private $createdAt;
 
     /**
      * @var DateTimeImmutable|null
      *
      * @ORM\Column(type="datetime_immutable")
      */
-    private $updated_at;
+    private $updatedAt;
 
     /**
      * @var string|null
      *
-     * @ORM\Column(type="array")
+     * @ORM\Column(type="json")
      */
     private $roles = 'ROLE_USER';
 
@@ -81,16 +73,9 @@ class Client
      */
     public function __construct()
     {
-        $this->created_at = new DateTimeImmutable();
-        $this->updated_at = new DateTimeImmutable();
-    }
-
-    /**
-     * @return int|null
-     */
-    public function getId(): ?int
-    {
-        return $this->id;
+        $this->createdAt = new DateTimeImmutable();
+        $this->updatedAt = new DateTimeImmutable();
+        parent::__construct();
     }
 
     /**
@@ -146,15 +131,15 @@ class Client
      */
     public function getCreatedAt(): ?DateTimeImmutable
     {
-        return $this->created_at;
+        return $this->createdAt;
     }
 
     /**
-     * @param DateTimeImmutable|null $created_at
+     * @param DateTimeImmutable|null $createdAt
      */
-    public function setCreatedAt(?DateTimeImmutable $created_at): void
+    public function setCreatedAt(?DateTimeImmutable $createdAt): void
     {
-        $this->created_at = $created_at;
+        $this->createdAt = $createdAt;
     }
 
     /**
@@ -162,23 +147,26 @@ class Client
      */
     public function getUpdatedAt(): ?DateTimeImmutable
     {
-        return $this->updated_at;
+        return $this->updatedAt;
     }
 
     /**
-     * @param DateTimeImmutable|null $updated_at
+     * @param DateTimeImmutable|null $updatedAt
      */
-    public function setUpdatedAt(?DateTimeImmutable $updated_at): void
+    public function setUpdatedAt(?DateTimeImmutable $updatedAt): void
     {
-        $this->updated_at = $updated_at;
+        $this->updatedAt = $updatedAt;
     }
 
     /**
-     * @return string|null
+     * @return array|string|null
      */
-    public function getRoles(): ?string
+    public function getRoles()
     {
-        return $this->roles;
+        #return $this->roles;
+        $roles = $this->roles;
+
+        return array_unique((array)$roles);
     }
 
     /**
@@ -187,5 +175,35 @@ class Client
     public function setRoles(?string $roles): void
     {
         $this->roles = $roles;
+    }
+
+    /**
+     * @inheritDoc
+     *
+     * @codeCoverageIgnore
+     */
+    public function getSalt()
+    {
+        // TODO: Implement getSalt() method.
+    }
+
+    /**
+     * @inheritDoc
+     *
+     *
+     */
+    public function getUsername()
+    {
+        return $this->email;
+    }
+
+    /**
+     * @inheritDoc
+     *
+     * @codeCoverageIgnore
+     */
+    public function eraseCredentials()
+    {
+        // TODO: Implement eraseCredentials() method.
     }
 }

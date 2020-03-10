@@ -4,7 +4,7 @@ namespace App\Entity;
 
 use Symfony\Component\Validator\Constraints as Assert;
 use Hateoas\Configuration\Annotation as Hateoas;
-use JMS\Serializer\Annotation as JMS;
+use JMS\Serializer\Annotation as Serializer;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -25,24 +25,20 @@ use Doctrine\ORM\Mapping as ORM;
  *     "brand",
  *      embedded="expr(object.getBrand())"
  * )
+ *
+ * @Serializer\ExclusionPolicy("all")
  */
-class Product
+class Product extends AbstractEntity
 {
-    /**
-     * @var int|null
-     *
-     * @ORM\Id()
-     * @ORM\GeneratedValue()
-     * @ORM\Column(type="integer")
-     */
-    private $id;
-
     /**
      * @var string|null
      *
      * @ORM\Column(type="string")
      *
      * @Assert\NotBlank(message="This value should not be blank")
+     *
+     * @Serializer\Expose()
+     * @Serializer\Groups({"detail_product", "list_product"})
      */
     private $name;
 
@@ -52,15 +48,17 @@ class Product
      * @ORM\Column(type="string")
      *
      * @Assert\NotBlank(message="This value should not be blank")
+     *
+     * @Serializer\Expose()
+     * @Serializer\Groups({"detail_product", "list_product"})
      */
     private $reference;
 
-    /**
+   
+     /**
      * @var Brand
      *
-     * @ORM\ManyToOne(targetEntity="App\Entity\Brand")
-     *
-     * @JMS\Exclude()
+     * @ORM\ManyToOne(targetEntity="App\Entity\Brand", cascade={"persist"})
      */
     private $brand;
 
@@ -70,6 +68,9 @@ class Product
      * @ORM\Column(type="text")
      *
      * @Assert\NotBlank(message="This value should not be blank")
+     *
+     * @Serializer\Expose()
+     * @Serializer\Groups({"detail_product", "list_product"})
      */
     private $description;
 
@@ -80,16 +81,11 @@ class Product
      *
      * @Assert\NotBlank(message="This value should not be blank")
      * @Assert\Positive(message="This value should not be equal to 0 or negative")
+     *
+     * @Serializer\Expose()
+     * @Serializer\Groups({"detail_product", "list_product"})
      */
     private $price;
-
-    /**
-     * @return int|null
-     */
-    public function getId(): ?int
-    {
-        return $this->id;
-    }
 
     /**
      * @return string|null

@@ -4,6 +4,7 @@ namespace App\Entity;
 
 use Symfony\Component\Validator\Constraints as Assert;
 use Hateoas\Configuration\Annotation as Hateoas;
+use JMS\Serializer\Annotation as Serializer;
 use Doctrine\ORM\Mapping as ORM;
 use DateTimeImmutable;
 use Exception;
@@ -22,7 +23,6 @@ use Exception;
  *          parameters = {"id" = "expr(object.getId())"}
  *      )
  * )
- *
  * @Hateoas\Relation(
  *     "update",
  *      href=@Hateoas\Route(
@@ -37,22 +37,19 @@ use Exception;
  *          parameters = {"id" = "expr(object.getId())"}
  *      )
  * )
+ * @Serializer\ExclusionPolicy("all")
  */
-class User
+class User extends AbstractEntity
 {
-    /**
-     * @ORM\Id()
-     * @ORM\GeneratedValue()
-     * @ORM\Column(type="integer")
-     */
-    private $id;
-
     /**
      * @var string|null
      *
      * @ORM\Column(type="string", length=255)
      *
      * @Assert\NotBlank(message="This value should not be blank")
+     *
+     * @Serializer\Expose()
+     * @Serializer\Groups({"write_user", "list_user"})
      */
     private $name;
 
@@ -63,6 +60,9 @@ class User
      *
      * @Assert\NotBlank(message="This value should not be blank")
      * @Assert\Email(message="Email address not valid")
+     *
+     * @Serializer\Expose()
+     * @Serializer\Groups({"write_user", "list_user"})
      */
     private $email;
 
@@ -70,40 +70,38 @@ class User
      * @var DateTimeImmutable|null
      *
      * @ORM\Column(type="datetime_immutable")
+     *
+     * @Serializer\Expose()
+     * @Serializer\Groups({"detail_user", "list_user"})
      */
-    private $created_at;
+    private $createdAt;
 
     /**
      * @var DateTimeImmutable|null
      *
      * @ORM\Column(type="datetime_immutable")
+     *
+     * @Serializer\Expose()
+     * @Serializer\Groups({"detail_user", "list_user"})
      */
-    private $updated_at;
+    private $updatedAt;
 
     /**
      * @var Client
      *
-     * @ORM\ManyToOne(targetEntity="Client")
+     * @ORM\ManyToOne(targetEntity="Client", cascade={"persist"})
      */
     private $client;
 
     /**
-     * User constructor.
-     *
      * @throws Exception
+     *
+     * @codeCoverageIgnore
      */
-    public function __construct()
+    public function init(): void
     {
-        $this->created_at = new DateTimeImmutable();
-        $this->updated_at = new DateTimeImmutable();
-    }
-
-    /**
-     * @return int|null
-     */
-    public function getId(): ?int
-    {
-        return $this->id;
+        $this->createdAt = new DateTimeImmutable();
+        $this->updatedAt = new DateTimeImmutable();
     }
 
     /**
@@ -143,15 +141,15 @@ class User
      */
     public function getCreatedAt(): ?DateTimeImmutable
     {
-        return $this->created_at;
+        return $this->createdAt;
     }
 
     /**
-     * @param DateTimeImmutable|null $created_at
+     * @param DateTimeImmutable|null $createdAt
      */
-    public function setCreatedAt(?DateTimeImmutable $created_at): void
+    public function setCreatedAt(?DateTimeImmutable $createdAt): void
     {
-        $this->created_at = $created_at;
+        $this->createdAt = $createdAt;
     }
 
     /**
@@ -159,15 +157,15 @@ class User
      */
     public function getUpdatedAt(): ?DateTimeImmutable
     {
-        return $this->updated_at;
+        return $this->updatedAt;
     }
 
     /**
-     * @param DateTimeImmutable|null $updated_at
+     * @param DateTimeImmutable|null $updatedAt
      */
-    public function setUpdatedAt(?DateTimeImmutable $updated_at): void
+    public function setUpdatedAt(?DateTimeImmutable $updatedAt): void
     {
-        $this->updated_at = $updated_at;
+        $this->updatedAt = $updatedAt;
     }
 
     /**

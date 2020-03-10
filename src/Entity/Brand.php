@@ -12,17 +12,8 @@ use Doctrine\ORM\Mapping as ORM;
  *
  * @ORM\Entity(repositoryClass="App\Repository\BrandRepository")
  */
-class Brand
+class Brand extends AbstractEntity
 {
-    /**
-     * @var int|null
-     *
-     * @ORM\Id()
-     * @ORM\GeneratedValue()
-     * @ORM\Column(type="integer")
-     */
-    private $id;
-
     /**
      * @var string|null
      *
@@ -31,14 +22,6 @@ class Brand
      * @Assert\NotBlank(message="This value should not be blank")
      */
     private $name;
-
-    /**
-     * @return int|null
-     */
-    public function getId(): ?int
-    {
-        return $this->id;
-    }
 
     /**
      * @return string|null

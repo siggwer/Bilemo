@@ -3,11 +3,14 @@
 namespace App\Tests\UnitTests\Entity;
 
 use PHPUnit\Framework\TestCase;
+use Ramsey\Uuid\UuidFactory;
 use ReflectionException;
-use DateTimeImmutable;
 use App\Entity\Client;
+use DateTimeImmutable;
+use Ramsey\Uuid\Uuid;
 use ReflectionClass;
 use Exception;
+use Mockery;
 
 /**
  * Class ClientTest
@@ -26,28 +29,43 @@ class ClientTest extends TestCase
      */
     public function setUp() : void
     {
-        $this->client = new Client();
+        $this->client = new Client(
+            'name',
+            'email',
+            'password'
+        )
+        ;
     }
 
     /**
-     *
      * @throws ReflectionException
+     * @throws Exception
      */
-    public function testGetId()
+    public function testGetId(): void
     {
-        $client = new Client();
-        $this->assertNull($client->getId());
-        $reflecion = new ReflectionClass($client);
+        $stringUuid = '253e0f90-8842-4731-91dd-0191816e6a28';
+        $uuid = Uuid::fromString($stringUuid);
+
+        $factoryMock = Mockery::mock(UuidFactory::class . '[uuid4]', [
+            'uuid4' => $uuid,
+        ]);
+
+        Uuid::setFactory($factoryMock);
+
+        $this->assertSame($uuid, Uuid::uuid4());
+        $this->assertEquals($stringUuid, Uuid::uuid4()->toString());
+
+        $reflecion = new ReflectionClass($this->client);
         $property = $reflecion->getProperty('id');
         $property->setAccessible(true);
-        $property->setValue($client, '1');
-        $this->assertEquals(1, $client->getId());
+        $property->setValue($this->client, $stringUuid);
+        $this->assertEquals($stringUuid, $this->client->getId());
     }
 
     /**
      *
      */
-    public function testGetEmail()
+    public function testGetEmail(): void
     {
         $this->client->setEmail('test@yopmail.com');
         $result = $this->client->getEmail();
@@ -55,9 +73,19 @@ class ClientTest extends TestCase
     }
 
     /**
+     * 
+     */
+    public function testGetPassword(): void
+    {
+        $this->client->setPassword('sfJDLKSmdlfsmdlfjlmskDFLMsdjflmSDFLMlm');
+        $result = $this->client->getPassword();
+        $this->assertEquals('sfJDLKSmdlfsmdlfjlmskDFLMsdjflmSDFLMlm', $result);
+    }
+
+    /**
      *
      */
-    public function testGetPlainPassword()
+    public function testGetPlainPassword(): void
     {
         $this->client->setPlainPassword('password');
         $result = $this->client->getPlainPassword();
@@ -67,7 +95,7 @@ class ClientTest extends TestCase
     /**
      * @throws Exception
      */
-    public function testGetCreatedAt()
+    public function testGetCreatedAt(): void
     {
         $this->client->setCreatedAt(new DateTimeImmutable());
         $result = $this->client->getCreatedAt();
@@ -77,10 +105,28 @@ class ClientTest extends TestCase
     /**
      * @throws Exception
      */
-    public function testGetUpdatedAt()
+    public function testGetUpdatedAt(): void
     {
         $this->client->setUpdatedAt(new DateTimeImmutable());
         $result = $this->client->getUpdatedAt();
         $this->assertInstanceOf(DateTimeImmutable::class, $result);
+    }
+
+    /**
+     *
+     */
+    public function testGetRoles(): void
+    {
+        $this->client->setRoles('ROLE_USER');
+        $this->assertEquals(['ROLE_USER'], $this->client->getRoles());
+    }
+
+    /**
+     *
+     */
+    public function testGetUsernameTest(): void
+    {
+        $this->client->setEmail('test@yopmail.com');
+        $this->assertEquals('test@yopmail.com', $this->client->getUsername());
     }
 }

@@ -6,6 +6,7 @@ use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Persistence\ObjectManager;
 use App\Entity\Client;
+use DateTimeImmutable;
 use Exception;
 
 /**
@@ -15,7 +16,7 @@ use Exception;
  */
 class ClientFixtures extends Fixture
 {
-    public const CLIENT_REFERENCE = 'client';
+   public const CLIENT_REFERENCE = 'client';
 
     /**
      * @var UserPasswordEncoderInterface
@@ -41,16 +42,19 @@ class ClientFixtures extends Fixture
     {
             for ($i = 1; $i <= 10; $i++) {
                 $client = new Client();
-                $client->setEmail('email' . $i++ . '@email.fr');
+                $client->setEmail('email' . $i . '@email.fr');
                 #$client->setPassword('password');
                 $client->setPassword($this->passwordEncoder->encodePassword(
                     $client,
                     'password'
                 ));
+                $client->setCreatedAt(new DateTimeImmutable());
+                $client->setUpdatedAt(new DateTimeImmutable());
                 $client->setRoles(('ROLE_USER'));
                 #$this->setReference(self::CLIENT_REFERENCE, (object)$client->getId('id'));
-                $this->setReference(self::CLIENT_REFERENCE . '_' . $i, $client);
+
                 $manager->persist($client);
+                $this->setReference(self::CLIENT_REFERENCE . '_' . $i, $client);
             }
 
         $manager->flush();
