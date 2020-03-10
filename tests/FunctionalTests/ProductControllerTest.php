@@ -32,7 +32,7 @@ class ProductControllerTest extends WebTestCase
     {
         $client = $this->createAuthenticatedClient();
 
-        $client->request('GET', '/api/products/016bffef-0acb-40d5-893e-0e06c0204dd1');
+        $client->request('GET', '/api/products/02565b4d-4e60-4fb2-9887-da83259be190');
 
         $this->assertEquals(200, $client->getResponse()->getStatusCode());
     }

@@ -2,6 +2,8 @@
 
 namespace App\Tests\FunctionalTests;
 
+use App\Entity\Client;
+use App\Entity\User;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
 /**
@@ -32,7 +34,7 @@ class UserControllerTest extends WebTestCase
     {
         $client = $this->createAuthenticatedClient();
 
-        $client->request('GET', '/api/users/018991bc-4e25-4ffb-9cd6-cc8bd64765bb');
+        $client->request('GET', '/api/users/019f42f9-bcc6-4564-89d9-8c09156f0873');
 
         $this->assertEquals(200, $client->getResponse()->getStatusCode());
     }
@@ -69,10 +71,13 @@ class UserControllerTest extends WebTestCase
     public function testUserUpdateOk()
     {
         $client = $this->createAuthenticatedClient();
+        $em = $client->getContainer()->get('doctrine.orm.entity_manager');
 
+        $c = $em->getRepository(Client::class)->findOneByEmail('email2@email.fr');
+        $user = $em->getRepository(User::class)->findOneByClient($c);
         $client->request(
             'PUT',
-            '/api/users/018991bc-4e25-4ffb-9cd6-cc8bd64765bb',
+            '/api/users/'. $user->getId(),
             array(),
             array(),
             array('Authorization' => $client,
@@ -98,7 +103,7 @@ class UserControllerTest extends WebTestCase
 
         $client->request(
             'DELETE',
-            '/api/users/018991bc-4e25-4ffb-9cd6-cc8bd64765bb',
+            '/api/users/019f42f9-bcc6-4564-89d9-8c09156f0873',
             array(),
             array(),
             array('Authorization' => $client,

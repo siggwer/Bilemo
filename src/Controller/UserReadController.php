@@ -59,7 +59,7 @@ class UserReadController extends AbstractController
     ): Response {
 
         $this->denyAccessUnlessGranted('item', $user);
-        dd($user);
+        //return $user;
         return new Response(
             $serializer->serialize($user, 'json'),
             Response::HTTP_OK,

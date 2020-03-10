@@ -51,13 +51,20 @@ class UserListingController extends AbstractController
     ): Response {
         return new Response(
             $serializer->serialize(
-                $repository->getPaginatedUsers(
+                $repository->findBy(
                     ['client' => $this->getUser()],
+                    [],
+                    10,
                     $request->query->get('page', 1) * 10 - 10
                 ), 'json'
             ),
             Response::HTTP_OK,
             ['content-type' => 'application/json']
+        );
+        return $repository->findBy( ['client' => $this->getUser()],
+            [],
+            10,
+            $request->query->get('page', 1) * 10 - 10
         );
     }
 }
