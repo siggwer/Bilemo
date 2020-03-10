@@ -28,9 +28,9 @@ class ProductController extends AbstractController
      * @SWG\Response(
      *     response="200",
      *     description="Return the list of all products.",
-     *     @SWG\Schema(
+     * @SWG\Schema(
      *      type="array",
-     *      @Model(type=Product::class)
+     * @Model(type=Product::class)
      *     )
      * )
      *
@@ -43,8 +43,8 @@ class ProductController extends AbstractController
      *
      * @Security(name="Bearer")
      *
-     * @param Request $request
-     * @param ProductRepository $repository
+     * @param Request             $request
+     * @param ProductRepository   $repository
      * @param SerializerInterface $serializer
      *
      * @return Response
@@ -55,9 +55,11 @@ class ProductController extends AbstractController
         SerializerInterface $serializer
     ): Response {
         return new Response(
-            $serializer->serialize($repository->getPaginatedPhones(
-                $request->query->get('page', 1) * 10 - 10
-            ), 'json'),
+            $serializer->serialize(
+                $repository->getPaginatedPhones(
+                    $request->query->get('page', 1) * 10 - 10
+                ), 'json'
+            ),
             Response::HTTP_OK,
             ['content-type' => 'application/json']
         );
@@ -69,7 +71,7 @@ class ProductController extends AbstractController
      * @SWG\Response(
      *     response="200",
      *     description="Return the detail of one product.",
-     *     @SWG\Schema(ref=@Model(type=App\Entity\Product::class, groups={"detail_product"}))
+     * @SWG\Schema(ref=@Model(type=App\Entity\Product::class, groups={"detail_product"}))
      * )
      *
      * @SWG\Response(
@@ -86,8 +88,8 @@ class ProductController extends AbstractController
      *
      * @Security(name="Bearer")
      *
-     * @param SerializerInterface $serializer
-     * @param Product $product
+     * @param  SerializerInterface $serializer
+     * @param  Product             $product
      * @return Response
      */
     public function read(
@@ -95,7 +97,7 @@ class ProductController extends AbstractController
         Product $product
     ): Response {
         return new Response(
-            $serializer->serialize($product,'json'),
+            $serializer->serialize($product, 'json'),
             Response::HTTP_OK,
             ['content-type' => 'application/json']
         );

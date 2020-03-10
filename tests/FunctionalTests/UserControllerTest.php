@@ -3,7 +3,6 @@
 namespace App\Tests\FunctionalTests;
 
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
-use Symfony\Bundle\FrameworkBundle\Client;
 
 /**
  * Class UserControllerTest
@@ -12,38 +11,10 @@ use Symfony\Bundle\FrameworkBundle\Client;
  */
 class UserControllerTest extends WebTestCase
 {
-    /**
-     * @param string $username
-     * @param string $password
-     *
-     * @return Client
-     */
-    protected function createAuthenticatedClient($username = 'email8@email.fr', $password = 'password'): Client
-    {
-        $client = static::createClient();
-        $client->request(
-            'POST',
-            '/api/login_check',
-            array(),
-            array(),
-            array('CONTENT_TYPE' => 'application/json'),
-            json_encode(array(
-                'username' => $username,
-                'password' => $password,
-            ))
-        );
-
-        $data = json_decode($client->getResponse()->getContent(), true);
-
-        $client = static::createClient();
-        $client->setServerParameter('HTTP_Authorization', sprintf('Bearer %s', $data['token']));
-
-        return $client;
-    }
-
+    use AuthenticationTrait;
 
     /**
-     *
+     * User list test
      */
     public function testUserListingResponseOk(): void
     {
@@ -55,7 +26,7 @@ class UserControllerTest extends WebTestCase
     }
 
     /**
-     *
+     * User display test
      */
     public function testUserReadingResponseOk(): void
     {
@@ -67,25 +38,74 @@ class UserControllerTest extends WebTestCase
     }
 
     /**
-     *
+     * User creation test
      */
     public function testUserCreateOk()
     {
         $client = $this->createAuthenticatedClient();
 
-        $data = [
-            'name' => 'test',
-            'email' => 'test14@test.com'
-        ];
         $client->request(
             'POST',
             '/api/users',
             array(),
             array(),
-            array('CONTENT_TYPE' => 'application/json'),
-            json_encode($data)
+            array('Authorization' => $client,
+                  'CONTENT_TYPE' => 'application/json'
+            ),
+            json_encode(
+                array(
+                'name'=>'test1',
+                'email'=>'test1@test.fr'
+                )
+            )
         );
 
         $this->assertEquals(201, $client->getResponse()->getStatusCode());
+    }
+
+    /**
+     * User update test
+     */
+    public function testUserUpdateOk()
+    {
+        $client = $this->createAuthenticatedClient();
+
+        $client->request(
+            'PUT',
+            '/api/users/018991bc-4e25-4ffb-9cd6-cc8bd64765bb',
+            array(),
+            array(),
+            array('Authorization' => $client,
+                'CONTENT_TYPE' => 'application/json'
+            ),
+            json_encode(
+                array(
+                'name'=>'test2',
+                'email'=>'test2@test.fr'
+                )
+            )
+        );
+
+        $this->assertEquals(204, $client->getResponse()->getStatusCode());
+    }
+
+    /**
+     * User delete test
+     */
+    public function testUserDeleteOk()
+    {
+        $client = $this->createAuthenticatedClient();
+
+        $client->request(
+            'DELETE',
+            '/api/users/018991bc-4e25-4ffb-9cd6-cc8bd64765bb',
+            array(),
+            array(),
+            array('Authorization' => $client,
+                'CONTENT_TYPE' => 'application/json'
+            )
+        );
+
+        $this->assertEquals(204, $client->getResponse()->getStatusCode());
     }
 }

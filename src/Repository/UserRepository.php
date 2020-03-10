@@ -31,8 +31,7 @@ class UserRepository extends ServiceEntityRepository
             ->orderBy('c.name', 'ASC')
             ->setCacheable(true)
             ->getQuery()
-            ->getResult()
-            ;
+            ->getResult();
     }
 
     /**
@@ -47,8 +46,7 @@ class UserRepository extends ServiceEntityRepository
             ->setParameter('id', $id)
             ->setCacheable(true)
             ->getQuery()
-            ->getResult()
-            ;
+            ->getResult();
     }
 
     // /**

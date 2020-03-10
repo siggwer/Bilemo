@@ -40,22 +40,24 @@ class ClientFixtures extends Fixture
      */
     public function load(ObjectManager $manager)
     {
-            for ($i = 1; $i <= 10; $i++) {
-                $client = new Client();
-                $client->setEmail('email' . $i . '@email.fr');
-                #$client->setPassword('password');
-                $client->setPassword($this->passwordEncoder->encodePassword(
+        for ($i = 1; $i <= 10; $i++) {
+            $client = new Client();
+            $client->setEmail('email' . $i . '@email.fr');
+            // $client->setPassword('password');
+            $client->setPassword(
+                $this->passwordEncoder->encodePassword(
                     $client,
                     'password'
-                ));
-                $client->setCreatedAt(new DateTimeImmutable());
-                $client->setUpdatedAt(new DateTimeImmutable());
-                $client->setRoles(('ROLE_USER'));
-                #$this->setReference(self::CLIENT_REFERENCE, (object)$client->getId('id'));
+                )
+            );
+            $client->setCreatedAt(new DateTimeImmutable());
+            $client->setUpdatedAt(new DateTimeImmutable());
+            $client->setRoles(('ROLE_USER'));
+            // $this->setReference(self::CLIENT_REFERENCE, (object)$client->getId('id'));
 
-                $manager->persist($client);
-                $this->setReference(self::CLIENT_REFERENCE . '_' . $i, $client);
-            }
+            $manager->persist($client);
+            $this->setReference(self::CLIENT_REFERENCE . '_' . $i, $client);
+        }
 
         $manager->flush();
     }

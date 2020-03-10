@@ -21,7 +21,7 @@ class UserVoter extends Voter
      */
     protected function supports($attribute, $subject)
     {
-        if (!array($attribute, [self::ITEM])){
+        if (!array($attribute, [self::ITEM])) {
             return false;
         }
         if (!$subject instanceof User) {
@@ -44,7 +44,11 @@ class UserVoter extends Voter
         }
 
         // you know $subject is a Post object, thanks to supports
-        /** @var User $user */
+        /**
+* 
+         *
+ * @var User $user 
+*/
         $user = $subject;
 
         return $user->getClient() === $client;

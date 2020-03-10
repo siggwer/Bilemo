@@ -23,7 +23,7 @@ class Client extends AbstractEntity implements UserInterface
      * @ORM\Column(type="string", length=255, unique=true)
      *
      * @Assert\NotBlank(message="This value should not be blank")
-     * @Assert\Email(message="Email address not valid")
+     * @Assert\Email(message="Email   address not valid")
      */
     private $email;
 
@@ -163,7 +163,7 @@ class Client extends AbstractEntity implements UserInterface
      */
     public function getRoles()
     {
-        #return $this->roles;
+        // return $this->roles;
         $roles = $this->roles;
 
         return array_unique((array)$roles);
@@ -189,8 +189,6 @@ class Client extends AbstractEntity implements UserInterface
 
     /**
      * @inheritDoc
-     *
-     *
      */
     public function getUsername()
     {

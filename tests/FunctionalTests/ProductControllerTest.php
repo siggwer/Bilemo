@@ -2,14 +2,7 @@
 
 namespace App\Tests\FunctionalTests;
 
-use Sensio\Bundle\FrameworkExtraBundle\EventListener\ParamConverterListener;
-use Sensio\Bundle\FrameworkExtraBundle\Request\ParamConverter\DoctrineParamConverter;
-use Sensio\Bundle\FrameworkExtraBundle\Request\ParamConverter\ParamConverterManager;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
-use Doctrine\Common\Persistence\ManagerRegistry;
-use Doctrine\Persistence\ObjectManager;
-use Symfony\Bundle\FrameworkBundle\Client;
-use App\Repository\UserRepository;
 
 /**
  * Class ProductControllerTest
@@ -18,42 +11,10 @@ use App\Repository\UserRepository;
  */
 class ProductControllerTest extends WebTestCase
 {
-    function setUp()
-    {
-        $this->client = static::createClient();
-    }
+    use AuthenticationTrait;
 
     /**
-     * @param string $username
-     * @param string $password
-     *
-     * @return Client
-     */
-    protected function createAuthenticatedClient($username = 'email8@email.fr', $password = 'password'): Client
-    {
-        $client = static::createClient();
-        $client->request(
-            'POST',
-            '/api/login_check',
-            array(),
-            array(),
-            array('CONTENT_TYPE' => 'application/json'),
-            json_encode(array(
-                'username' => $username,
-                'password' => $password,
-            ))
-        );
-
-        $data = json_decode($client->getResponse()->getContent(), true);
-
-        $client = static::createClient();
-        $client->setServerParameter('HTTP_Authorization', sprintf('Bearer %s', $data['token']));
-
-        return $client;
-    }
-
-    /**
-     *
+     * Product list test
      */
     public function testProductListingResponseOk(): void
     {
@@ -65,7 +26,7 @@ class ProductControllerTest extends WebTestCase
     }
 
     /**
-     *
+     * PProduct display test
      */
     public function testProductReadingResponseOk(): void
     {

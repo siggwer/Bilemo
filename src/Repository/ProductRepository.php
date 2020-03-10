@@ -30,8 +30,7 @@ class ProductRepository extends ServiceEntityRepository
             ->orderBy('p.price', 'ASC')
             ->setCacheable(true)
             ->getQuery()
-            ->getResult()
-            ;
+            ->getResult();
     }
 
     /**

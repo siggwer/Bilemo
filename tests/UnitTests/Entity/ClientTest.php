@@ -33,8 +33,7 @@ class ClientTest extends TestCase
             'name',
             'email',
             'password'
-        )
-        ;
+        );
     }
 
     /**
@@ -46,9 +45,11 @@ class ClientTest extends TestCase
         $stringUuid = '253e0f90-8842-4731-91dd-0191816e6a28';
         $uuid = Uuid::fromString($stringUuid);
 
-        $factoryMock = Mockery::mock(UuidFactory::class . '[uuid4]', [
+        $factoryMock = Mockery::mock(
+            UuidFactory::class . '[uuid4]', [
             'uuid4' => $uuid,
-        ]);
+            ]
+        );
 
         Uuid::setFactory($factoryMock);
 
