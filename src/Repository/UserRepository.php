@@ -20,21 +20,6 @@ class UserRepository extends ServiceEntityRepository
     }
 
     /**
-     * @param $param
-     * @param $client
-     *
-     * @return mixed
-     */
-    public function getPaginatedUsers($param, $client)
-    {
-        return $this->createQueryBuilder('c')
-            ->orderBy('c.name', 'ASC')
-            ->setCacheable(true)
-            ->getQuery()
-            ->getResult();
-    }
-
-    /**
      * @param $id
      *
      * @return mixed

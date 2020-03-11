@@ -2,6 +2,8 @@
 
 namespace App\Controller;
 
+use App\Event\ListenerView;
+use JMS\Serializer\Serializer;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Response;
@@ -48,22 +50,25 @@ class UserReadController extends AbstractController
      *
      * @Security(name="Bearer")
      *
-     * @param SerializerInterface $serializer
+     *
      * @param User                $user
      *
-     * @return Response
+     * @return User|void
      */
     public function read(
-        SerializerInterface $serializer,
+        //SerializerInterface $serializer,
+        ListenerView $listenerView,
         User $user
-    ): Response {
+    )
+    {
 
         $this->denyAccessUnlessGranted('item', $user);
-        //return $user;
-        return new Response(
-            $serializer->serialize($user, 'json'),
-            Response::HTTP_OK,
-            ['content-type' => 'application/json']
-        );
+
+        return $user;
+//        return new Response(
+//            $serializer->serialize($user, 'json'),
+//            Response::HTTP_OK,
+//            ['content-type' => 'application/json']
+//        );
     }
 }
