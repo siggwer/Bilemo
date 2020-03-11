@@ -2,9 +2,10 @@
 
 namespace App\Tests\FunctionalTests;
 
+use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 use App\Entity\Client;
 use App\Entity\User;
-use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
+
 
 /**
  * Class UserControllerTest
@@ -34,14 +35,20 @@ class UserControllerTest extends WebTestCase
     {
         $client = $this->createAuthenticatedClient();
 
-        $client->request('GET', '/api/users/019f42f9-bcc6-4564-89d9-8c09156f0873');
+        $em = $client->getContainer()->get('doctrine.orm.entity_manager');
+
+        $c = $em->getRepository(Client::class)->findOneByEmail('email2@email.fr');
+
+        $user = $em->getRepository(User::class)->findOneByClient($c);
+
+        $client->request('GET', '/api/users/' . $user->getId());
 
         $this->assertEquals(200, $client->getResponse()->getStatusCode());
     }
 
     /**
-     * User creation test
-     */
+ * User creation test
+ */
     public function testUserCreateOk()
     {
         $client = $this->createAuthenticatedClient();
@@ -52,17 +59,41 @@ class UserControllerTest extends WebTestCase
             array(),
             array(),
             array('Authorization' => $client,
-                  'CONTENT_TYPE' => 'application/json'
+                'CONTENT_TYPE' => 'application/json'
             ),
             json_encode(
                 array(
-                'name'=>'test1',
-                'email'=>'test1@test.fr'
+                    'name'=>'test1',
+                    'email'=>'test1@test.fr'
                 )
             )
         );
 
         $this->assertEquals(201, $client->getResponse()->getStatusCode());
+    }
+
+    /**
+     * User creation not ok test
+     */
+    public function testUserCreateNotOk()
+    {
+        $client = $this->createAuthenticatedClient();
+
+        $client->request(
+            'POST',
+            '/api/users',
+            array(),
+            array(),
+            array('Authorization' => $client,
+                'CONTENT_TYPE' => 'application/json'
+            ),
+            json_encode(
+                array(
+                )
+            )
+        );
+
+        $this->assertEquals(400, $client->getResponse()->getStatusCode());
     }
 
     /**
@@ -77,7 +108,7 @@ class UserControllerTest extends WebTestCase
         $user = $em->getRepository(User::class)->findOneByClient($c);
         $client->request(
             'PUT',
-            '/api/users/'. $user->getId(),
+            '/api/users/' . $user->getId(),
             array(),
             array(),
             array('Authorization' => $client,
@@ -95,15 +126,48 @@ class UserControllerTest extends WebTestCase
     }
 
     /**
+     * User update not ok test
+     */
+    public function testUserUpdateNotOk()
+    {
+        $client = $this->createAuthenticatedClient();
+        $em = $client->getContainer()->get('doctrine.orm.entity_manager');
+
+        $c = $em->getRepository(Client::class)->findOneByEmail('email2@email.fr');
+        $user = $em->getRepository(User::class)->findOneByClient($c);
+        $client->request(
+            'PUT',
+            '/api/users/' . $user->getId(),
+            array(),
+            array(),
+            array('Authorization' => $client,
+                'CONTENT_TYPE' => 'application/json'
+            ),
+            json_encode(
+                array(
+                )
+            )
+        );
+
+        $this->assertEquals(400, $client->getResponse()->getStatusCode());
+    }
+
+    /**
      * User delete test
      */
     public function testUserDeleteOk()
     {
         $client = $this->createAuthenticatedClient();
 
+        $em = $client->getContainer()->get('doctrine.orm.entity_manager');
+
+        $c = $em->getRepository(Client::class)->findOneByEmail('email2@email.fr');
+
+        $user = $em->getRepository(User::class)->findOneByClient($c);
+
         $client->request(
             'DELETE',
-            '/api/users/019f42f9-bcc6-4564-89d9-8c09156f0873',
+            '/api/users/' . $user->getId(),
             array(),
             array(),
             array('Authorization' => $client,
