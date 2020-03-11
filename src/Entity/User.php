@@ -59,7 +59,7 @@ class User extends AbstractEntity
      * @ORM\Column(type="string", length=255, unique=true)
      *
      * @Assert\NotBlank(message="This value should not be blank")
-     * @Assert\Email(message="Email address not valid")
+     * @Assert\Email(message="Email   address not valid")
      *
      * @Serializer\Expose()
      * @Serializer\Groups({"write_user", "list_user"})

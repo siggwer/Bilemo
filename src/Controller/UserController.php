@@ -32,9 +32,9 @@ class UserController extends AbstractController
      * @SWG\Response(
      *     response="200",
      *     description="Return the list of all users.",
-     *     @SWG\Schema(
-     *         type="array",
-     *         @Model(type=User::class)
+     * @SWG\Schema(
+     *     type="array",
+     * @Model(type=User::class)
      *     )
      * )
      *
@@ -42,9 +42,9 @@ class UserController extends AbstractController
      *
      * @Security(name="Bearer")
      *
-     * @param Request $request
+     * @param Request             $request
      * @param SerializerInterface $serializer
-     * @param UserRepository $repository
+     * @param UserRepository      $repository
      *
      * @return Response
      */
@@ -53,11 +53,13 @@ class UserController extends AbstractController
         SerializerInterface $serializer,
         UserRepository $repository
     ): Response {
-         return new Response(
-            $serializer->serialize($repository->getPaginatedUsers(
-                ['client' => $this->getUser()],
-                $request->query->get('page', 1) * 10 - 10
-            ), 'json'),
+        return new Response(
+            $serializer->serialize(
+                $repository->getPaginatedUsers(
+                    ['client' => $this->getUser()],
+                    $request->query->get('page', 1) * 10 - 10
+                ), 'json'
+            ),
             Response::HTTP_OK,
             ['content-type' => 'application/json']
         );
@@ -69,7 +71,7 @@ class UserController extends AbstractController
      * @SWG\Response(
      *     response="200",
      *     description="Return the detail of one product",
-     *     @SWG\Schema(ref=@Model(type=App\Entity\User::class, groups={"detail_user"}))
+     * @SWG\Schema(ref=@Model(type=App\Entity\User::class, groups={"detail_user"}))
      * )
      *
      * @SWG\Response(
@@ -94,7 +96,7 @@ class UserController extends AbstractController
      * @Security(name="Bearer")
      *
      * @param SerializerInterface $serializer
-     * @param User $user
+     * @param User                $user
      *
      * @return Response
      */
@@ -102,10 +104,11 @@ class UserController extends AbstractController
         SerializerInterface $serializer,
         User $user
     ): Response {
-          $this->denyAccessUnlessGranted('item', $user);
+
+        $this->denyAccessUnlessGranted('item', $user);
 
         return new Response(
-            $serializer->serialize($user,'json'),
+            $serializer->serialize($user, 'json'),
             Response::HTTP_OK,
             ['content-type' => 'application/json']
         );
@@ -117,7 +120,7 @@ class UserController extends AbstractController
      * @SWG\Response(
      *     response="201",
      *     description="A new user created.",
-     *      @SWG\Schema(ref=@Model(type=App\Entity\User::class, groups={"detail_user"}))
+     * @SWG\Schema(ref=@Model(type=App\Entity\User::class, groups={"detail_user"}))
      * )
      *
      * @SWG\Response(
@@ -143,9 +146,9 @@ class UserController extends AbstractController
      * @Security(name="Bearer")
      *
      * @param SerializerInterface $serializer
-     * @param ValidatorInterface $validator
-     * @param Request $request
-     * @param User $user
+     * @param ValidatorInterface  $validator
+     * @param Request             $request
+     *
      * @return Response
      *
      * @throws Exception
@@ -153,12 +156,8 @@ class UserController extends AbstractController
     public function create(
         SerializerInterface $serializer,
         ValidatorInterface $validator,
-        Request $request,
-        User $user
-    ): Response
-    {
-      $this->denyAccessUnlessGranted('item', $user);
-
+        Request $request
+    ): Response {
         $user = $serializer->deserialize(
             $request->getContent(),
             User::class,
@@ -176,7 +175,13 @@ class UserController extends AbstractController
         $this->getDoctrine()->getManager()->persist($user);
         $this->getDoctrine()->getManager()->flush();
 
-        return new Response(null,Response::HTTP_OK);
+        return new Response(
+            $serializer->serialize(
+                $user,
+                'json'
+            ),
+            Response::HTTP_CREATED, ['content-type' => 'application/json']
+        );
     }
 
     /**
@@ -187,7 +192,7 @@ class UserController extends AbstractController
      *     description="Update user."
      * )
      *
-     *  @SWG\Response(
+     * @SWG\Response(
      *     response="401",
      *     description="Unauthorized, JWT Token not found"
      * )
@@ -216,13 +221,12 @@ class UserController extends AbstractController
      *
      * @Security(name="Bearer")
      *
-     * @param SerializerInterface $serializer
-     * @param ValidatorInterface $validator
-     * @param Request $request
-     * @param User $user
-     
+     * @param  SerializerInterface $serializer
+     * @param  ValidatorInterface  $validator
+     * @param  Request             $request
+     * @param  User                $user
      * @return Response
-     
+     *
      * @throws Exception
      */
     public function update(
@@ -230,9 +234,9 @@ class UserController extends AbstractController
         Request $request,
         SerializerInterface $serializer,
         ValidatorInterface $validator
-    ): Response
-    {
-       $this->denyAccessUnlessGranted('item', $user);
+    ): Response {
+
+        $this->denyAccessUnlessGranted('item', $user);
 
         $newUser = $serializer->deserialize(
             $request->getContent(),
@@ -284,8 +288,9 @@ class UserController extends AbstractController
      * @SWG\Tag(name="User")
      *
      * @Security(name="Bearer")
-     * @param User $user
      *
+     * @param User $user
+     * 
      * @return Response
      */
     public function delete(User $user): Response

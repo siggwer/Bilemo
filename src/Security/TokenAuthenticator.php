@@ -33,7 +33,7 @@ class TokenAuthenticator extends JWTTokenAuthenticator
      *
      * @param JWTTokenManagerInterface $jwtManager
      * @param EventDispatcherInterface $dispatcher
-     * @param TokenExtractorInterface $tokenExtractor
+     * @param TokenExtractorInterface  $tokenExtractor
      */
     public function __construct(
         JWTTokenManagerInterface $jwtManager,
@@ -45,7 +45,7 @@ class TokenAuthenticator extends JWTTokenAuthenticator
     }
 
     /**
-     * @param Request $request
+     * @param Request                 $request
      * @param AuthenticationException $authException
      *
      * @return Response|null

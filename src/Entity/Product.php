@@ -54,8 +54,7 @@ class Product extends AbstractEntity
      */
     private $reference;
 
-   
-     /**
+    /**
      * @var Brand
      *
      * @ORM\ManyToOne(targetEntity="App\Entity\Brand", cascade={"persist"})
