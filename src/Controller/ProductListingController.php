@@ -4,11 +4,9 @@ namespace App\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
 use Nelmio\ApiDocBundle\Annotation\Security;
 use Nelmio\ApiDocBundle\Annotation\Model;
-use JMS\Serializer\SerializerInterface;
 use App\Repository\ProductRepository;
 use Swagger\Annotations as SWG;
 use App\Entity\Product;
@@ -41,25 +39,16 @@ class ProductListingController extends AbstractController
      *
      * @Security(name="Bearer")
      *
-     * @param Request             $request
-     * @param ProductRepository   $repository
-     * @param SerializerInterface $serializer
-     *
-     * @return Response
+     * @param Request $request
+     * @param ProductRepository $repository
+     * @return Product
      */
     public function listing(
         Request $request,
-        ProductRepository $repository,
-        SerializerInterface $serializer
-    ): Response {
-        return new Response(
-            $serializer->serialize(
-                $repository->getPaginatedPhones(
-                    $request->query->get('page', 1) * 10 - 10
-                ), 'json'
-            ),
-            Response::HTTP_OK,
-            ['content-type' => 'application/json']
-        );
+        ProductRepository $repository
+    ): Array {
+        return $repository->getPaginatedPhones(
+            $request->query->get(
+                'page', 1) * 10 - 10);
     }
 }

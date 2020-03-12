@@ -27,7 +27,10 @@ class ProductRepository extends ServiceEntityRepository
     public function getPaginatedPhones($param)
     {
         return $this->createQueryBuilder('p')
+            ->where('p.id = :id')
+            ->setParameter('id', $param )
             ->orderBy('p.price', 'ASC')
+            ->setMaxResults(10)
             ->setCacheable(true)
             ->getQuery()
             ->getResult();

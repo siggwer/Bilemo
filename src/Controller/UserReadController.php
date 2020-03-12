@@ -2,14 +2,10 @@
 
 namespace App\Controller;
 
-use App\Event\ListenerView;
-use JMS\Serializer\Serializer;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Component\HttpFoundation\Response;
 use Nelmio\ApiDocBundle\Annotation\Security;
 use Nelmio\ApiDocBundle\Annotation\Model;
-use JMS\Serializer\SerializerInterface;
 use Swagger\Annotations as SWG;
 use App\Entity\User;
 
@@ -26,7 +22,10 @@ class UserReadController extends AbstractController
      * @SWG\Response(
      *     response="200",
      *     description="Return the detail of one product",
-     * @SWG\Schema(ref=@Model(type=App\Entity\User::class, groups={"detail_user"}))
+     *  @SWG\Schema(
+     *     type="array",
+     * @Model(type=User::class)
+     *     )
      * )
      *
      * @SWG\Response(
@@ -53,22 +52,12 @@ class UserReadController extends AbstractController
      *
      * @param User                $user
      *
-     * @return User|void
+     * @return User
      */
-    public function read(
-        //SerializerInterface $serializer,
-        ListenerView $listenerView,
-        User $user
-    )
+    public function read(User $user): User
     {
-
         $this->denyAccessUnlessGranted('item', $user);
 
         return $user;
-//        return new Response(
-//            $serializer->serialize($user, 'json'),
-//            Response::HTTP_OK,
-//            ['content-type' => 'application/json']
-//        );
     }
 }

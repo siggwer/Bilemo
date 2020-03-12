@@ -4,10 +4,8 @@ namespace App\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Component\HttpFoundation\Response;
 use Nelmio\ApiDocBundle\Annotation\Security;
 use Nelmio\ApiDocBundle\Annotation\Model;
-use JMS\Serializer\SerializerInterface;
 use Swagger\Annotations as SWG;
 use App\Entity\Product;
 
@@ -24,7 +22,10 @@ class ProductReadController extends AbstractController
      * @SWG\Response(
      *     response="200",
      *     description="Return the detail of one product.",
-     * @SWG\Schema(ref=@Model(type=App\Entity\Product::class, groups={"detail_product"}))
+     * * @SWG\Schema(
+     *      type="array",
+     * @Model(type=Product::class)
+     *     )
      * )
      *
      * @SWG\Response(
@@ -41,18 +42,12 @@ class ProductReadController extends AbstractController
      *
      * @Security(name="Bearer")
      *
-     * @param  SerializerInterface $serializer
      * @param  Product             $product
-     * @return Response
+     *
+     * @return Product
      */
-    public function read(
-        SerializerInterface $serializer,
-        Product $product
-    ): Response {
-        return new Response(
-            $serializer->serialize($product, 'json'),
-            Response::HTTP_OK,
-            ['content-type' => 'application/json']
-        );
+    public function read(Product $product): Product
+    {
+        return $product;
     }
 }
