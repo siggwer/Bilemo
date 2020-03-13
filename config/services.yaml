@@ -28,6 +28,21 @@ services:
         tags:
             - { name: kernel.event_listener, event: kernel.view, method: onKernelView }
 
+    app.normalizer.resource_validation_exception:
+        class: App\Normalizer\BandRequestHttpExceptionNormalizer
+        arguments:
+            - { type: 'Symfony\Component\HttpKernel\Exception\NotFoundHttpException' }
+        tags:
+            - { name: app.normalizer }
+
+
+    app.exception_subscriber:
+        class: App\Listener\ListenerException
+        arguments:
+            - '@jms_serializer'
+        tags:
+            - { name: kernel.event_listener }
+
     mhujer.jms_serializer.uuid.uuid_serializer_handler:
         class: Mhujer\JmsSerializer\Uuid\UuidSerializerHandler
         tags:

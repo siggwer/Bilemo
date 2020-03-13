@@ -2,7 +2,6 @@
 
 namespace App\Tests\FunctionalTests;
 
-use Symfony\Component\HttpFoundation\Response;
 use Symfony\Bundle\FrameworkBundle\Client;
 
 /**

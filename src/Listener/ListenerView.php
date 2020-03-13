@@ -2,11 +2,10 @@
 
 namespace App\Listener;
 
-use JMS\Serializer\SerializerInterface;
-use Symfony\Component\ExpressionLanguage\ExpressionFunction;
 use Symfony\Component\HttpKernel\Event\ViewEvent;
 use Symfony\Component\HttpFoundation\Response;
-use JMS\Serializer\Serializer;
+use JMS\Serializer\SerializerInterface;
+use Exception;
 
 /**
  * Class ListenerView
@@ -32,18 +31,23 @@ class ListenerView
 
     /**
      * @param ViewEvent $event
-     * @throws \Exception
+     * @throws Exception
      */
     public function onKernelView(ViewEvent $event): void
     {
         $value = $event->getControllerResult();
-        dd($event->getKernel());
 
-        $response = new Response(
-           $this->serializer->serialize($value, 'json'),
-            Response::HTTP_OK,
-            ['content-type' => 'application/json']);
-
+        if ($value !== null){
+            $response = new Response(
+                $this->serializer->serialize($value, 'json'),
+                Response::HTTP_OK,
+                ['content-type' => 'application/json']);
+        } else {
+            $response = new Response(
+                $this->serializer->serialize($value, 'json'),
+                Response::HTTP_NO_CONTENT,
+                ['content-type' => 'application/json']);
+        }
         $event->setResponse($response);
     }
 }
