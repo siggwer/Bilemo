@@ -1,1 +1,49 @@
 # Bilemo
+
+[![Codacy Badge](https://api.codacy.com/project/badge/Grade/763a39ae9f95437ca40e02a3869af5bb)](https://www.codacy.com/manual/siggwer/Snowtricks?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=siggwer/Snowtricks&amp;utm_campaign=Badge_Grade)
+
+# Openclassrooms project 7
+```
+Development of an API based on symfony 4.
+```
+## Installation
+
+Clone this repository.
+```
+git clone https://github.com/siggwer/Bilemo.git
+```
+
+Install dependencies
+```
+composer install
+```
+
+Create and edit a new env file `.env.local`
+```
+# .env.local
+DATABASE_URL=mysql://your_login:your_password@127.0.0.1:3306/your-databasename
+```
+
+Create the database 
+```
+bin/console doctrine:database:create
+```
+
+Load the fixtures
+```
+bin/console composer prepare
+```
+
+Create the token
+```
+$ mkdir -p config/jwt
+$ openssl genpkey -out config/jwt/private.pem -aes256 -algorithm rsa -pkeyopt rsa_keygen_bits:4096
+$ openssl pkey -in config/jwt/private.pem -out config/jwt/public.pem -pubout
+```
+
+Start the server
+```
+bin/console server:run
+```
+
+Enjoy!
