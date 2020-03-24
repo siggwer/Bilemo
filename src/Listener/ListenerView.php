@@ -31,6 +31,7 @@ class ListenerView
 
     /**
      * @param ViewEvent $event
+     *
      * @throws Exception
      */
     public function onKernelView(ViewEvent $event): void

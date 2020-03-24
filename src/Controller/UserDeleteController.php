@@ -4,7 +4,6 @@ namespace App\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Component\HttpFoundation\Response;
 use Nelmio\ApiDocBundle\Annotation\Security;
 use Swagger\Annotations as SWG;
 use App\Entity\User;
@@ -47,14 +46,14 @@ class UserDeleteController extends AbstractController
      *
      * @param User $user
      *
-     * @return Response
+     * @return User
      */
-    public function delete(User $user): Response
+    public function delete(User $user)
     {
         $this->denyAccessUnlessGranted('item', $user);
         $this->getDoctrine()->getManager()->remove($user);
         $this->getDoctrine()->getManager()->flush();
 
-        return new Response(null, Response::HTTP_NO_CONTENT);
+        return $user;
     }
 }

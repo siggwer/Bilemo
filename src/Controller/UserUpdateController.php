@@ -64,7 +64,8 @@ class UserUpdateController extends AbstractController
      * @param  ValidatorInterface  $validator
      * @param  Request             $request
      * @param  User                $user
-     * @return Response
+     *
+     * @return User
      *
      * @throws Exception
      */
@@ -73,7 +74,8 @@ class UserUpdateController extends AbstractController
         Request $request,
         SerializerInterface $serializer,
         ValidatorInterface $validator
-    ): Response {
+    ): User
+    {
 
         $this->denyAccessUnlessGranted('item', $user);
 
@@ -96,6 +98,6 @@ class UserUpdateController extends AbstractController
         $this->getDoctrine()->getManager()->persist($user);
         $this->getDoctrine()->getManager()->flush();
 
-        return new Response(null, Response::HTTP_NO_CONTENT);
+        return $user;
     }
 }

@@ -3,6 +3,8 @@
 namespace App\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
+use Symfony\Component\Validator\ConstraintViolationListInterface;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\Routing\Annotation\Route;
@@ -23,7 +25,7 @@ use Exception;
 class UserCreateController extends AbstractController
 {
     /**
-     * @Route("/users", name="user_create", methods={"POST"})
+     * @Route("/users/", name="user_create", methods={"POST"})
      *
      * @SWG\Response(
      *     response="201",
@@ -57,7 +59,7 @@ class UserCreateController extends AbstractController
      * @param ValidatorInterface  $validator
      * @param Request             $request
      *
-     * @return Response
+     * @return User|ConstraintViolationListInterface
      *
      * @throws Exception
      */
@@ -65,7 +67,8 @@ class UserCreateController extends AbstractController
         SerializerInterface $serializer,
         ValidatorInterface $validator,
         Request $request
-    ): Response {
+    )
+    {
         $user = $serializer->deserialize(
             $request->getContent(),
             User::class,
@@ -76,19 +79,18 @@ class UserCreateController extends AbstractController
         $constraintViolation = $validator->validate($user);
 
         if($constraintViolation->count() > 0) {
-            return new JsonResponse($constraintViolation, Response::HTTP_BAD_REQUEST);
+            //return $constraintViolation; //new JsonResponse($constraintViolation, Response::HTTP_BAD_REQUEST);
+            throw new BadRequestHttpException($constraintViolation);
         }
+//        $data = $serializer->deserialize($constraintViolation, true, 'json');
+//        if (null === $data) {
+//            throw new \RuntimeException('File does not contain valid JSON.');
+//        }
 
         $user->setClient($this->getUser());
         $this->getDoctrine()->getManager()->persist($user);
         $this->getDoctrine()->getManager()->flush();
 
-        return new Response(
-            $serializer->serialize(
-                $user,
-                'json'
-            ),
-            Response::HTTP_CREATED, ['content-type' => 'application/json']
-        );
+        return $user;
     }
 }

@@ -36,10 +36,10 @@ class UserListingController extends AbstractController
      *
      * @Security(name="Bearer")
      *
-     * @param Request             $request
-     * @param UserRepository      $repository
+     * @param Request $request
+     * @param UserRepository $repository
      *
-     * @return User
+     * @return array
      */
     public function listing(
         Request $request,
