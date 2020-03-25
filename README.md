@@ -1,6 +1,6 @@
 # Bilemo
 
-[![Codacy Badge](https://api.codacy.com/project/badge/Grade/763a39ae9f95437ca40e02a3869af5bb)](https://www.codacy.com/manual/siggwer/Snowtricks?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=siggwer/Snowtricks&amp;utm_campaign=Badge_Grade)
+[![Codacy Badge](https://api.codacy.com/project/badge/Grade/54f99fc6cc07479cb52324eddc4986e2)](https://www.codacy.com/manual/siggwer/Bilemo?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=siggwer/Bilemo&amp;utm_campaign=Badge_Grade)
 
 # Openclassrooms project 7
 ```
