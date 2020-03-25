@@ -3,16 +3,14 @@
 namespace App\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 use Symfony\Component\Validator\ConstraintViolationListInterface;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
-use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
 use Nelmio\ApiDocBundle\Annotation\Security;
 use Nelmio\ApiDocBundle\Annotation\Model;
 use JMS\Serializer\SerializerInterface;
+use App\Exception\BadRequestException;
 use Swagger\Annotations as SWG;
 use App\Entity\User;
 use Exception;
@@ -79,13 +77,8 @@ class UserCreateController extends AbstractController
         $constraintViolation = $validator->validate($user);
 
         if($constraintViolation->count() > 0) {
-            //return $constraintViolation; //new JsonResponse($constraintViolation, Response::HTTP_BAD_REQUEST);
-            throw new BadRequestHttpException($constraintViolation);
+            throw new BadRequestException($constraintViolation);
         }
-//        $data = $serializer->deserialize($constraintViolation, true, 'json');
-//        if (null === $data) {
-//            throw new \RuntimeException('File does not contain valid JSON.');
-//        }
 
         $user->setClient($this->getUser());
         $this->getDoctrine()->getManager()->persist($user);
