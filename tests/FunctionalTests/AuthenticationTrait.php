@@ -2,7 +2,6 @@
 
 namespace App\Tests\FunctionalTests;
 
-use Symfony\Component\HttpFoundation\Response;
 use Symfony\Bundle\FrameworkBundle\Client;
 
 /**
@@ -18,7 +17,7 @@ trait AuthenticationTrait
      *
      * @return Client
      */
-    protected function createAuthenticatedClient($username = 'email8@email.fr', $password = 'password'): Client
+    protected function createAuthenticatedClient($username = 'email2@email.fr', $password = 'password'): Client
     {
         $client = static::createClient();
         $client->request(

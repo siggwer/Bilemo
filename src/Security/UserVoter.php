@@ -19,7 +19,7 @@ class UserVoter extends Voter
     /**
      * @inheritDoc
      */
-    protected function supports($attribute, $subject)
+    protected function supports($attribute, $subject): bool
     {
         if (!array($attribute, [self::ITEM])) {
             return false;
@@ -34,7 +34,7 @@ class UserVoter extends Voter
     /**
      * @inheritDoc
      */
-    protected function voteOnAttribute($attribute, $subject, TokenInterface $token)
+    protected function voteOnAttribute($attribute, $subject, TokenInterface $token): bool
     {
         $client = $token->getUser();
 
@@ -44,11 +44,7 @@ class UserVoter extends Voter
         }
 
         // you know $subject is a Post object, thanks to supports
-        /**
-* 
-         *
- * @var User $user 
-*/
+        /** @var User $user */
         $user = $subject;
 
         return $user->getClient() === $client;

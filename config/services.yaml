@@ -23,6 +23,14 @@ services:
         resource: '../src/Controller'
         tags: ['controller.service_arguments']
 
+    App\Listener\ListenerView:
+        tags:
+            - { name: kernel.event_listener, event: kernel.view, method: onKernelView }
+
+    App\Listener\ListenerException:
+        tags:
+            - { name: kernel.event_listener, event: kernel.exception, method: onKernelException }
+
     mhujer.jms_serializer.uuid.uuid_serializer_handler:
         class: Mhujer\JmsSerializer\Uuid\UuidSerializerHandler
         tags:
