@@ -1,6 +1,7 @@
 #index:
 #    path: /
 #    controller: App\Controller\DefaultController::index
+
 api_login_check:
   path: /api/login_check
 
@@ -8,12 +9,8 @@ gesdinet_jwt_refresh_token:
   path:       /api/token/refresh
   controller: gesdinet.jwtrefreshtoken::refresh
 
-#app.swagger_ui:
-#  path: /api/doc
-#  methods: GET
-#  defaults: { _controller: nelmio_api_doc.controller.swagger_ui }
-
 app.swagger_ui:
-  path: /api/doc/{area}
+  path: /api/doc
   methods: GET
-  defaults: { _controller: nelmio_api_doc.controller.swagger_ui, area: default }
+  defaults: { _controller: nelmio_api_doc.controller.swagger_ui }
+

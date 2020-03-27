@@ -3,7 +3,6 @@
 namespace App\Listener;
 
 use App\Exception\BadRequestException;
-use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
 use Symfony\Component\HttpKernel\Event\ExceptionEvent;
 use Symfony\Component\HttpFoundation\Response;
@@ -45,21 +44,15 @@ class ListenerException
     {
         $exception = $event->getThrowable();
 
-//        if($exception instanceof BadRequestException){
-//            $response = new JsonResponse($exception->getConstraintsViolation(),
-//                Response::HTTP_BAD_REQUEST);
-//            //$response->headers->set('Content-Type', 'application/json');
-//            $response->headers->replace($exception->getHeaders());
-//
-//            $event->setResponse($response);
-//        }
-        $response = new Response(
-            $this->serializer->serialize($exception->getConstraintsViolation(), 'json'),
-            Response::HTTP_BAD_REQUEST
-        );
-        $response->headers->set('Content-Type', 'application/problem+json');
-        $response->headers->replace($exception->getHeaders());
+        if ($exception instanceof BadRequestException) {
+            $response = new Response(
+                $this->serializer->serialize($exception->getConstraintsViolation(), 'json'),
+                Response::HTTP_BAD_REQUEST
+            );
+            $response->headers->set('Content-Type', 'application/problem+json');
+            $response->headers->replace($exception->getHeaders());
 
-        $event->setResponse($response);
+            $event->setResponse($response);
+        }
     }
 }

@@ -4,13 +4,12 @@ namespace App\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
-use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
 use Nelmio\ApiDocBundle\Annotation\Security;
 use Nelmio\ApiDocBundle\Annotation\Model;
 use JMS\Serializer\SerializerInterface;
+use App\Exception\BadRequestException;
 use Swagger\Annotations as SWG;
 use DateTimeImmutable;
 use App\Entity\User;
@@ -60,10 +59,11 @@ class UserUpdateController extends AbstractController
      *
      * @Security(name="Bearer")
      *
-     * @param  SerializerInterface $serializer
-     * @param  ValidatorInterface  $validator
-     * @param  Request             $request
-     * @param  User                $user
+     * @param User $user
+     *
+     * @param Request $request
+     * @param SerializerInterface $serializer
+     * @param ValidatorInterface $validator
      *
      * @return User
      *
@@ -74,7 +74,7 @@ class UserUpdateController extends AbstractController
         Request $request,
         SerializerInterface $serializer,
         ValidatorInterface $validator
-    ): User
+    )
     {
 
         $this->denyAccessUnlessGranted('item', $user);
@@ -92,12 +92,12 @@ class UserUpdateController extends AbstractController
         $constraintViolation = $validator->validate($user);
 
         if($constraintViolation->count() > 0) {
-            return new JsonResponse($constraintViolation, Response::HTTP_BAD_REQUEST);
+            throw new BadRequestException($constraintViolation);
         }
 
         $this->getDoctrine()->getManager()->persist($user);
         $this->getDoctrine()->getManager()->flush();
 
-        return $user;
+        return null;
     }
 }

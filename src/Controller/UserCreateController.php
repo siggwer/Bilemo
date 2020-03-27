@@ -23,7 +23,7 @@ use Exception;
 class UserCreateController extends AbstractController
 {
     /**
-     * @Route("/users/", name="user_create", methods={"POST"})
+     * @Route("/users", name="user_create", methods={"POST"})
      *
      * @SWG\Response(
      *     response="201",
