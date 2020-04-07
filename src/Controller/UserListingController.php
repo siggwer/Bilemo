@@ -5,11 +5,13 @@ namespace App\Controller;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Request;
+use App\Services\Paginator\PaginatorFactory;
 use Nelmio\ApiDocBundle\Annotation\Security;
 use Nelmio\ApiDocBundle\Annotation\Model;
 use App\Repository\UserRepository;
 use Swagger\Annotations as SWG;
 use App\Entity\User;
+use Exception;
 
 /**
  * Class UserListingController
@@ -38,19 +40,27 @@ class UserListingController extends AbstractController
      *
      * @param Request $request
      * @param UserRepository $repository
+     * @param PaginatorFactory $paginatorFactory
      *
      * @return array
+     *
      */
     public function listing(
         Request $request,
-        UserRepository $repository
-    ): array
+        UserRepository $repository,
+        PaginatorFactory $paginatorFactory
+    )
     {
-        return $repository->findBy(
-            ['client' => $this->getUser()],
-            [],
-            10,
-            $request->query->get('page', 1) * 10 - 10
-        );
+        try {
+            $result = $paginatorFactory->getData(
+                'user_listing',
+                $repository->createPaginatedQueryBuilder($this->getUser()),
+                $request->query->get('page', 1),
+                $request->query->get('limit', 10)
+            );
+        } catch (Exception $e) {
+        }
+
+        return $result;
     }
 }

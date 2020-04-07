@@ -2,9 +2,11 @@
 
 namespace App\Repository;
 
-use App\Entity\User;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Common\Persistence\ManagerRegistry;
+use Doctrine\ORM\Tools\Pagination\Paginator;
+use App\Entity\Client;
+use App\Entity\User;
 
 /**
  * @method User|null find($id, $lockMode = null, $lockVersion = null)
@@ -18,6 +20,21 @@ class UserRepository extends ServiceEntityRepository
     {
         parent::__construct($registry, User::class);
     }
+
+    /**
+     * @param Client $client
+     *
+     * @return Paginator
+     */
+    public function createPaginatedQueryBuilder(Client $client) : Paginator
+    {
+        return new Paginator(
+            $this->createQueryBuilder("u")
+                ->where("u.client = :client")
+                ->setParameter("client", $client),
+            true);
+    }
+
 
     /**
      * @param $id
