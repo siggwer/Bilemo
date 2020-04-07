@@ -44,6 +44,7 @@ class UserListingController extends AbstractController
      *
      * @return array
      *
+     * @throws Exception
      */
     public function listing(
         Request $request,
@@ -51,16 +52,14 @@ class UserListingController extends AbstractController
         PaginatorFactory $paginatorFactory
     )
     {
-        try {
-            $result = $paginatorFactory->getData(
-                'user_listing',
-                $repository->createPaginatedQueryBuilder($this->getUser()),
+        return $paginatorFactory->getData(
+            'user_listing',
+            $repository->createPaginatedQueryBuilder(
+                $this->getUser(),
                 $request->query->get('page', 1),
-                $request->query->get('limit', 10)
-            );
-        } catch (Exception $e) {
-        }
-
-        return $result;
+                $request->query->get('limit', 10)),
+            $request->query->get('page', 1),
+            $request->query->get('limit', 10)
+        );
     }
 }

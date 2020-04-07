@@ -6,10 +6,12 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Request;
 use Nelmio\ApiDocBundle\Annotation\Security;
+use App\Services\Paginator\PaginatorFactory;
 use Nelmio\ApiDocBundle\Annotation\Model;
 use App\Repository\ProductRepository;
 use Swagger\Annotations as SWG;
 use App\Entity\Product;
+use Exception;
 
 /**
  * Class ProductListingController
@@ -41,14 +43,23 @@ class ProductListingController extends AbstractController
      *
      * @param Request $request
      * @param ProductRepository $repository
-     * @return Product
+     * @param PaginatorFactory $paginatorFactory
+     *
+     * @return array
+     * @throws Exception
      */
     public function listing(
         Request $request,
-        ProductRepository $repository
-    ): Array {
-        return $repository->getPaginatedPhones(
-            $request->query->get(
-                'page', 1) * 10 - 10);
+        ProductRepository $repository,
+        PaginatorFactory $paginatorFactory
+    ) {
+        return $paginatorFactory->getData(
+                'product_listing',
+                $repository->createPaginatedQueryBuilder(
+                    $request->query->get('page', 1),
+                    $request->query->get('limit', 10)),
+                $request->query->get('page', 1),
+                $request->query->get('limit', 10)
+            );
     }
 }

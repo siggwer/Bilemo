@@ -57,7 +57,7 @@ class PaginatorFactory
 
         $first = $this->generator->generateFirst($route, $page, $limit);
 
-        $last = $this->generator->generateLast($route,$total, $page, $limit);
+        $last = $this->generator->generateLast($route, $pages, $page, $limit);
 
         return [
             "page" => $page,

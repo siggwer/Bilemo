@@ -36,7 +36,7 @@ class UrlGenerator
      */
     public function generateNext($route, $pages, $page, $limit) : array
     {
-        if ($page < $pages === false ){
+        if ($page < $pages ){
             return [$this->urlGenerator->generate($route, ["page" => $page + 1, "limit" => $limit])];
         } else{
             $data = [];
@@ -80,16 +80,16 @@ class UrlGenerator
 
     /**
      * @param $route
-     * @param $total
      * @param $page
+     * @param $pages
      * @param $limit
      *
      * @return array
      */
-    public function generateLast($route, $total, $page, $limit) : array
+    public function generateLast($route, $pages, $page, $limit) : array
     {
-        if ($page < $total){
-            return [$this->urlGenerator->generate($route, ["page" => $limit, "limit" => $limit])];
+        if ($page < $pages){
+            return [$this->urlGenerator->generate($route, ["page" => $pages, "limit" => $limit])];
         }  else{
             $data = [];
         }

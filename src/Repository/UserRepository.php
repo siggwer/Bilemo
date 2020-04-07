@@ -26,12 +26,14 @@ class UserRepository extends ServiceEntityRepository
      *
      * @return Paginator
      */
-    public function createPaginatedQueryBuilder(Client $client) : Paginator
+    public function createPaginatedQueryBuilder(Client $client, $page, $limit) : Paginator
     {
         return new Paginator(
-            $this->createQueryBuilder("u")
-                ->where("u.client = :client")
-                ->setParameter("client", $client),
+            $this->createQueryBuilder('u')
+                ->where('u.client = :client')
+                ->setParameter('client', $client)
+                ->setFirstResult(($page - 1) * $limit)
+                ->setMaxResults($limit),
             true);
     }
 
