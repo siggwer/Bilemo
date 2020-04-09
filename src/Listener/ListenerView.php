@@ -40,22 +40,24 @@ class ListenerView
         $value = $event->getControllerResult();
         $method = $event->getRequest()->getMethod();
 
-        if ($value !== null && $method === 'GET' ) {
+        if ($value !== null && $method === 'GET') {
             $response = new Response(
                 $this->serializer->serialize($value, 'json'),
                 Response::HTTP_OK,
-                ['content-type' => 'application/json']);
-
-        } elseif ($value !== null && $method === 'POST' ){
+                ['content-type' => 'application/json']
+            );
+        } elseif ($value !== null && $method === 'POST') {
             $response = new Response(
                 $this->serializer->serialize($value, 'json'),
                 Response::HTTP_CREATED,
-                ['content-type' => 'application/json']);
-
+                ['content-type' => 'application/json']
+            );
         } elseif ($value === null && ($method === 'PUT' || $method === 'DELETE')) {
-            $response = new JsonResponse(null,
+            $response = new JsonResponse(
+                null,
                 Response::HTTP_NO_CONTENT,
-                ['content-type' => 'application/json']);
+                ['content-type' => 'application/json']
+            );
         }
         $event->setResponse($response);
     }

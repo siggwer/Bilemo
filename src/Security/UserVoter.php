@@ -44,7 +44,9 @@ class UserVoter extends Voter
         }
 
         // you know $subject is a Post object, thanks to supports
-        /** @var User $user */
+        /**
+ * @var User $user 
+*/
         $user = $subject;
 
         return $user->getClient() === $client;

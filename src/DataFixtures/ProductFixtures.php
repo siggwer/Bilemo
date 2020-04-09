@@ -22,8 +22,8 @@ class ProductFixtures extends Fixture implements DependentFixtureInterface
      */
     public function load(ObjectManager $manager)
     {
-        for ($j = 1; $j <= 10; $j++){
-            for ($i = 1; $i <= 10; $i++){
+        for ($j = 1; $j <= 10; $j++) {
+            for ($i = 1; $i <= 10; $i++) {
                 $product = new Product();
                 $product->setName('phone n' . $i);
                 $product->setReference('ref' . $i);

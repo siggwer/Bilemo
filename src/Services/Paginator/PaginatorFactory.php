@@ -29,10 +29,10 @@ class PaginatorFactory
     }
 
     /**
-     * @param string $route
+     * @param string    $route
      * @param Paginator $doctrinePaginator
-     * @param int $page
-     * @param int $limit
+     * @param int       $page
+     * @param int       $limit
      *
      * @return array
      *
@@ -43,8 +43,7 @@ class PaginatorFactory
         Paginator $doctrinePaginator,
         int $page,
         int $limit
-    )
-    {
+    ) {
         $total = $doctrinePaginator->count();
 
         $items = $doctrinePaginator->getIterator();

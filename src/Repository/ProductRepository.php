@@ -27,11 +27,13 @@ class ProductRepository extends ServiceEntityRepository
      */
     public function createPaginatedQueryBuilder($page, $limit) : Paginator
     {
-        return new Paginator($this->createQueryBuilder('p')
-            ->orderBy('p.price', 'ASC')
-            ->setFirstResult(($page - 1) * $limit)
-            ->setMaxResults($limit),
-            true);
+        return new Paginator(
+            $this->createQueryBuilder('p')
+                ->orderBy('p.price', 'ASC')
+                ->setFirstResult(($page - 1) * $limit)
+                ->setMaxResults($limit),
+            true
+        );
     }
 
     // /**

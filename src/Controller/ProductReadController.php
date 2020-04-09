@@ -42,7 +42,7 @@ class ProductReadController extends AbstractController
      *
      * @Security(name="Bearer")
      *
-     * @param  Product             $product
+     * @param Product $product
      *
      * @return Product
      */

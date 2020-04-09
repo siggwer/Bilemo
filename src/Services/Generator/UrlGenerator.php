@@ -36,9 +36,9 @@ class UrlGenerator
      */
     public function generateNext($route, $pages, $page, $limit) : array
     {
-        if ($page < $pages ){
+        if ($page < $pages) {
             return [$this->urlGenerator->generate($route, ["page" => $page + 1, "limit" => $limit])];
-        } else{
+        } else {
             $data = [];
         }
         return $data;
@@ -53,11 +53,11 @@ class UrlGenerator
      */
     public function generatePrevious($route, $page, $limit) : array
     {
-        if ($page > 1 ){
+        if ($page > 1) {
             return [$this->urlGenerator->generate($route, ["page" => $page - 1, "limit" => $limit])];
-        } else{
+        } else {
             $data = [];
-       }
+        }
         return $data;
     }
 
@@ -70,9 +70,9 @@ class UrlGenerator
      */
     public function generateFirst($route, $page, $limit) : array
     {
-        if ($page > 1 ){
+        if ($page > 1) {
             return [ $this->urlGenerator->generate($route, ["page" => 1, "limit" => $limit])];
-        } else{
+        } else {
             $data = [];
         }
         return $data;
@@ -88,9 +88,9 @@ class UrlGenerator
      */
     public function generateLast($route, $pages, $page, $limit) : array
     {
-        if ($page < $pages){
+        if ($page < $pages) {
             return [$this->urlGenerator->generate($route, ["page" => $pages, "limit" => $limit])];
-        }  else{
+        } else {
             $data = [];
         }
         return $data;
