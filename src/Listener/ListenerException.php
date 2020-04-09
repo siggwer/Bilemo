@@ -28,7 +28,7 @@ class ListenerException
     /**
      * ListenerException constructor.
      *
-     * @param ValidatorInterface $validator
+     * @param ValidatorInterface  $validator
      * @param SerializerInterface $serializer
      */
     public function __construct(ValidatorInterface $validator, SerializerInterface $serializer)

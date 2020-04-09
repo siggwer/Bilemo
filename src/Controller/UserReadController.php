@@ -22,7 +22,7 @@ class UserReadController extends AbstractController
      * @SWG\Response(
      *     response="200",
      *     description="Return the detail of one product",
-     *  @SWG\Schema(
+     * @SWG\Schema(
      *     type="array",
      * @Model(type=User::class)
      *     )
@@ -49,8 +49,7 @@ class UserReadController extends AbstractController
      *
      * @Security(name="Bearer")
      *
-     *
-     * @param User                $user
+     * @param User $user
      *
      * @return User
      */

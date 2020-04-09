@@ -59,11 +59,11 @@ class UserUpdateController extends AbstractController
      *
      * @Security(name="Bearer")
      *
-     * @param User $user
+     * @param User                $user
      *
-     * @param Request $request
+     * @param Request             $request
      * @param SerializerInterface $serializer
-     * @param ValidatorInterface $validator
+     * @param ValidatorInterface  $validator
      *
      * @return User
      *
@@ -74,9 +74,7 @@ class UserUpdateController extends AbstractController
         Request $request,
         SerializerInterface $serializer,
         ValidatorInterface $validator
-    )
-    {
-
+    ) {
         $this->denyAccessUnlessGranted('item', $user);
 
         $newUser = $serializer->deserialize(
@@ -91,7 +89,7 @@ class UserUpdateController extends AbstractController
 
         $constraintViolation = $validator->validate($user);
 
-        if($constraintViolation->count() > 0) {
+        if ($constraintViolation->count() > 0) {
             throw new BadRequestException($constraintViolation);
         }
 

@@ -65,8 +65,7 @@ class UserCreateController extends AbstractController
         SerializerInterface $serializer,
         ValidatorInterface $validator,
         Request $request
-    )
-    {
+    ) {
         $user = $serializer->deserialize(
             $request->getContent(),
             User::class,
@@ -76,7 +75,7 @@ class UserCreateController extends AbstractController
         $user->init();
         $constraintViolation = $validator->validate($user);
 
-        if($constraintViolation->count() > 0) {
+        if ($constraintViolation->count() > 0) {
             throw new BadRequestException($constraintViolation);
         }
 

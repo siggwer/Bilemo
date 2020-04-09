@@ -2,9 +2,10 @@
 
 namespace App\Repository;
 
-use App\Entity\Product;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Common\Persistence\ManagerRegistry;
+use Doctrine\ORM\Tools\Pagination\Paginator;
+use App\Entity\Product;
 
 /**
  * @method Product|null find($id, $lockMode = null, $lockVersion = null)
@@ -22,33 +23,17 @@ class ProductRepository extends ServiceEntityRepository
     /**
      * @param $param
      *
-     * @return mixed
+     * @return Paginator
      */
-    public function getPaginatedPhones($param)
+    public function createPaginatedQueryBuilder($page, $limit) : Paginator
     {
-        return $this->createQueryBuilder('p')
-            ->where('p.id = :id')
-            ->setParameter('id', $param )
-            ->orderBy('p.price', 'ASC')
-            ->setMaxResults(10)
-            ->setCacheable(true)
-            ->getQuery()
-            ->getResult();
-    }
-
-    /**
-     * @param $id
-     *
-     * @return mixed
-     */
-    public function findById($id)
-    {
-        return $this->createQueryBuilder('p')
-            ->where('p.id = :id')
-            ->setParameter('id', $id)
-            ->setCacheable(true)
-            ->getQuery()
-            ->getResult();
+        return new Paginator(
+            $this->createQueryBuilder('p')
+                ->orderBy('p.price', 'ASC')
+                ->setFirstResult(($page - 1) * $limit)
+                ->setMaxResults($limit),
+            true
+        );
     }
 
     // /**

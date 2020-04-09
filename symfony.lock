@@ -267,18 +267,6 @@
             "./config/packages/sensio_framework_extra.yaml"
         ]
     },
-    "sensiolabs/security-checker": {
-        "version": "4.0",
-        "recipe": {
-            "repo": "github.com/symfony/recipes",
-            "branch": "master",
-            "version": "4.0",
-            "ref": "160c9b600564faa1224e8f387d49ef13ceb8b793"
-        },
-        "files": [
-            "./config/packages/security_checker.yaml"
-        ]
-    },
     "symfony/asset": {
         "version": "v4.4.4"
     },
@@ -375,12 +363,6 @@
             "./src/Kernel.php"
         ]
     },
-    "symfony/http-client": {
-        "version": "v4.4.5"
-    },
-    "symfony/http-client-contracts": {
-        "version": "v2.0.1"
-    },
     "symfony/http-foundation": {
         "version": "v4.4.4"
     },
@@ -456,9 +438,6 @@
             "./config/routes.yaml"
         ]
     },
-    "symfony/security": {
-        "version": "v4.4.4"
-    },
     "symfony/security-bundle": {
         "version": "4.4",
         "recipe": {
@@ -471,11 +450,17 @@
             "./config/packages/security.yaml"
         ]
     },
-    "symfony/serializer": {
-        "version": "v4.4.4"
+    "symfony/security-core": {
+        "version": "v4.4.7"
     },
-    "symfony/serializer-pack": {
-        "version": "v1.0.2"
+    "symfony/security-csrf": {
+        "version": "v4.4.7"
+    },
+    "symfony/security-guard": {
+        "version": "v4.4.7"
+    },
+    "symfony/security-http": {
+        "version": "v4.4.7"
     },
     "symfony/service-contracts": {
         "version": "v2.0.1"

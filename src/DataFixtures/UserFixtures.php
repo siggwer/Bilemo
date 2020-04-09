@@ -21,10 +21,10 @@ class UserFixtures extends Fixture implements DependentFixtureInterface
     public function load(ObjectManager $manager)
     {
         for ($j = 1; $j <= 10; $j++) {
-            for ($i = 1; $i <= 10; $i++) {
+            for ($i = 1; $i <= 25; $i++) {
                 $user = new User();
                 $user->setName('username' . $i);
-                $user->setEmail('email' . (($j - 1)* 10 + $i). '@email.fr');
+                $user->setEmail('email' . (($j - 1)* 25 + $i). '@email.fr');
                 $user->setClient($this->getReference(ClientFixtures::CLIENT_REFERENCE . '_'. $j));
                 $user->setCreatedAt(new DateTimeImmutable());
                 $user->setUpdatedAt(new DateTimeImmutable());
