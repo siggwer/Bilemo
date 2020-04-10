@@ -42,7 +42,7 @@ class ProductListingController extends AbstractController
      *              )
      *           ),
      * @SWG\Property(
-     *               property="array",
+     *               property="_embedded",
      * @SWG\Items(ref=@Model(type=App\Entity\Product::class))
      *          ),
      *      )
@@ -62,13 +62,14 @@ class ProductListingController extends AbstractController
      * @param PaginatorFactory  $paginatorFactory
      *
      * @return array
+     *
      * @throws Exception
      */
     public function listing(
         Request $request,
         ProductRepository $repository,
         PaginatorFactory $paginatorFactory
-    ) {
+    ) : array {
         return $paginatorFactory->getData(
             'product_listing',
             $repository->createPaginatedQueryBuilder(

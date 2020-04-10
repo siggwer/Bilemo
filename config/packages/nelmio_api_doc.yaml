@@ -1,20 +1,20 @@
 nelmio_api_doc:
-    areas: # to filter documented areas
-        path_patterns:
-            - ^/api(?!/doc$) # Accepts routes under /api except /api/doc
+  areas: # to filter documented areas
+    path_patterns:
+      - ^/api(?!/doc$) # Accepts routes under /api except /api/doc
 
-    documentation:
-#        host: api.example.com
-        schemes: [http, https]
-        info:
-            title: Bilemo API
-            description: API for phone and client
-            version: 1.0.0
-        securityDefinitions:
-            Bearer:
-                type: apiKey
-                description: 'Value: Bearer {jwt}'
-                name: Authorization
-                in: header
-        security:
-            - Bearer: []
+  documentation:
+    #        host: api.example.com
+    schemes: [http, https]
+    info:
+      title: Bilemo API
+      description: API for phone and client
+      version: 1.0.0
+    securityDefinitions:
+      Bearer:
+        type: apiKey
+        description: 'Value: Bearer {jwt}'
+        name: Authorization
+        in: header
+    security:
+      - Bearer: []

@@ -34,7 +34,7 @@ services:
     mhujer.jms_serializer.uuid.uuid_serializer_handler:
         class: Mhujer\JmsSerializer\Uuid\UuidSerializerHandler
         tags:
-            - { name: jms_serializer.subscribing_handler }
+             - { name: jms_serializer.subscribing_handler }
 
     # add more service definitions when explicit configuration is needed
     # please note that last definitions always *replace* previous ones
